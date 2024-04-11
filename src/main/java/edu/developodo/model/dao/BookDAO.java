@@ -1,6 +1,7 @@
 package edu.developodo.model.dao;
 
 import edu.developodo.model.connection.ConnectionMariaDB;
+import edu.developodo.model.entity.Author;
 import edu.developodo.model.entity.Book;
 
 import java.io.IOException;
@@ -17,6 +18,8 @@ public class BookDAO implements DAO<Book,String> {
     private static final String INSERT ="INSERT INTO book (isbn,title,id_author) VALUES (?,?,?)";
     private static final String UPDATE ="UPDATE book SET title=? WHERE isbn=?";
     private static final String DELETE ="DELETE FROM book WHERE isbn=?";
+    private static final String FINDBYAUTHOR ="SELECT b.isbn,b.title,b.id_author FROM book AS b WHERE b.id_author=?";
+
 
     private Connection conn;
     public BookDAO(){
@@ -112,8 +115,34 @@ public class BookDAO implements DAO<Book,String> {
         return result;
     }
 
+    public List<Book> findByAuthor(Author a) {
+        List<Book> result = new ArrayList<>();
+        if(a==null || a.getDni()==null) return result;
+        try(PreparedStatement pst = conn.prepareStatement(FINDBYAUTHOR)){
+            pst.setString(1,a.getDni());
+            try(ResultSet res = pst.executeQuery()){
+                while(res.next()){
+                    Book b = new Book();
+                    b.setIsbn(res.getString("isbn"));
+                    b.setAuthor(a);
+                    b.setTitle(res.getString("title"));
+                    result.add(b);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return result;
+    }
+
     @Override
     public void close() throws IOException {
 
+    }
+
+    public static BookDAO build(){
+        return new BookDAO();
     }
 }

@@ -1,5 +1,6 @@
 package edu.developodo.model.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,7 +41,19 @@ public class Author {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
-
+    public void addBook(Book book){
+        if(books==null){
+            books = new ArrayList<>();
+        }
+        if(!books.contains(book)){
+            books.add(book);
+        }
+    }
+    public void removeBook(Book book){
+        if(books!=null){
+            books.remove(book);
+        }
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

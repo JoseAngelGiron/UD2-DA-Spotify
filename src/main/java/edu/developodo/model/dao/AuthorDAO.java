@@ -22,8 +22,8 @@ public class AuthorDAO implements DAO<Author,String> {
     public Author save(Author entity) {
         Author result = entity;
         if(entity==null || entity.getDni()==null) return result;
-        Author a = findById(entity.getDni());
-        if(a==null){
+        Author a = findById(entity.getDni());  //si no está devuelve un autor por defecto
+        if(a.getDni()==null){
             //INSERT
             try(PreparedStatement pst = ConnectionMariaDB.getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
                         pst.setString(1,entity.getDni());
@@ -75,6 +75,8 @@ public class AuthorDAO implements DAO<Author,String> {
             if(res.next()){
                 result.setDni(res.getString("dni"));
                 result.setName(res.getString("name"));
+                BookDAO bDAO = new BookDAO();
+                result.setBooks(bDAO.findByAuthor(result));
             }
             res.close();
         } catch (SQLException e) {
@@ -94,6 +96,7 @@ public class AuthorDAO implements DAO<Author,String> {
                 Author a = new Author();
                 a.setDni(res.getString("dni"));
                 a.setName(res.getString("name"));
+                a.setBooks(BookDAO.build().findByAuthor(a));
                 result.add(a);
             }
             res.close();
@@ -106,5 +109,9 @@ public class AuthorDAO implements DAO<Author,String> {
     @Override
     public void close() throws IOException {
 
+    }
+
+    public static AuthorDAO build(){
+        return new AuthorDAO();
     }
 }
