@@ -54,6 +54,14 @@ public class Author {
             books.remove(book);
         }
     }
+    public Book getBook(Book book){
+        Book result=null;
+        if(books!=null){
+            int i=books.indexOf(book);
+            result = books.get(i);
+        }
+        return result;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

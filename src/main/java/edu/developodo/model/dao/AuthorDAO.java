@@ -36,6 +36,8 @@ public class AuthorDAO implements DAO<Author,String> {
                                 entity.setDni(rs.getStrng(1));
                              }
                          */
+
+                        //save cascade -> opcional
                         if(entity.getBooks()!=null) {
                             for (Book b : entity.getBooks()) {
                                 BookDAO.build().save(b);
@@ -51,6 +53,22 @@ public class AuthorDAO implements DAO<Author,String> {
                 pst.setString(1,entity.getName());
                 pst.setString(2,entity.getDni());
                 pst.executeUpdate();
+
+                //update cascada --> opcional
+                if(entity.getBooks()!=null){
+                    List<Book> booksBefore = BookDAO.build().findByAuthor(entity);
+                    List<Book> booksAfter = entity.getBooks();
+
+                    List<Book> booksToBeRemoved = new ArrayList<>(booksBefore);
+                    booksToBeRemoved.removeAll(booksAfter);
+
+                    for(Book b:booksToBeRemoved){
+                        BookDAO.build().delete(b);
+                    }
+                    for(Book b:booksAfter){
+                        BookDAO.build().save(b);
+                    }
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
