@@ -39,7 +39,6 @@ public class BookDAO implements DAO<Book,String> {
                         pst.setString(1,entity.getIsbn());
                         pst.setString(2,entity.getTitle());
                         pst.setString(3,entity.getAuthor().getDni());
-                        //faltan líneas
                         pst.executeUpdate();
                     }catch (SQLException e){
                         e.printStackTrace();
@@ -49,7 +48,6 @@ public class BookDAO implements DAO<Book,String> {
                     try(PreparedStatement pst = conn.prepareStatement(UPDATE)) {
                         pst.setString(1,entity.getTitle());
                         pst.setString(2,entity.getIsbn());
-                        //faltan líneas
                         pst.executeUpdate();
                     }catch (SQLException e){
                         e.printStackTrace();
@@ -83,7 +81,8 @@ public class BookDAO implements DAO<Book,String> {
                 if(res.next()){
                     Book b = new Book();
                     b.setIsbn(res.getString("isbn"));
-                    // b.setAuthor(res.getString("author"));
+                    //Eager
+                    b.setAuthor(AuthorDAO.build().findById(res.getString("id_author")));
                     b.setTitle(res.getString("title"));
                     result=b;
                 }
@@ -102,7 +101,8 @@ public class BookDAO implements DAO<Book,String> {
                 while(res.next()){
                     Book b = new Book();
                     b.setIsbn(res.getString("isbn"));
-                   // b.setAuthor(res.getString("author"));
+                   //Eager
+                    // b.setAuthor(res.getString("author"));
                     b.setTitle(res.getString("title"));
                     result.add(b);
                 }

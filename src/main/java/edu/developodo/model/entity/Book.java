@@ -58,7 +58,7 @@ public class Book {
         return "Book{" +
                 "isbn='" + isbn + '\'' +
                 ", title='" + title + '\'' +
-                ", author=" + author.getDni() +
+                ", author=" + author.getDni() +","+author.getName()+
                 '}';
     }
 }

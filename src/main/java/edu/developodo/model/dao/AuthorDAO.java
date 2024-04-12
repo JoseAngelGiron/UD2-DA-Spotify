@@ -2,6 +2,7 @@ package edu.developodo.model.dao;
 
 import edu.developodo.model.connection.ConnectionMariaDB;
 import edu.developodo.model.entity.Author;
+import edu.developodo.model.entity.Book;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -35,6 +36,11 @@ public class AuthorDAO implements DAO<Author,String> {
                                 entity.setDni(rs.getStrng(1));
                              }
                          */
+                        if(entity.getBooks()!=null) {
+                            for (Book b : entity.getBooks()) {
+                                BookDAO.build().save(b);
+                            }
+                        }
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -53,20 +59,18 @@ public class AuthorDAO implements DAO<Author,String> {
     }
 
     @Override
-    public Author delete(Author entity) {
+    public Author delete(Author entity) throws SQLException {
         if(entity==null || entity.getDni()==null) return entity;
         try(PreparedStatement pst = ConnectionMariaDB.getConnection().prepareStatement(DELETE)) {
             pst.setString(1,entity.getDni());
             pst.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return entity;
     }
 
     @Override
     public Author findById(String key) {
-        Author result = new Author();
+        Author result = new AuthorLazy();
         if(key==null) return result;
 
         try(PreparedStatement pst = ConnectionMariaDB.getConnection().prepareStatement(FINDBYDNI)) {
@@ -75,8 +79,9 @@ public class AuthorDAO implements DAO<Author,String> {
             if(res.next()){
                 result.setDni(res.getString("dni"));
                 result.setName(res.getString("name"));
-                BookDAO bDAO = new BookDAO();
-                result.setBooks(bDAO.findByAuthor(result));
+                //Lazy
+                //BookDAO bDAO = new BookDAO();
+                //result.setBooks(bDAO.findByAuthor(result));
             }
             res.close();
         } catch (SQLException e) {
@@ -93,10 +98,11 @@ public class AuthorDAO implements DAO<Author,String> {
 
             ResultSet res = pst.executeQuery();
             while(res.next()){
-                Author a = new Author();
+                Author a = new AuthorLazy();
                 a.setDni(res.getString("dni"));
                 a.setName(res.getString("name"));
-                a.setBooks(BookDAO.build().findByAuthor(a));
+                //Lazy
+                // a.setBooks(BookDAO.build().findByAuthor(a));
                 result.add(a);
             }
             res.close();
@@ -114,4 +120,13 @@ public class AuthorDAO implements DAO<Author,String> {
     public static AuthorDAO build(){
         return new AuthorDAO();
     }
+}
+class AuthorLazy extends Author{
+ @Override
+ public List<Book> getBooks(){
+        if(super.getBooks()==null){
+            setBooks(BookDAO.build().findByAuthor(this));
+        }
+        return super.getBooks();
+ }
 }
