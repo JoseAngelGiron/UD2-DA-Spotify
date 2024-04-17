@@ -8,4 +8,8 @@ module edu.developodo {
     opens edu.developodo.model.connection to java.xml.bind;
 
     exports edu.developodo;
+    //exports edu.developodo.controller;
+    //opens edu.developodo.controller to javafx.fxml;
+    exports edu.developodo.view;
+    opens edu.developodo.view to javafx.fxml;
 }
