@@ -4,7 +4,7 @@ public enum Scenes {
     ROOT("view/layout.fxml"),
     MAIN("view/main.fxml"),
     ABOUT("view/about.fxml"),
-    MODAL("view/modal.fxml");
+    FORMAUTHOR("view/formAuthor.fxml");
 
     private String url;
     Scenes(String url){
