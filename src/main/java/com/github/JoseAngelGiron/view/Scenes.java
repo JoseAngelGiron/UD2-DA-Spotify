@@ -1,8 +1,9 @@
 package com.github.JoseAngelGiron.view;
 
 public enum Scenes {
-    ROOT("view/layout"),
-    LOGIN("view/login");
+    ROOT("view/main"),
+    LOGIN("view/login"),
+    REGISTER("view/register");
 
 
     private String url;

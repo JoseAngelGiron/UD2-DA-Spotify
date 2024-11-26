@@ -14,6 +14,7 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
 
     private Connection connection;
 
+
     @Override
     public Artist save(Artist entity) {
         return null;
@@ -22,6 +23,11 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
     @Override
     public Artist delete(Artist entity) throws SQLException {
         return null;
+    }
+
+    @Override
+    public void insert() {
+
     }
 
     @Override

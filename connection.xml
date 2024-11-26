@@ -2,7 +2,7 @@
 <connection>
     <server>localhost</server>
     <port>3306</port>
-    <database>library</database>
+    <database>spotify</database>
     <user>root</user>
     <password>root</password>
 </connection>

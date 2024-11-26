@@ -11,6 +11,7 @@ public class AdminDAO extends Admin implements DAO<Admin, String> {
 
 
     private Connection connection;
+
     @Override
     public Admin save(Admin entity) {
         return null;
@@ -19,6 +20,11 @@ public class AdminDAO extends Admin implements DAO<Admin, String> {
     @Override
     public Admin delete(Admin entity) throws SQLException {
         return null;
+    }
+
+    @Override
+    public void insert() {
+
     }
 
     @Override

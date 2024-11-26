@@ -1,15 +1,16 @@
 package com.github.JoseAngelGiron.model;
 
 
+
 import com.github.JoseAngelGiron.model.entity.User;
 
 public class UserSession {
 
     private static UserSession _instance;
-    private User userLoggedIn;
+    private User user;
 
     private UserSession(){
-        userLoggedIn = new User();
+        user = new User();
     }
 
     public static UserSession UserSession(){
@@ -28,15 +29,15 @@ public class UserSession {
      * @return void
      */
     public void closeSession(){
-        userLoggedIn = null;
+        user = null;
     }
 
     public void setUserIntoSession(User user){
-        this.userLoggedIn = user;
+        this.user = user;
     }
 
     public User getUserLoggedIn() {
-        return userLoggedIn;
+        return user;
     }
 
 }

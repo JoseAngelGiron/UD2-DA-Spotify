@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+
+<AnchorPane prefHeight="691.0" prefWidth="836.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JoseAngelGiron.view.ArtistProfileController">
+   <children>
+      <GridPane layoutX="3.0" layoutY="1.0" prefHeight="200.0" prefWidth="278.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="1.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="87.59998168945313" minHeight="10.0" prefHeight="69.60000610351562" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="88.9999755859375" minHeight="10.0" prefHeight="32.399993896484375" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="49.80002441406249" minHeight="5.800024414062477" prefHeight="38.60001220703124" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ImageView fitHeight="60.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="artistName" prefHeight="18.0" prefWidth="149.0" text="Nombre_Artista" GridPane.rowIndex="1" />
+            <Label prefHeight="18.0" prefWidth="50.0" text="Artist" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+      <TableView layoutX="289.0" layoutY="57.0" prefHeight="143.0" prefWidth="386.0">
+        <columns>
+          <TableColumn prefWidth="81.60003662109375" text="FotoAlbum" />
+          <TableColumn prefWidth="167.99993896484375" text="NombreCancion" />
+            <TableColumn prefWidth="134.4000244140625" text="duración" />
+        </columns>
+      </TableView>
+      <Label layoutX="294.0" layoutY="24.0" prefHeight="18.0" prefWidth="140.0" text="Canciones mas populares" />
+      <GridPane layoutX="4.0" layoutY="233.0" prefHeight="438.0" prefWidth="836.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="233.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="739.200048828125" minWidth="10.0" prefWidth="739.200048828125" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="99.59998168945313" minHeight="10.0" prefHeight="52.199988746643065" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="202.79999103546143" minHeight="10.0" prefHeight="67.60000000000001" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="199.59998168945313" minHeight="10.0" prefHeight="59.99997558593749" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="199.59998168945313" minHeight="10.0" prefHeight="76.7999755859375" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="199.59998168945313" minHeight="10.0" prefHeight="38.00002441406252" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="199.59998168945313" minHeight="10.0" prefHeight="104.39997558593751" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Artistas similares:" />
+            <Label text="Albums del artista" GridPane.rowIndex="2" />
+            <Label text="Perfiles de artistas conocidos" GridPane.rowIndex="4" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

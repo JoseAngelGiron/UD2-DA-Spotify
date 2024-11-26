@@ -3,6 +3,8 @@ package com.github.JoseAngelGiron.model.entity;
 import java.util.List;
 import java.util.Set;
 
+import static com.github.JoseAngelGiron.utils.security.Security.encryptPassword;
+
 public class User extends SpotifyElement{
 
     protected String password;
@@ -22,7 +24,7 @@ public class User extends SpotifyElement{
 
     public User(int id, String nick, String password, String photo,String userName, String surname, String email, String dni, String address) {
         super(id, nick);
-        this.password = password;
+        setPassword(password);
         this.photo = photo;
         this.userName = userName;
         this.surname = surname;
@@ -31,12 +33,22 @@ public class User extends SpotifyElement{
         this.address = address;
     }
 
+    public User(String name, String password, String email) {
+        super(name);
+        setPassword(password);
+        this.email = email;
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        if (password.length() != 64) {
+            this.password = encryptPassword(password);
+        } else {
+            this.password = password;
+        }
     }
 
     public String getPhoto() {
