@@ -1,15 +1,15 @@
-module edu.developodo {
+module com.github.JoseAngelGiron {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.xml.bind;
     requires java.sql;
     requires java.desktop;
 
-    opens edu.developodo to javafx.fxml;
-    opens edu.developodo.model.connection to java.xml.bind;
+    opens com.github.JoseAngelGiron to javafx.fxml;
+    opens com.github.JoseAngelGiron.model.connection to java.xml.bind;
 
     exports com.github.JoseAngelGiron;
 
     exports com.github.JoseAngelGiron.view;
-    opens edu.developodo.view to javafx.fxml;
+    opens com.github.JoseAngelGiron.view to javafx.fxml;
 }

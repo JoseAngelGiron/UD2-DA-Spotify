@@ -23,6 +23,11 @@ public class ListSongsDAO extends ListSongs implements DAO<ListSongs, String> {
     }
 
     @Override
+    public void insert() {
+
+    }
+
+    @Override
     public ListSongs findById(String key) {
         return null;
     }

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" minHeight="400.0" minWidth="399.0" prefHeight="455.0" prefWidth="618.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" minHeight="400.0" minWidth="399.0" prefHeight="455.0" prefWidth="618.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JoseAngelGiron.view.LoginController">
    <children>
       <GridPane prefHeight="381.0" prefWidth="470.0">
         <columnConstraints>
@@ -28,8 +28,8 @@
             <RowConstraints maxHeight="43.00000610351563" minHeight="10.0" prefHeight="25.599993896484364" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="emailText" prefHeight="31.0" prefWidth="335.0" GridPane.rowIndex="3" />
-            <TextField fx:id="passwordText" prefHeight="26.0" prefWidth="338.0" GridPane.rowIndex="5" />
+            <TextField fx:id="emailText" prefHeight="31.0" prefWidth="335.0" text="JangelGiron@gmail.com" GridPane.rowIndex="3" />
+            <TextField fx:id="passwordText" prefHeight="26.0" prefWidth="338.0" text="Patata56" GridPane.rowIndex="5" />
             <Label prefHeight="39.0" prefWidth="62.0" text="E-mail:" GridPane.rowIndex="2" />
             <Label prefHeight="38.0" text="Contraseña: " GridPane.rowIndex="4" />
             <Button fx:id="primaryButton" onAction="#LogUser" prefHeight="45.0" prefWidth="216.0" text="Iniciar sesión" GridPane.rowIndex="7" />
@@ -60,7 +60,7 @@
         </rowConstraints>
          <children>
             <Label prefHeight="24.0" prefWidth="214.0" text="¿No tienes cuenta? ¡Registrate!" />
-            <Button alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="31.0" prefWidth="207.0" text="Crear una nueva cuenta" textAlignment="CENTER" GridPane.columnIndex="2" />
+            <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#changeToRegister" prefHeight="31.0" prefWidth="207.0" text="Crear una nueva cuenta" textAlignment="CENTER" GridPane.columnIndex="2" />
          </children>
       </GridPane>
    </children>

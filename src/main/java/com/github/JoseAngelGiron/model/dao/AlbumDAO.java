@@ -9,8 +9,6 @@ import java.util.List;
 
 public class AlbumDAO extends Album implements DAO<Album, String> {
 
-
-
     private Connection connection;
     @Override
     public Album save(Album entity) {
@@ -20,6 +18,11 @@ public class AlbumDAO extends Album implements DAO<Album, String> {
     @Override
     public Album delete(Album entity) throws SQLException {
         return null;
+    }
+
+    @Override
+    public void insert() {
+
     }
 
     @Override

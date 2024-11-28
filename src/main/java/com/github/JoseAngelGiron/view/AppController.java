@@ -3,6 +3,8 @@ package com.github.JoseAngelGiron.view;
 import com.github.JoseAngelGiron.App;
 
 import com.github.JoseAngelGiron.model.UserSession;
+import com.github.JoseAngelGiron.model.entity.Admin;
+import com.github.JoseAngelGiron.model.entity.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,6 +13,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 
 
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -23,8 +29,30 @@ import java.util.ResourceBundle;
 public class AppController extends Controller implements Initializable {
     @FXML
     private Pane mainWindow;
+
+    @FXML
+    private AnchorPane mainPane;
+
     @FXML
     private Button administrationButton;
+
+    @FXML
+    private TextField searchField;
+
+    @FXML
+    private MenuItem profile;
+
+    @FXML
+    private MenuItem configuration;
+
+    @FXML
+    private MenuItem admin;
+
+    @FXML
+    private MenuItem closeSession;
+
+
+
 
     public static Controller centerController;
     public static Controller modalController;
@@ -38,6 +66,17 @@ public class AppController extends Controller implements Initializable {
 
     @Override
     public void onClose(Object output) {
+
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        showAdministrationButton();
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Realizar la búsqueda en vivo
+            System.out.println("Buscando: " + newValue);
+            // Lógica de búsqueda (ejemplo: filtrar una lista)
+        });
 
     }
     /**
@@ -62,62 +101,68 @@ public class AppController extends Controller implements Initializable {
     }
 
 
-    /**
-     * Changes the scene to the store view.
-     * @throws IOException If an error occurs while loading the store view.
-     */
-    @FXML
-    public void changeStore() throws IOException {
-        changeScene(Scenes.STORE, mainWindow,null);
-    }
-    /**
-     * Changes the scene to the library view.
-     * @throws IOException If an error occurs while loading the library view.
-     */
-    @FXML
-    public void changeToLibrary() throws IOException {
-        changeScene(Scenes.LIBRARY, mainWindow, Scenes.LIBRARY_USER);
-    }
-    /**
-     * Changes the scene to the personal area.
-     * @throws IOException If an error occurs while loading the personal area view.
-     */
-    @FXML
-    public void changeToPersonalArea() throws IOException {
-        changeScene(Scenes.PROFILE, mainWindow,null);
-    }
+
 
     /**
      * Changes the scene to the administration area.
      * @throws IOException If an error occurs while loading the administration view.
      */
     @FXML
+    public void changeToLogin() throws IOException {
+        changeScene(Scenes.LOGIN, mainWindow, null);
+    }
+
+    /**
+     * Changes the scene to the profile area.
+     * @throws IOException If an error occurs while loading the profile view.
+     */
+    @FXML
+    public void changeToProfile() throws IOException {
+        changeScene(Scenes.OWNPROFILE, mainPane, null);
+    }
+
+    /**
+     * Changes the scene to the configuration area.
+     * @throws IOException If an error occurs while loading the profile view.
+     */
+    @FXML
+    public void changeToConfiguration() throws IOException {
+        changeScene(Scenes.CONFIGURATION, mainPane, null);
+    }
+
+    /**
+     * Changes the scene to the dmin area.
+     * @throws IOException If an error occurs while loading the admin view.
+     */
+    @FXML
     public void changeToAdminArea() throws IOException {
-        changeScene(Scenes.ADMIN, mainWindow, null);
+        changeScene(Scenes.ADMIN, mainPane, null);
     }
 
     /**
-     * Initializes the controller after its root element has been completely processed.
-     *
-     * @param location  The location used to resolve relative paths for the root object.
-     * @param resources The resources used to localize the root object.
+     * Changes the scene to the home area.
+     * @throws IOException If an error occurs while loading the home view.
      */
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        hideAdministrationButton();
-        try {
-            changeStore();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    @FXML
+    public void changeToMain() throws IOException {
+        changeScene(Scenes.ADMIN, mainPane, null);
+    }
+
+
+
+
+    /**
+     * Show the administration button based on the user's role.
+     */
+    public void showAdministrationButton() {
+        User currentuser = UserSession.UserSession().getUserLoggedIn();
+
+        if(currentuser.getClass().equals(Admin.class)){
+           Admin userAdmin = (Admin) currentuser;
+           if(userAdmin.isAdmin()){
+               admin.setVisible(true);
+           }
         }
-    }
-    /**
-     * Hides the administration button based on the user's role.
-     */
-    public void hideAdministrationButton() {
-        UserSession session = UserSession.UserSession();
-
-
     }
 
     /**
