@@ -16,10 +16,12 @@ public class Artist extends User{
 
     public Artist(User user, String musicalGender, boolean verified) {
         super(user.getId(), user.getName(), user.getPassword(), user.getPhoto(), user.getUserName(),
-                user.getSurname(), user.getEmail(), user.getDni(), user.getDni());
+                user.getSurname(), user.getEmail(), user.getDni(), user.getAddress());
         this.musicalGender = musicalGender;
         this.verified = verified;
     }
+
+
 
     public Artist(int id, String musicalGender, boolean verified) {
         super(id);

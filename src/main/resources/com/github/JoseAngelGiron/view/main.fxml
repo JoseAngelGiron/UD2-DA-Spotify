@@ -37,6 +37,7 @@
                       <MenuItem mnemonicParsing="false" onAction="#changeToProfile" text="Perfil" />
                       <MenuItem mnemonicParsing="false" onAction="#changeToConfiguration" text="Configuracion" />
                         <MenuItem mnemonicParsing="false" onAction="#changeToAdminArea" text="Admin" visible="false" />
+                        <MenuItem fx:id="artistOptions" mnemonicParsing="false" text="Opciones de Artista" visible="false" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#changeToLogin" text="Cerrar Sesión" />
                     </items>

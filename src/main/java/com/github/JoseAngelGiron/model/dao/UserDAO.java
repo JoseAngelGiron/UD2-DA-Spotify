@@ -2,6 +2,8 @@ package com.github.JoseAngelGiron.model.dao;
 
 
 import com.github.JoseAngelGiron.model.connection.ConnectionMariaDB;
+import com.github.JoseAngelGiron.model.entity.Admin;
+import com.github.JoseAngelGiron.model.entity.Artist;
 import com.github.JoseAngelGiron.model.entity.User;
 
 import java.io.IOException;
@@ -11,23 +13,32 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import static com.github.JoseAngelGiron.utils.Utils.intToBoolean;
+
 
 public class UserDAO extends User implements DAO<User, String> {
 
-    private final static String FINDBYNICKANDPASSWORD ="SELECT * FROM USER WHERE Email = ? AND Password= ?";
-    private final static String FINDBYEMAIL = "SELECT * FROM USER WHERE Email = ? ";
-    private final static String INSERT = "INSERT INTO USER (Nick, Password, Email) VALUES (?,?,?)";
+
+    private static final String FINDUSERANDARTISTRBYEMAIL = "SELECT U.*, A.*, AD.* FROM USER U " +
+                    "LEFT JOIN ARTIST A ON U.IDUser = A.IDArtist " +
+                    "LEFT JOIN ADMIN AD ON U.IDUser = AD.IDAdmin "+
+                    "WHERE U.Email = ?";
+
+    private static final String FINDBYEMAIL = "SELECT * FROM USER WHERE Email = ? ";
+    private static final String INSERT = "INSERT INTO USER (Nick, Password, Email) VALUES (?,?,?)";
 
 
-    private Connection connection;
+    private  static Connection connection ;
 
     public UserDAO() {
-        this.connection = ConnectionMariaDB.getConnection();
+        connection = ConnectionMariaDB.getConnection();
+
     }
 
     public UserDAO(String name, String password, String email) {
         super(name, password, email);
         connection = ConnectionMariaDB.getConnection();
+
 
     }
 
@@ -66,72 +77,45 @@ public class UserDAO extends User implements DAO<User, String> {
         return null;
     }
 
-
-
-    public User findByEmailAndPassword(String email, String password){
+    public static User findByEmail(String email) {
         User userToReturn = new User();
-        if(email != null && password != null){
+        connection = ConnectionMariaDB.getConnection();
+        if(email!=null){
 
-            try(PreparedStatement statement = connection.prepareStatement(FINDBYNICKANDPASSWORD)) {
+            try(PreparedStatement statement = connection.prepareStatement(FINDUSERANDARTISTRBYEMAIL)) {
                 statement.setString(1, email);
-                statement.setString(2, password);
+
 
                 ResultSet res = statement.executeQuery();
 
                 if(res.next()){
-                    
                     userToReturn.setId(res.getInt("IDUser"));
-                    System.out.println(userToReturn.getId());
                     userToReturn.setName(res.getString("Nick"));
                     userToReturn.setPassword(res.getString("Password"));
                     userToReturn.setPhoto(res.getString("URLPhoto"));
-                    userToReturn.setUserName(res.getString("Name"));
+                    userToReturn.setName(res.getString("Name"));
                     userToReturn.setSurname(res.getString("Surname"));
                     userToReturn.setEmail(res.getString("Email"));
                     userToReturn.setDni(res.getString("DNI"));
                     userToReturn.setAddress(res.getString("Adress"));
-                    return userToReturn;
+
+                    if(res.getInt("IDArtist") != 0){
+                        return new  Artist(userToReturn, res.getString("MusicalGender"),
+                                intToBoolean(res.getInt("Verified")));
+
+
+                    } else if (res.getInt("IDAdmin") != 0) {
+                        return new Admin(userToReturn,
+                                intToBoolean(res.getInt("ISAdmin")));
+                    }
+
                 }
 
             }catch (SQLException e){
                 e.printStackTrace();
             }
-
         }
-
         return userToReturn;
-
-    }
-
-    public User findByEmail(String email) {
-
-        if(email!=null){
-
-            try(PreparedStatement statement = connection.prepareStatement(FINDBYEMAIL)) {
-                statement.setString(1, email);
-
-
-                ResultSet res = statement.executeQuery();
-
-                if(res.next()){
-                    this.id = res.getInt("IDUser");
-                    this.name = res.getString("Nick");
-
-                    this.password = res.getString("Password");
-                    this.photo = res.getString("URLPhoto");
-                    this.userName = res.getString("Name");
-                    this.surname = res.getString("Surname");
-                    this.email = res.getString("Email");
-                    this.dni = res.getString("DNI");
-                    this.address = res.getString("Adress");
-                    return this;
-                }
-
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-        }
-        return this;
 
     }
 

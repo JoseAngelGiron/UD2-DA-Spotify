@@ -12,6 +12,12 @@ public class Admin extends User{
         this.isAdmin = isAdmin;
     }
 
+    public Admin(User user, boolean verified) {
+        super(user.getId(), user.getName(), user.getPassword(), user.getPhoto(), user.getUserName(),
+                user.getSurname(), user.getEmail(), user.getDni(), user.getAddress());
+        this.isAdmin = verified;
+    }
+
     public boolean isAdmin() {
         return isAdmin;
     }

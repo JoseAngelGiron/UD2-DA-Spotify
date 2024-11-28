@@ -33,6 +33,8 @@ public class User extends SpotifyElement{
         this.address = address;
     }
 
+
+
     public User(String name, String password, String email) {
         super(name);
         setPassword(password);

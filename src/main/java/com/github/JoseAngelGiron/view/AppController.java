@@ -4,6 +4,7 @@ import com.github.JoseAngelGiron.App;
 
 import com.github.JoseAngelGiron.model.UserSession;
 import com.github.JoseAngelGiron.model.entity.Admin;
+import com.github.JoseAngelGiron.model.entity.Artist;
 import com.github.JoseAngelGiron.model.entity.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,6 +47,9 @@ public class AppController extends Controller implements Initializable {
     private MenuItem configuration;
 
     @FXML
+    private MenuItem artistOptions;
+
+    @FXML
     private MenuItem admin;
 
     @FXML
@@ -72,6 +76,7 @@ public class AppController extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         showAdministrationButton();
+        showArtistButton();
         try {
             changeToHome();
         } catch (IOException e) {
@@ -184,8 +189,6 @@ public class AppController extends Controller implements Initializable {
     }
 
 
-
-
     /**
      * Show the administration button based on the user's role.
      */
@@ -197,6 +200,17 @@ public class AppController extends Controller implements Initializable {
            if(userAdmin.isAdmin()){
                admin.setVisible(true);
            }
+        }
+    }
+
+    /**
+     * Show the artist button based on the user's role.
+     */
+    public void showArtistButton() {
+        User currentuser = UserSession.UserSession().getUserLoggedIn();
+
+        if(currentuser.getClass().equals(Artist.class)){
+            artistOptions.setVisible(true);
         }
     }
 

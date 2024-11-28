@@ -9,6 +9,7 @@ import com.github.JoseAngelGiron.App;
 
 import com.github.JoseAngelGiron.model.UserSession;
 import com.github.JoseAngelGiron.model.dao.UserDAO;
+import com.github.JoseAngelGiron.model.entity.Artist;
 import com.github.JoseAngelGiron.model.entity.User;
 
 import javafx.fxml.FXML;
@@ -19,8 +20,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import static com.github.JoseAngelGiron.model.dao.UserDAO.findByEmail;
 import static com.github.JoseAngelGiron.utils.security.Security.encryptPassword;
-import static com.github.JoseAngelGiron.view.AppController.changeScene;
+
 
 
 public class LoginController extends Controller implements Initializable {
@@ -58,13 +60,9 @@ public class LoginController extends Controller implements Initializable {
         String email = emailText.getText();
         String password = encryptPassword(passwordText.getText());
 
-        UserDAO userDAO = new UserDAO();
+        userToLogin = findByEmail(email);
 
-        userToLogin = userDAO.findByEmailAndPassword(email, password);
-        System.out.println(userToLogin.getId()+ " " +userToLogin.getEmail());
-
-        if(userToLogin.getId()>0){
-
+        if(userToLogin.getId()>0 && userToLogin.getPassword().equals(password)){
             UserSession session = UserSession.UserSession();
             session.setUserIntoSession(userToLogin);
             changeToMainWindow();

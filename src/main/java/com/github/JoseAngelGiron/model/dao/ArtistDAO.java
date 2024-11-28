@@ -4,6 +4,7 @@ import com.github.JoseAngelGiron.model.connection.ConnectionMariaDB;
 import com.github.JoseAngelGiron.model.entity.Artist;
 import com.github.JoseAngelGiron.model.entity.User;
 
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +18,10 @@ import static com.github.JoseAngelGiron.utils.Utils.intToBoolean;
 
 public class ArtistDAO extends Artist implements DAO <Artist, String> {
 
-    private final static String FINDBYID = "SELECT * FROM ARTIST  WHERE IDArtist=?";
+    private final static String FINDBYID = "SELECT * FROM ARTIST WHERE IDArtist=?";
+
+
+
     private final static String FINDARTISTANDUSERBYID = "SELECT A.*, U.* FROM ARTIST A " +
             "JOIN USER U ON U.IDUser=A.IDArtist WHERE IDArtist=? AND IDUSER=?";
 
@@ -100,15 +104,12 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
     public static Artist findArtistById(int key) {
         Artist artistToReturn = new Artist();
 
-
-
         if(key!=0){
 
             try(PreparedStatement preparedStatement = connection.prepareStatement(FINDARTISTANDUSERBYID)){
 
                 preparedStatement.setInt(1, key);
                 preparedStatement.setInt(2, key);
-
 
                 ResultSet res = preparedStatement.executeQuery();
                 if(res.next()){
@@ -134,6 +135,7 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
 
         return artistToReturn;
     }
+
 
     @Override
     public List<Artist> findAll() {
