@@ -30,7 +30,7 @@
               </rowConstraints>
                <children>
                   <TextField fx:id="searchField" promptText="Buscar..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button mnemonicParsing="false" text="Home" GridPane.rowIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#changeToHome" text="Home" GridPane.rowIndex="1" />
                   <Button mnemonicParsing="false" text="News" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <MenuButton mnemonicParsing="false" text="Opciones" GridPane.columnIndex="3" GridPane.rowIndex="1">
                     <items>

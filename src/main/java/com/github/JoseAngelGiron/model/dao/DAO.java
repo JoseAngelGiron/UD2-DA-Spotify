@@ -7,7 +7,7 @@ import java.util.List;
 public interface DAO<T,K> extends Closeable {
     T save(T entity);
     T delete(T entity) throws SQLException;
-    void insert();
-    T findById(K key);
+    Boolean insert();
+    T findById(int key);
     List<T> findAll();
 }

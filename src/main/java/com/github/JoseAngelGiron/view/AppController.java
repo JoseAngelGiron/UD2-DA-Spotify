@@ -72,6 +72,13 @@ public class AppController extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         showAdministrationButton();
+        try {
+            changeToHome();
+        } catch (IOException e) {
+            System.out.println("La vista de bienvenida no se pudo cargar "+e);
+        }
+
+        //Esto es para hacer el listener
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             // Realizar la búsqueda en vivo
             System.out.println("Buscando: " + newValue);
@@ -100,7 +107,35 @@ public class AppController extends Controller implements Initializable {
         modalController=view.controller;
     }
 
+    /**
+     * Changes the displayed scene in a Pane container with a new scene by loading an FXML file
+     * and associating it with its controller.
+     *
+     * @param scene The scene to be loaded.
+     * @param pane  The Pane container in which the new scene will be shown.
+     * @param data  Optional data to be passed to the controller of the new scene.
+     * @throws IOException If an error occurs while loading the FXML file.
+     */
+    public static void changeScene(Scenes scene, Pane pane, Object data) throws IOException {
+        pane.getChildren().clear();
+        View view = loadFXML(scene);
+        pane.getChildren().add(view.scene);
+        centerController = view.controller;
 
+        centerController.onOpen(data, null);
+    }
+
+
+    public static View loadFXML(Scenes scenes) throws IOException {
+        String url = scenes.getURL();
+        FXMLLoader loader = new FXMLLoader(App.class.getResource(url + ".fxml"));
+        Parent p = loader.load();
+        Controller c = loader.getController();
+        View view = new View();
+        view.scene=p;
+        view.controller=c;
+        return view;
+    }
 
 
     /**
@@ -144,8 +179,8 @@ public class AppController extends Controller implements Initializable {
      * @throws IOException If an error occurs while loading the home view.
      */
     @FXML
-    public void changeToMain() throws IOException {
-        changeScene(Scenes.ADMIN, mainPane, null);
+    public void changeToHome() throws IOException {
+        changeScene(Scenes.HOME, mainPane, null);
     }
 
 
@@ -165,36 +200,7 @@ public class AppController extends Controller implements Initializable {
         }
     }
 
-    /**
-     * Changes the displayed scene in a Pane container with a new scene by loading an FXML file
-     * and associating it with its controller.
-     *
-     * @param scene The scene to be loaded.
-     * @param pane  The Pane container in which the new scene will be shown.
-     * @param data  Optional data to be passed to the controller of the new scene.
-     * @throws IOException If an error occurs while loading the FXML file.
-     */
-    public static void changeScene(Scenes scene, Pane pane, Object data) throws IOException {
-        pane.getChildren().clear();
-        View view = loadFXML(scene);
-        pane.getChildren().add(view.scene);
-        centerController = view.controller;
 
-        centerController.onOpen(data, null);
-    }
-    /**
-     * Displays all users in a table view.
-     */
-    public static View loadFXML(Scenes scenes) throws IOException {
-        String url = scenes.getURL();
-        FXMLLoader loader = new FXMLLoader(App.class.getResource(url + ".fxml"));
-        Parent p = loader.load();
-        Controller c = loader.getController();
-        View view = new View();
-        view.scene=p;
-        view.controller=c;
-        return view;
-    }
 
     @FXML
     private void closeApp(){

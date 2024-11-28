@@ -23,12 +23,12 @@ public class AdminDAO extends Admin implements DAO<Admin, String> {
     }
 
     @Override
-    public void insert() {
-
+    public Boolean insert() {
+        return false;
     }
 
     @Override
-    public Admin findById(String key) {
+    public Admin findById(int key) {
         return null;
     }
 

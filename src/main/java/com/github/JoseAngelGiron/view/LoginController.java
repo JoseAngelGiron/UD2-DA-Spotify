@@ -19,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import static com.github.JoseAngelGiron.utils.security.Security.encryptPassword;
 import static com.github.JoseAngelGiron.view.AppController.changeScene;
 
 
@@ -55,13 +56,14 @@ public class LoginController extends Controller implements Initializable {
     private void LogUser() throws IOException {
         userToLogin = new User();
         String email = emailText.getText();
-        String password = passwordText.getText();
+        String password = encryptPassword(passwordText.getText());
 
         UserDAO userDAO = new UserDAO();
 
         userToLogin = userDAO.findByEmailAndPassword(email, password);
+        System.out.println(userToLogin.getId()+ " " +userToLogin.getEmail());
 
-        if(userToLogin.getId()>-1){
+        if(userToLogin.getId()>0){
 
             UserSession session = UserSession.UserSession();
             session.setUserIntoSession(userToLogin);

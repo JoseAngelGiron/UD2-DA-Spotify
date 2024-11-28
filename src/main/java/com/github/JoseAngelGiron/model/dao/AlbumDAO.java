@@ -21,12 +21,12 @@ public class AlbumDAO extends Album implements DAO<Album, String> {
     }
 
     @Override
-    public void insert() {
-
+    public Boolean insert() {
+        return false;
     }
 
     @Override
-    public Album findById(String key) {
+    public Album findById(int key) {
         return null;
     }
 

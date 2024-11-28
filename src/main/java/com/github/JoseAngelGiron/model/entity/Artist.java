@@ -14,6 +14,19 @@ public class Artist extends User{
         this.verified = verified;
     }
 
+    public Artist(User user, String musicalGender, boolean verified) {
+        super(user.getId(), user.getName(), user.getPassword(), user.getPhoto(), user.getUserName(),
+                user.getSurname(), user.getEmail(), user.getDni(), user.getDni());
+        this.musicalGender = musicalGender;
+        this.verified = verified;
+    }
+
+    public Artist(int id, String musicalGender, boolean verified) {
+        super(id);
+        this.musicalGender = musicalGender;
+        this.verified = verified;
+    }
+
     public String getMusicalGender() {
         return musicalGender;
     }

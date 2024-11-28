@@ -42,33 +42,34 @@ public class UserDAO extends User implements DAO<User, String> {
     }
 
     @Override
-    public void insert() {
+    public Boolean insert() {
 
         if(name != null && password != null && email != null){
-            try(PreparedStatement statement = connection.prepareStatement(INSERT)) {
+            try(PreparedStatement preparedStatement = connection.prepareStatement(INSERT)) {
 
-                statement.setString(1, name);
-                statement.setString(2, password);
-                statement.setString(3, email);
+                preparedStatement.setString(1, name);
+                preparedStatement.setString(2, password);
+                preparedStatement.setString(3, email);
 
-                statement.executeQuery();
+                preparedStatement.executeQuery();
 
             }catch (SQLException e){
                 e.printStackTrace();
             }
         }
+        return false;
 
     }
 
     @Override
-    public User findById(String key) {
+    public User findById(int key) {
         return null;
     }
-    
-    
+
+
 
     public User findByEmailAndPassword(String email, String password){
-
+        User userToReturn = new User();
         if(email != null && password != null){
 
             try(PreparedStatement statement = connection.prepareStatement(FINDBYNICKANDPASSWORD)) {
@@ -78,17 +79,18 @@ public class UserDAO extends User implements DAO<User, String> {
                 ResultSet res = statement.executeQuery();
 
                 if(res.next()){
-                    this.id = res.getInt("IDUser");
-                    this.name = res.getString("Nick");
-
-                    this.password = res.getString("Password");
-                    this.photo = res.getString("URLPhoto");
-                    this.userName = res.getString("Name");
-                    this.surname = res.getString("Surname");
-                    this.email = res.getString("Email");
-                    this.dni = res.getString("DNI");
-                    this.address = res.getString("Adress");
-                    return this;
+                    
+                    userToReturn.setId(res.getInt("IDUser"));
+                    System.out.println(userToReturn.getId());
+                    userToReturn.setName(res.getString("Nick"));
+                    userToReturn.setPassword(res.getString("Password"));
+                    userToReturn.setPhoto(res.getString("URLPhoto"));
+                    userToReturn.setUserName(res.getString("Name"));
+                    userToReturn.setSurname(res.getString("Surname"));
+                    userToReturn.setEmail(res.getString("Email"));
+                    userToReturn.setDni(res.getString("DNI"));
+                    userToReturn.setAddress(res.getString("Adress"));
+                    return userToReturn;
                 }
 
             }catch (SQLException e){
@@ -97,8 +99,8 @@ public class UserDAO extends User implements DAO<User, String> {
 
         }
 
-        return this;
-        
+        return userToReturn;
+
     }
 
     public User findByEmail(String email) {

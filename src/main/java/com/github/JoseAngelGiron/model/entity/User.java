@@ -39,6 +39,10 @@ public class User extends SpotifyElement{
         this.email = email;
     }
 
+    public User(int id) {
+        this.id = id;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -58,7 +62,6 @@ public class User extends SpotifyElement{
     public void setPhoto(String photo) {
         this.photo = photo;
     }
-
 
     public String getUserName() {
         return userName;
