@@ -1,5 +1,6 @@
 package com.github.JoseAngelGiron.model.entity;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -127,5 +128,20 @@ public class User extends SpotifyElement{
 
     public void setListSongsList(List<ListSongs> listSongsList) {
         this.listSongsList = listSongsList;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "address='" + address + '\'' +
+                ", dni='" + dni + '\'' +
+                ", email='" + email + '\'' +
+                ", surname='" + surname + '\'' +
+                ", userName='" + userName + '\'' +
+                ", photo=" + Arrays.toString(photo) +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", id=" + id +
+                '}';
     }
 }

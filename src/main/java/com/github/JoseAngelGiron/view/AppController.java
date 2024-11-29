@@ -189,6 +189,7 @@ public class AppController extends Controller implements Initializable {
     }
 
 
+
     /**
      * Changes the scene to the home area.
      * @throws IOException If an error occurs while loading the home view.

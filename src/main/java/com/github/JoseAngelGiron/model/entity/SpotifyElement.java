@@ -10,6 +10,10 @@ public abstract class SpotifyElement {
 
     }
 
+    public SpotifyElement(int id) {
+        this.id = id;
+    }
+
     public SpotifyElement(int id, String name) {
         this.id = id;
         this.name = name;

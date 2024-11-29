@@ -17,6 +17,10 @@ public class Album extends SpotifyElement{
 
     }
 
+    public Album(int id) {
+        super(id);
+    }
+
     public Album(int id, String name, byte[] image, int year) {
         super(id, name);
         this.image = image;
@@ -68,5 +72,16 @@ public class Album extends SpotifyElement{
 
     public void setSongsOfAlbum(List<Song> songsOfAlbum) {
         this.songsOfAlbum = songsOfAlbum;
+    }
+
+    @Override
+    public String toString() {
+        return "Album{" +
+                "year=" + year +
+                ", artist=" + artist +
+                ", id=" + id +
+                ", name='" + name + '\'' +
+                ", songsOfAlbum=" + songsOfAlbum +
+                '}';
     }
 }

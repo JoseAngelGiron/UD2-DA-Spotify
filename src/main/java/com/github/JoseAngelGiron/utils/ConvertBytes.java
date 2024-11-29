@@ -87,28 +87,35 @@ public class ConvertBytes {
     }
 
     public static byte[] imageToBytes(Image image) throws IOException {
-        // Crear un BufferedImage con las mismas dimensiones que la imagen de JavaFX
-        BufferedImage bufferedImage = new BufferedImage((int) image.getWidth(), (int) image.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
-        // Usar PixelReader para obtener los píxeles de la imagen JavaFX
+        BufferedImage bufferedImage = new BufferedImage(
+                (int) image.getWidth(),
+                (int) image.getHeight(),
+                BufferedImage.TYPE_INT_RGB
+        );
+
         PixelReader pixelReader = image.getPixelReader();
 
-        // Leer píxeles y establecerlos en el BufferedImage
         for (int x = 0; x < image.getWidth(); x++) {
             for (int y = 0; y < image.getHeight(); y++) {
-                javafx.scene.paint.Color color = pixelReader.getColor(x, y);
-                int argb = (int) (color.getRed() * 255) << 16 | (int) (color.getGreen() * 255) << 8 | (int) (color.getBlue() * 255) | (int) (color.getOpacity() * 255) << 24;
-                bufferedImage.setRGB(x, y, argb);
+                javafx.scene.paint.Color fxColor = pixelReader.getColor(x, y);
+
+                int red = (int) (fxColor.getRed() * 255);
+                int green = (int) (fxColor.getGreen() * 255);
+                int blue = (int) (fxColor.getBlue() * 255);
+
+
+                java.awt.Color awtColor = new java.awt.Color(red, green, blue);
+                bufferedImage.setRGB(x, y, awtColor.getRGB());
             }
         }
 
-        // Escribir el BufferedImage en un ByteArrayOutputStream
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ImageIO.write(bufferedImage, "jpg", byteArrayOutputStream);  // Cambiar "jpg" a "png" si prefieres PNG
+        ImageIO.write(bufferedImage, "jpg", byteArrayOutputStream);
 
-        // Retornar el byte[]
         return byteArrayOutputStream.toByteArray();
     }
+
 
 
 }

@@ -92,14 +92,13 @@ public class UserDAO extends User implements DAO<User, String> {
                     userToReturn.setName(res.getString("Nick"));
                     userToReturn.setPassword(res.getString("Password"));
                     userToReturn.setPhoto(res.getBytes("Photo"));
-                    userToReturn.setName(res.getString("Name"));
+                    userToReturn.setUserName(res.getString("Name"));
                     userToReturn.setSurname(res.getString("Surname"));
                     userToReturn.setEmail(res.getString("Email"));
                     userToReturn.setDni(res.getString("DNI"));
                     userToReturn.setAddress(res.getString("Adress"));
 
                     if(res.getInt("IDArtist") != 0){
-                        System.out.println(res.getInt("IDArtist"));
                         return new Artist(userToReturn, res.getString("MusicalGender"),
                                 intToBoolean(res.getInt("Verified")));
 

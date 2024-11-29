@@ -2,7 +2,7 @@ package com.github.JoseAngelGiron.model.entity;
 
 
 public class Song extends SpotifyElement{
-
+    protected String lyrics;
     protected byte[] songFile;
 
     protected String musicalGender;
@@ -27,7 +27,13 @@ public class Song extends SpotifyElement{
         this.songFile = songFile;
     }
 
+    public String getLyrics() {
+        return lyrics;
+    }
 
+    public void setLyrics(String lyrics) {
+        this.lyrics = lyrics;
+    }
 
     public String getMusicalGender() {
         return musicalGender;
