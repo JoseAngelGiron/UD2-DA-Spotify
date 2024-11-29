@@ -3,8 +3,8 @@ package com.github.JoseAngelGiron.model.entity;
 
 public class Song extends SpotifyElement{
 
-    protected String urlFile;
-    protected String urlImage;
+    protected byte[] songFile;
+
     protected String musicalGender;
     protected Artist artistOwner;
     protected Album album;
@@ -13,28 +13,21 @@ public class Song extends SpotifyElement{
 
     }
 
-    public Song(int id, String name, String urlFile, String urlImage, String musicalGender) {
+    public Song(int id, String name, byte[] songFile, String musicalGender) {
         super(id, name);
-        this.urlFile = urlFile;
-        this.urlImage = urlImage;
+        this.songFile = songFile;
         this.musicalGender = musicalGender;
     }
 
-    public String getUrlFile() {
-        return urlFile;
+    public byte[] getSongFile() {
+        return songFile;
     }
 
-    public void setUrlFile(String urlFile) {
-        this.urlFile = urlFile;
+    public void setSongFile(byte[] songFile) {
+        this.songFile = songFile;
     }
 
-    public String getUrlImage() {
-        return urlImage;
-    }
 
-    public void setUrlImage(String urlImage) {
-        this.urlImage = urlImage;
-    }
 
     public String getMusicalGender() {
         return musicalGender;

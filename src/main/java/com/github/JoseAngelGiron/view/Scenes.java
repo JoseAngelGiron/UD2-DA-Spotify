@@ -9,6 +9,8 @@ public enum Scenes {
     HOME("view/home"),
 
     OWNPROFILE("view/ownProfile"),
+    ARTISTOPTIONS("view/artistOptions"),
+
     ARTISTPROFILE("view/artistProfile"),
     USERPROFILE("view/userProfile"),
 

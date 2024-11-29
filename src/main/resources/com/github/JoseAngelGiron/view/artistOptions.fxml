@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="737.0" prefWidth="1028.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JoseAngelGiron.view.ArtistOptionsController">
+   <children>
+      <Pane layoutX="14.0" layoutY="9.0" prefHeight="291.0" prefWidth="1006.0" AnchorPane.bottomAnchor="382.19999999999993" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="9.0">
+         <children>
+            <TableView layoutX="24.0" prefHeight="299.0" prefWidth="276.0">
+              <columns>
+                <TableColumn editable="false" prefWidth="126.4000015258789" resizable="false" text="Foto del album" />
+                <TableColumn editable="false" prefWidth="145.60000610351562" resizable="false" text="Nombre" />
+              </columns>
+            </TableView>
+            <TableView layoutX="444.0" prefHeight="299.0" prefWidth="501.0">
+              <columns>
+                <TableColumn editable="false" prefWidth="141.59994506835938" />
+                <TableColumn editable="false" prefWidth="209.5999755859375" resizable="false" text="Nombre" />
+                  <TableColumn editable="false" prefWidth="144.800048828125" resizable="false" text="Reproducir" />
+              </columns>
+            </TableView>
+            <Button layoutX="24.0" layoutY="306.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="276.0" text="Añadir un nuevo album" />
+         </children>
+         <padding>
+            <Insets left="60.0" />
+         </padding>
+      </Pane>
+      <TitledPane animated="false" expanded="false" layoutY="612.8" prefHeight="122.0" prefWidth="1028.0" text="Reproductor" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="613.0">
+         <content>
+            <Pane prefHeight="114.0" prefWidth="659.0">
+               <children>
+                  <GridPane layoutX="8.0" prefHeight="139.0" prefWidth="733.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="324.20001220703125" minWidth="10.0" prefWidth="198.39996376037598" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.2000045776367" minWidth="10.0" prefWidth="339.199951171875" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.2000045776367" minWidth="10.0" prefWidth="201.60004882812495" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="325.0" text="Reproducir" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Slider GridPane.columnIndex="1" />
+                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="166.0" text="Close" GridPane.columnIndex="2" />
+                        <Button mnemonicParsing="false" text="Siguiente" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Button mnemonicParsing="false" text="Anterior" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+               </children>
+            </Pane>
+         </content>
+      </TitledPane>
+      <Pane layoutX="36.0" layoutY="395.0" prefHeight="207.0" prefWidth="444.0" AnchorPane.bottomAnchor="135.39999999999998" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="548.8" AnchorPane.topAnchor="395.0">
+         <children>
+            <GridPane layoutY="15.0" prefHeight="158.0" prefWidth="449.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="349.20001220703125" minWidth="10.0" prefWidth="195.60004425048828" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="497.39995117187505" minWidth="10.0" prefWidth="253.19995574951173" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="30.799993896484374" minHeight="10.0" prefHeight="24.000006103515624" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="54.799993896484374" minHeight="10.0" prefHeight="32.799993896484374" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="54.799993896484374" minHeight="10.0" prefHeight="32.799993896484374" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="46.800012207031244" minHeight="7.7999839782714915" prefHeight="23.000012207031247" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="77.60001220703126" minHeight="10.0" prefHeight="37.5999755859375" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="77.60001220703126" minHeight="10.0" prefHeight="43.2000244140625" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#uploadImageAlbum" prefHeight="26.0" prefWidth="194.0" text="Añadir imagen del album" GridPane.rowIndex="5" />
+                  <ImageView fx:id="imageViewAlbum" fitHeight="105.0" fitWidth="189.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
+                  <TextField fx:id="albumNameTextField" prefHeight="26.0" prefWidth="442.0" promptText="Nombre del album..." GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets right="300.0" />
+                     </GridPane.margin>
+                     <padding>
+                        <Insets right="225.0" />
+                     </padding></TextField>
+                  <Label prefHeight="18.0" prefWidth="233.0" text="Inserte el nombre del album:" GridPane.columnIndex="1" />
+                  <Label prefWidth="54.0" text="Año:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <GridPane prefHeight="31.0" prefWidth="477.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="242.5999755859375" minWidth="10.0" prefWidth="224.40001220703124" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="397.00000762939453" minWidth="10.0" prefWidth="29.199987792968727" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="29.40003662109375" minHeight="10.0" prefHeight="29.40003662109375" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="13.600012207031249" minHeight="6.199963378906251" prefHeight="6.199963378906251" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <TextField fx:id="yearOfReleaseTextField" prefHeight="26.0" prefWidth="66.0" promptText="Año de salida..." />
+                     </children>
+                  </GridPane>
+                  <Button mnemonicParsing="false" onAction="#registerAlbum" prefHeight="26.0" prefWidth="219.0" text="Registrar album" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+      <Button layoutX="36.0" layoutY="355.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="276.0" text="Añadir nueva canción a un album" />
+      <Pane layoutX="514.0" layoutY="395.0" prefHeight="207.0" prefWidth="444.0">
+         <children>
+            <GridPane layoutY="15.0" prefHeight="158.0" prefWidth="449.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="349.20001220703125" minWidth="10.0" prefWidth="195.60004425048828" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="497.39995117187505" minWidth="10.0" prefWidth="253.19995574951173" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="30.799993896484374" minHeight="10.0" prefHeight="24.000006103515624" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="54.799993896484374" minHeight="10.0" prefHeight="32.799993896484374" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="54.799993896484374" minHeight="10.0" prefHeight="32.799993896484374" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="46.800012207031244" minHeight="7.7999839782714915" prefHeight="23.000012207031247" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="77.60001220703126" minHeight="10.0" prefHeight="37.5999755859375" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="77.60001220703126" minHeight="10.0" prefHeight="43.2000244140625" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="194.0" text="Añadir imagen del album" GridPane.rowIndex="5" />
+                  <ImageView fitHeight="112.0" fitWidth="192.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
+                  <TextField prefHeight="26.0" prefWidth="442.0" promptText="Nombre del album..." GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets right="300.0" />
+                     </GridPane.margin>
+                     <padding>
+                        <Insets right="225.0" />
+                     </padding>
+                  </TextField>
+                  <Label prefHeight="18.0" prefWidth="233.0" text="Inserte el nombre de la canción:" GridPane.columnIndex="1" />
+                  <Label prefWidth="54.0" text="Año:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <GridPane prefHeight="31.0" prefWidth="477.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="242.5999755859375" minWidth="10.0" prefWidth="224.40001220703124" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="397.00000762939453" minWidth="10.0" prefWidth="29.199987792968727" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="29.40003662109375" minHeight="10.0" prefHeight="29.40003662109375" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="13.600012207031249" minHeight="6.199963378906251" prefHeight="6.199963378906251" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <TextField prefHeight="26.0" prefWidth="66.0" promptText="Año de salida..." />
+                     </children>
+                  </GridPane>
+                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="219.0" text="Registrar album" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

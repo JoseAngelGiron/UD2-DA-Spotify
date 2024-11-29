@@ -8,7 +8,7 @@ public class Artist extends User{
     public Artist() {
     }
 
-    public Artist(int id, String nick, String password, String photo, String userName, String surname, String email, String dni, String address, String musicalGender, boolean verified) {
+    public Artist(int id, String nick, String password, byte[] photo, String userName, String surname, String email, String dni, String address, String musicalGender, boolean verified) {
         super(id, nick, password, photo, userName, surname, email, dni, address);
         this.musicalGender = musicalGender;
         this.verified = verified;

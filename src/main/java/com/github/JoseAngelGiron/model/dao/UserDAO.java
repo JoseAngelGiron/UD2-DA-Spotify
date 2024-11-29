@@ -24,7 +24,6 @@ public class UserDAO extends User implements DAO<User, String> {
                     "LEFT JOIN ADMIN AD ON U.IDUser = AD.IDAdmin "+
                     "WHERE U.Email = ?";
 
-    private static final String FINDBYEMAIL = "SELECT * FROM USER WHERE Email = ? ";
     private static final String INSERT = "INSERT INTO USER (Nick, Password, Email) VALUES (?,?,?)";
 
 
@@ -92,7 +91,7 @@ public class UserDAO extends User implements DAO<User, String> {
                     userToReturn.setId(res.getInt("IDUser"));
                     userToReturn.setName(res.getString("Nick"));
                     userToReturn.setPassword(res.getString("Password"));
-                    userToReturn.setPhoto(res.getString("URLPhoto"));
+                    userToReturn.setPhoto(res.getBytes("Photo"));
                     userToReturn.setName(res.getString("Name"));
                     userToReturn.setSurname(res.getString("Surname"));
                     userToReturn.setEmail(res.getString("Email"));
@@ -100,9 +99,9 @@ public class UserDAO extends User implements DAO<User, String> {
                     userToReturn.setAddress(res.getString("Adress"));
 
                     if(res.getInt("IDArtist") != 0){
-                        return new  Artist(userToReturn, res.getString("MusicalGender"),
+                        System.out.println(res.getInt("IDArtist"));
+                        return new Artist(userToReturn, res.getString("MusicalGender"),
                                 intToBoolean(res.getInt("Verified")));
-
 
                     } else if (res.getInt("IDAdmin") != 0) {
                         return new Admin(userToReturn,

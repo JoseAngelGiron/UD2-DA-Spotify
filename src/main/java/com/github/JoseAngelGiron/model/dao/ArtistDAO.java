@@ -116,7 +116,7 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
                     artistToReturn.setId(res.getInt("IDArtist"));
                     artistToReturn.setName(res.getString("Nick"));
                     artistToReturn.setPassword(res.getString("Password"));
-                    artistToReturn.setPhoto(res.getString("URLPhoto"));
+                    artistToReturn.setPhoto(res.getBytes("Photo"));
                     artistToReturn.setName(res.getString("Name"));
                     artistToReturn.setSurname(res.getString("Surname"));
                     artistToReturn.setEmail(res.getString("Email"));

@@ -8,7 +8,7 @@ import static com.github.JoseAngelGiron.utils.security.Security.encryptPassword;
 public class User extends SpotifyElement{
 
     protected String password;
-    protected String photo;
+    protected byte[] photo;
 
     protected String userName;
     protected String surname;
@@ -22,7 +22,7 @@ public class User extends SpotifyElement{
     public User() {
     }
 
-    public User(int id, String nick, String password, String photo,String userName, String surname, String email, String dni, String address) {
+    public User(int id, String nick, String password, byte[] photo,String userName, String surname, String email, String dni, String address) {
         super(id, nick);
         setPassword(password);
         this.photo = photo;
@@ -57,11 +57,11 @@ public class User extends SpotifyElement{
         }
     }
 
-    public String getPhoto() {
+    public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 

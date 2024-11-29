@@ -171,13 +171,23 @@ public class AppController extends Controller implements Initializable {
     }
 
     /**
-     * Changes the scene to the dmin area.
+     * Changes the scene to the admin area.
      * @throws IOException If an error occurs while loading the admin view.
      */
     @FXML
     public void changeToAdminArea() throws IOException {
         changeScene(Scenes.ADMIN, mainPane, null);
     }
+
+    /**
+     * Changes the scene to the artistOptions area.
+     * @throws IOException If an error occurs while loading the admin view.
+     */
+    @FXML
+    public void changeToArtistOptions() throws IOException {
+        changeScene(Scenes.ARTISTOPTIONS, mainPane, null);
+    }
+
 
     /**
      * Changes the scene to the home area.
