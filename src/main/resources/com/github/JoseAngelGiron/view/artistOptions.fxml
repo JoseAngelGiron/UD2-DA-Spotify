@@ -16,9 +16,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="737.0" prefWidth="1028.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JoseAngelGiron.view.ArtistOptionsController">
+<AnchorPane fx:id="mainPane" prefHeight="840.0" prefWidth="1309.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JoseAngelGiron.view.ArtistOptionsController">
    <children>
-      <Pane layoutX="14.0" layoutY="9.0" prefHeight="291.0" prefWidth="1006.0" AnchorPane.bottomAnchor="382.19999999999993" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="9.0">
+      <Pane layoutX="14.0" layoutY="14.0" prefHeight="291.0" prefWidth="1006.0" AnchorPane.bottomAnchor="378.79999999999995" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.799999999999955" AnchorPane.topAnchor="14.0">
          <children>
             <TableView fx:id="albumTableView" layoutX="24.0" prefHeight="299.0" prefWidth="276.0">
               <columns>
@@ -29,44 +29,31 @@
             <TableView fx:id="songTableView" layoutX="444.0" prefHeight="299.0" prefWidth="501.0">
               <columns>
                 <TableColumn editable="false" minWidth="0.0" prefWidth="0.0" />
-                <TableColumn fx:id="columnNameSong" editable="false" prefWidth="307.199951171875" resizable="false" text="Nombre" />
-                  <TableColumn fx:id="columnGenderSong" editable="false" prefWidth="190.39996337890625" resizable="false" text="Gender" />
+                  <TableColumn fx:id="columnPhotoSong" editable="false" prefWidth="150.4000244140625" resizable="false" text="Photo" />
+                <TableColumn fx:id="columnNameSong" editable="false" prefWidth="184.79998779296875" resizable="false" text="Nombre" />
+                  <TableColumn fx:id="columnGenderSong" editable="false" prefWidth="150.4000244140625" resizable="false" text="Gender" />
               </columns>
             </TableView>
             <Button fx:id="addAlbum" layoutX="24.0" layoutY="306.0" mnemonicParsing="false" onAction="#showRegisterPanel" prefHeight="26.0" prefWidth="276.0" text="Añadir un nuevo album" />
+            <TitledPane fx:id="reproductor" animated="false" layoutX="447.0" layoutY="306.0" prefHeight="114.0" prefWidth="495.0" text="Reproductor">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="88.0" prefWidth="503.0">
+                     <children>
+                        <Button layoutX="133.0" layoutY="47.0" mnemonicParsing="false" onAction="#startSong" prefHeight="26.0" prefWidth="106.0" text="Reproducir" />
+                        <Button layoutX="308.0" layoutY="47.0" mnemonicParsing="false" onAction="#stopSong" prefHeight="26.0" prefWidth="106.0" text="Pausar" />
+                        <Button layoutX="923.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" text="Cerrar" />
+                        <Slider layoutX="205.0" layoutY="21.0" />
+                        <ImageView fx:id="imageSong" fitHeight="69.0" fitWidth="100.0" layoutX="7.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </TitledPane>
          </children>
          <padding>
             <Insets left="60.0" />
          </padding>
       </Pane>
-      <TitledPane animated="false" expanded="false" layoutY="612.8" prefHeight="122.0" prefWidth="1028.0" text="Reproductor" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="613.0">
-         <content>
-            <Pane prefHeight="114.0" prefWidth="659.0">
-               <children>
-                  <GridPane layoutX="8.0" prefHeight="139.0" prefWidth="733.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="324.20001220703125" minWidth="10.0" prefWidth="198.39996376037598" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.2000045776367" minWidth="10.0" prefWidth="339.199951171875" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.2000045776367" minWidth="10.0" prefWidth="201.60004882812495" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="325.0" text="Reproducir" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Slider GridPane.columnIndex="1" />
-                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="166.0" text="Close" GridPane.columnIndex="2" />
-                        <Button mnemonicParsing="false" text="Siguiente" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <Button mnemonicParsing="false" text="Anterior" GridPane.rowIndex="1" />
-                     </children>
-                  </GridPane>
-               </children>
-            </Pane>
-         </content>
-      </TitledPane>
-      <Pane fx:id="addAlbumPane" layoutX="36.0" layoutY="395.0" prefHeight="171.0" prefWidth="434.0" visible="false" AnchorPane.bottomAnchor="171.0" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="558.0" AnchorPane.topAnchor="395.0">
+      <Pane fx:id="addAlbumPane" layoutX="14.0" layoutY="475.0" prefHeight="197.0" prefWidth="485.0" visible="false" AnchorPane.bottomAnchor="168.20000000000005" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="810.8000000000001" AnchorPane.topAnchor="475.0">
          <children>
             <GridPane layoutY="2.0" prefHeight="171.0" prefWidth="449.0">
               <columnConstraints>
@@ -114,7 +101,7 @@
             </GridPane>
          </children>
       </Pane>
-      <Pane fx:id="modifyAlbumPane" layoutX="459.0" layoutY="337.0" prefHeight="266.0" prefWidth="501.0" visible="false">
+      <Pane fx:id="modifyAlbumPane" layoutX="586.0" layoutY="475.0" prefHeight="197.0" prefWidth="495.0" visible="false">
          <children>
             <GridPane layoutY="15.0" prefHeight="224.0" prefWidth="501.0">
                <columnConstraints>

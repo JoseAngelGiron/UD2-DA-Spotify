@@ -15,7 +15,7 @@ import java.util.List;
 public class SongDAO extends Song implements DAO<Song, String> {
 
     private final static String FINDSONGBYALBUM = "SELECT S.* FROM SONG S WHERE S.IDAlbum = ?";
-    private final static String INSERT = "INSERT INTO SONG (Name, Lyrics, SongFile, Gender, IDAlbum) VALUES (?,?,?,?,?)";
+    private final static String INSERT = "INSERT INTO SONG (Name, PhotoSong, SongFile, Gender, IDAlbum) VALUES (?,?,?,?,?)";
 
 
     private static Connection connection;
@@ -24,7 +24,7 @@ public class SongDAO extends Song implements DAO<Song, String> {
     }
 
     public SongDAO(Song song) {
-        super( song.getName(), song.getSongFile(),  song.getMusicalGender(), song.getAlbum());
+        super( song.getName(), song.getSongFile(), song.getPhotoSong(),  song.getMusicalGender(), song.getAlbum());
         connection = ConnectionMariaDB.getConnection();
     }
 
@@ -52,7 +52,7 @@ public class SongDAO extends Song implements DAO<Song, String> {
             try(PreparedStatement preparedStatement = connection.prepareStatement(INSERT)) {
 
                 preparedStatement.setString(1, name);
-                preparedStatement.setString(2, lyrics);
+                preparedStatement.setBytes(2, photoSong);
                 preparedStatement.setBytes(3, songFile);
                 preparedStatement.setString(4, musicalGender);
                 preparedStatement.setInt(5, album.getId());
@@ -97,10 +97,9 @@ public class SongDAO extends Song implements DAO<Song, String> {
                     Song songToBeAdded = new Song();
                     songToBeAdded.setId(res.getInt("IDSong"));
                     songToBeAdded.setName(res.getString("Name"));
-                    songToBeAdded.setLyrics(res.getString("Lyrics"));
+                    songToBeAdded.setPhotoSong(res.getBytes("PhotoSong"));
                     songToBeAdded.setSongFile(res.getBytes("SongFile"));
                     songToBeAdded.setMusicalGender(res.getString("Gender"));
-                    songToBeAdded.setMusicalGender(res.getString("IDAlbum"));
 
                     songsToReturn.add(songToBeAdded);
 

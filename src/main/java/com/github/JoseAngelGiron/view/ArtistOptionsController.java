@@ -1,5 +1,6 @@
 package com.github.JoseAngelGiron.view;
 
+import com.github.JoseAngelGiron.model.SongPlayer;
 import com.github.JoseAngelGiron.model.UserSession;
 import com.github.JoseAngelGiron.model.dao.AlbumDAO;
 import com.github.JoseAngelGiron.model.entity.Album;
@@ -69,6 +70,9 @@ public class ArtistOptionsController extends Controller implements Initializable
     private TableView<Song> songTableView;
 
     @FXML
+    private TableColumn<Song, ImageView> columnPhotoSong;
+
+    @FXML
     private TableColumn<Song, String> columnNameSong;
 
     @FXML
@@ -97,12 +101,21 @@ public class ArtistOptionsController extends Controller implements Initializable
     @FXML
     private Label yearAlbumToBeModified;
 
+    @FXML
+    private TitledPane reproductor;
+
+    @FXML
+    private ImageView imageSong;
+
+
 
     private Album albumToBeModified;
 
     private Image imageAlbum;
 
     private AlbumDAO albumDAO;
+
+    private Song actualSong;
 
 
     @Override
@@ -112,6 +125,7 @@ public class ArtistOptionsController extends Controller implements Initializable
 
     @Override
     public void onClose(Object output) {
+        stopSong();
 
     }
 
@@ -210,6 +224,7 @@ public class ArtistOptionsController extends Controller implements Initializable
      */
     @FXML
     public void changeToModifyAlbum(Object object) throws IOException {
+        onClose(null);
         changeScene(Scenes.MODIFYALBUM, mainPane, object);
     }
 
@@ -271,37 +286,33 @@ public class ArtistOptionsController extends Controller implements Initializable
     private void setupTableSelectionListenerSong() {
         songTableView.setOnMouseClicked(event -> {
 
-            Song songSelected = songTableView.getSelectionModel().getSelectedItem();
+             actualSong = songTableView.getSelectionModel().getSelectedItem();
 
-            if (songSelected != null) {
-                startSong(songSelected.getSongFile());
-                updateAlbumDetails();
+            if (actualSong != null) {
+                try {
+                    startSong();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                imageSong.setImage(bytesToImage(actualSong.getPhotoSong()));
+                reproductor.setExpanded(true);
             }
         });
     }
 
-    private void startSong(byte[] songFile) {
+    @FXML
+    public void stopSong(){
+        SongPlayer.stopSong();
 
+    }
 
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(songFile);
-
-
-        try (AudioInputStream audioStream = AudioSystem.getAudioInputStream(byteArrayInputStream)) {
-
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioStream);
-
-
-            clip.start();
-
-
-            while (clip.isRunning()) {
-                Thread.sleep(1000);
-            }
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
-            e.printStackTrace();
+    @FXML
+    public void startSong() throws InterruptedException {
+        if(actualSong!=null){
+            SongPlayer.playSong(actualSong.getSongFile());
         }
     }
+
 
     private void showSongsOfAlbum(Album album) {
 
@@ -310,6 +321,15 @@ public class ArtistOptionsController extends Controller implements Initializable
         ObservableList<Song> songsObservableList = FXCollections.observableArrayList(songs);
 
         songTableView.setItems(songsObservableList);
+
+        columnPhotoSong.setCellValueFactory(cellData -> {
+            Song song = cellData.getValue();
+            Image image = bytesToImage(song.getPhotoSong());
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(100);
+            imageView.setFitHeight(75);
+            return new SimpleObjectProperty<>(imageView);
+        });
 
         columnNameSong.setCellValueFactory(cellData -> {
             Song song = cellData.getValue();

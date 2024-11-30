@@ -3,9 +3,7 @@ package com.github.JoseAngelGiron.utils;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
+
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -117,24 +115,8 @@ public class ConvertBytes {
         return byteArrayOutputStream.toByteArray();
     }
 
-    public static File selectMP3(Stage stage) {
-        FileChooser fileChooser = new FileChooser();
 
-        // Configurar el filtro para aceptar solo archivos MP3
-        FileChooser.ExtensionFilter filtroMP3 = new FileChooser.ExtensionFilter("Archivos WAV (*.wav)", "*.wav");
-        fileChooser.getExtensionFilters().add(filtroMP3);
 
-        // Mostrar el diálogo de selección de archivo
-        File archivoSeleccionado = fileChooser.showOpenDialog(stage);
 
-        // Validar si el usuario seleccionó un archivo
-        if (archivoSeleccionado != null) {
-            System.out.println("Archivo seleccionado: " + archivoSeleccionado.getAbsolutePath());
-        } else {
-            System.out.println("No se seleccionó ningún archivo.");
-        }
 
-        // Devuelve el archivo seleccionado o null si no se seleccionó nada
-        return archivoSeleccionado;
-    }
 }

@@ -2,8 +2,9 @@ package com.github.JoseAngelGiron.model.entity;
 
 
 public class Song extends SpotifyElement{
-    protected String lyrics;
+
     protected byte[] songFile;
+    protected byte[] photoSong;
     protected String musicalGender;
     protected Album album;
 
@@ -17,9 +18,10 @@ public class Song extends SpotifyElement{
         this.musicalGender = musicalGender;
     }
 
-    public Song( String name, byte[] songFile, String musicalGender, Album album) {
+    public Song( String name, byte[] songFile, byte[] photoSong, String musicalGender, Album album) {
         super(name);
         this.songFile = songFile;
+        this.photoSong = photoSong;
         this.musicalGender = musicalGender;
         this.album = album;
     }
@@ -33,12 +35,12 @@ public class Song extends SpotifyElement{
         this.songFile = songFile;
     }
 
-    public String getLyrics() {
-        return lyrics;
+    public byte[] getPhotoSong() {
+        return photoSong;
     }
 
-    public void setLyrics(String lyrics) {
-        this.lyrics = lyrics;
+    public void setPhotoSong(byte[] photoSong) {
+        this.photoSong = photoSong;
     }
 
     public String getMusicalGender() {
