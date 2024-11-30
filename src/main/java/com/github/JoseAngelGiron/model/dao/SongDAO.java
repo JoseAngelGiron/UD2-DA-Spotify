@@ -1,6 +1,7 @@
 package com.github.JoseAngelGiron.model.dao;
 
 import com.github.JoseAngelGiron.model.connection.ConnectionMariaDB;
+
 import com.github.JoseAngelGiron.model.entity.Song;
 
 import java.io.IOException;
@@ -13,14 +14,29 @@ import java.util.List;
 
 public class SongDAO extends Song implements DAO<Song, String> {
 
-    private final static String FINDSONGBYALBUM = "SELECT S.* FROM SONG S " +
-            "WHERE S.IDAlbum = ?";
+    private final static String FINDSONGBYALBUM = "SELECT S.* FROM SONG S WHERE S.IDAlbum = ?";
+    private final static String INSERT = "INSERT INTO SONG (Name, Lyrics, SongFile, Gender, IDAlbum) VALUES (?,?,?,?,?)";
 
 
     private static Connection connection;
+
+    public SongDAO() {
+    }
+
+    public SongDAO(Song song) {
+        super( song.getName(), song.getSongFile(),  song.getMusicalGender(), song.getAlbum());
+        connection = ConnectionMariaDB.getConnection();
+    }
+
     @Override
-    public Song save(Song entity) {
-        return null;
+    public void save() {
+
+        if(this.id>0){
+            update();
+        }else{
+            insert();
+        }
+
     }
 
     @Override
@@ -29,7 +45,31 @@ public class SongDAO extends Song implements DAO<Song, String> {
     }
 
     @Override
-    public Boolean insert() {
+    public boolean insert() {
+        boolean inserted =false;
+
+        if(name != null && musicalGender != null && songFile != null && album.getId()>0){
+            try(PreparedStatement preparedStatement = connection.prepareStatement(INSERT)) {
+
+                preparedStatement.setString(1, name);
+                preparedStatement.setString(2, lyrics);
+                preparedStatement.setBytes(3, songFile);
+                preparedStatement.setString(4, musicalGender);
+                preparedStatement.setInt(5, album.getId());
+
+                preparedStatement.executeQuery();
+                inserted = true;
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return inserted;
+
+
+    }
+
+    @Override
+    public boolean update() {
         return false;
     }
 

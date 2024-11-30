@@ -39,8 +39,8 @@ public class AlbumDAO extends Album implements DAO<Album, String> {
     }
 
     @Override
-    public Album save(Album entity) {
-        return null;
+    public void save() {
+
     }
 
     @Override
@@ -49,7 +49,7 @@ public class AlbumDAO extends Album implements DAO<Album, String> {
     }
 
     @Override
-    public Boolean insert() {
+    public boolean insert() {
         boolean inserted = false;
 
         if(name != null && image!=null  && year != 0){
@@ -68,6 +68,11 @@ public class AlbumDAO extends Album implements DAO<Album, String> {
         }
 
         return inserted;
+    }
+
+    @Override
+    public boolean update() {
+        return false;
     }
 
     @Override

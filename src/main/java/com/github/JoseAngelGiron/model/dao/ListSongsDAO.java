@@ -13,8 +13,8 @@ public class ListSongsDAO extends ListSongs implements DAO<ListSongs, String> {
 
     private Connection connection;
     @Override
-    public ListSongs save(ListSongs entity) {
-        return null;
+    public void save() {
+
     }
 
     @Override
@@ -23,7 +23,12 @@ public class ListSongsDAO extends ListSongs implements DAO<ListSongs, String> {
     }
 
     @Override
-    public Boolean insert() {
+    public boolean insert() {
+        return false;
+    }
+
+    @Override
+    public boolean update() {
         return false;
     }
 

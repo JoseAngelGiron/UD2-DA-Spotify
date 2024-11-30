@@ -26,11 +26,11 @@
                 <TableColumn fx:id="columnAlbumName" editable="false" prefWidth="142.4000244140625" resizable="false" text="Nombre" />
               </columns>
             </TableView>
-            <TableView layoutX="444.0" prefHeight="299.0" prefWidth="501.0">
+            <TableView fx:id="songTableView" layoutX="444.0" prefHeight="299.0" prefWidth="501.0">
               <columns>
-                <TableColumn editable="false" prefWidth="141.59994506835938" />
-                <TableColumn editable="false" prefWidth="209.5999755859375" resizable="false" text="Nombre" />
-                  <TableColumn editable="false" prefWidth="144.800048828125" resizable="false" text="Reproducir" />
+                <TableColumn editable="false" minWidth="0.0" prefWidth="0.0" />
+                <TableColumn fx:id="columnNameSong" editable="false" prefWidth="307.199951171875" resizable="false" text="Nombre" />
+                  <TableColumn fx:id="columnGenderSong" editable="false" prefWidth="190.39996337890625" resizable="false" text="Gender" />
               </columns>
             </TableView>
             <Button fx:id="addAlbum" layoutX="24.0" layoutY="306.0" mnemonicParsing="false" onAction="#showRegisterPanel" prefHeight="26.0" prefWidth="276.0" text="Añadir un nuevo album" />

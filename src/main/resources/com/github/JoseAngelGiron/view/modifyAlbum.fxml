@@ -1,22 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 
 <AnchorPane prefHeight="650.0" prefWidth="981.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JoseAngelGiron.view.ModifyAlbumController">
    <children>
-      <TableView layoutX="389.0" layoutY="14.0" prefHeight="323.0" prefWidth="478.0">
+      <TableView fx:id="tableOfSongs" layoutX="389.0" layoutY="14.0" prefHeight="323.0" prefWidth="478.0">
         <columns>
-          <TableColumn prefWidth="174.4000244140625" text="C1" />
-          <TableColumn prefWidth="162.4000244140625" text="Nombre" />
+          <TableColumn fx:id="columnGenderSong" prefWidth="132.800048828125" text="Foto" />
+          <TableColumn fx:id="columnNameSong" prefWidth="186.39996337890625" text="Nombre" />
+            <TableColumn fx:id="columnGenderSong1" prefWidth="158.4000244140625" text="Genero" />
         </columns>
       </TableView>
-      <ImageView fitHeight="176.0" fitWidth="246.0" layoutX="26.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="26.0" layoutY="20.0" prefHeight="18.0" prefWidth="118.0" text="Nombre" />
-      <Label layoutX="26.0" layoutY="233.0" text="Año" />
+      <ImageView fx:id="imageViewAlbum" fitHeight="176.0" fitWidth="246.0" layoutX="26.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="albumNameLabel" layoutX="26.0" layoutY="20.0" prefHeight="18.0" prefWidth="118.0" text="Nombre" />
+      <Label fx:id="yearOfReleaseLabel" layoutX="26.0" layoutY="233.0" prefHeight="18.0" prefWidth="75.0" text="Año" />
+      <Pane layoutX="392.0" layoutY="382.0" prefHeight="200.0" prefWidth="478.0">
+         <children>
+            <GridPane layoutX="-6.0" layoutY="-1.0" prefHeight="200.0" prefWidth="486.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="270.3999877929688" minWidth="10.0" prefWidth="270.3999877929688" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="379.0" minWidth="10.0" prefWidth="216.00001220703126" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="60.799963378906256" minHeight="10.0" prefHeight="25.799981689453126" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="110.4" minHeight="10.0" prefHeight="39.4000244140625" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="142.8000244140625" minHeight="0.0" prefHeight="19.599975585937507" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="140.19998779296876" minHeight="10.0" prefHeight="25.20001220703125" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="154.40001220703127" minHeight="2.79998779296875" prefHeight="12.200000000000003" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="154.40001220703127" minHeight="10.0" prefHeight="30.999999999999986" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="154.40001220703127" minHeight="9.0" prefHeight="9.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="154.40001220703127" minHeight="10.0" prefHeight="43.20000000000002" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label prefHeight="18.0" prefWidth="87.0" text="Nombre:" />
+                  <TextField fx:id="nameSongField" promptText="Nombre de la canción..." GridPane.rowIndex="1" />
+                  <Label prefHeight="18.0" prefWidth="267.0" text="Género:" GridPane.rowIndex="2" />
+                  <TextField fx:id="genderSongField" promptText="Género musical..." GridPane.rowIndex="3" />
+                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="216.0" text="Borrar" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Button mnemonicParsing="false" onAction="#save" prefHeight="26.0" prefWidth="267.0" text="Guardar" GridPane.rowIndex="7" />
+                  <Button mnemonicParsing="false" onAction="#storageSong" prefHeight="26.0" prefWidth="269.0" text="Añadir canción" GridPane.rowIndex="5">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </Button>
+                  <Label fx:id="labelSongAdd" prefHeight="18.0" prefWidth="195.0" text="Canción añadida" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <ImageView fitHeight="150.0" fitWidth="215.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+      <Button layoutX="26.0" layoutY="298.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="295.0" text="Añadir nueva canción" />
    </children>
 </AnchorPane>

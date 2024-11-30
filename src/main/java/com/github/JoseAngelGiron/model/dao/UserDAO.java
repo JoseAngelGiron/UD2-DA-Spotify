@@ -42,8 +42,8 @@ public class UserDAO extends User implements DAO<User, String> {
     }
 
     @Override
-    public User save(User entity) {
-        return null;
+    public void save() {
+
     }
 
     @Override
@@ -52,7 +52,7 @@ public class UserDAO extends User implements DAO<User, String> {
     }
 
     @Override
-    public Boolean insert() {
+    public boolean insert() {
 
         if(name != null && password != null && email != null){
             try(PreparedStatement preparedStatement = connection.prepareStatement(INSERT)) {
@@ -69,6 +69,11 @@ public class UserDAO extends User implements DAO<User, String> {
         }
         return false;
 
+    }
+
+    @Override
+    public boolean update() {
+        return false;
     }
 
     @Override

@@ -13,8 +13,8 @@ public class AdminDAO extends Admin implements DAO<Admin, String> {
     private Connection connection;
 
     @Override
-    public Admin save(Admin entity) {
-        return null;
+    public void save() {
+
     }
 
     @Override
@@ -23,7 +23,12 @@ public class AdminDAO extends Admin implements DAO<Admin, String> {
     }
 
     @Override
-    public Boolean insert() {
+    public boolean insert() {
+        return false;
+    }
+
+    @Override
+    public boolean update() {
         return false;
     }
 

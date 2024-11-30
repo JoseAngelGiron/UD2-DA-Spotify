@@ -20,8 +20,6 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
 
     private final static String FINDBYID = "SELECT * FROM ARTIST WHERE IDArtist=?";
 
-
-
     private final static String FINDARTISTANDUSERBYID = "SELECT A.*, U.* FROM ARTIST A " +
             "JOIN USER U ON U.IDUser=A.IDArtist WHERE IDArtist=? AND IDUSER=?";
 
@@ -39,8 +37,8 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
     }
 
     @Override
-    public Artist save(Artist entity) {
-        return null;
+    public void save() {
+
     }
 
     @Override
@@ -49,7 +47,7 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
     }
 
     @Override
-    public Boolean insert() {
+    public boolean insert() {
         boolean inserted = false;
 
         if(this.id != 0){
@@ -73,6 +71,11 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
         }
 
         return inserted;
+    }
+
+    @Override
+    public boolean update() {
+        return false;
     }
 
     @Override

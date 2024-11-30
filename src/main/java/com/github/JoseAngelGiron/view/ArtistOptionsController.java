@@ -13,6 +13,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -20,10 +23,14 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 
+import javax.sound.sampled.*;
+
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+
 import java.net.URL;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -59,15 +66,13 @@ public class ArtistOptionsController extends Controller implements Initializable
 
 
     @FXML
-    private TableView<Song> tableOfSongs;
+    private TableView<Song> songTableView;
 
     @FXML
     private TableColumn<Song, String> columnNameSong;
 
     @FXML
     private TableColumn<Song, String> columnGenderSong;
-
-
 
 
     @FXML
@@ -93,14 +98,11 @@ public class ArtistOptionsController extends Controller implements Initializable
     private Label yearAlbumToBeModified;
 
 
-
     private Album albumToBeModified;
 
     private Image imageAlbum;
 
     private AlbumDAO albumDAO;
-
-
 
 
     @Override
@@ -116,15 +118,15 @@ public class ArtistOptionsController extends Controller implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         showAlbumsOfArtist();
-        setupTableSelectionListener();
+        setupTableSelectionListenerAlbum();
+        setupTableSelectionListenerSong();
 
 
     }
 
 
-
     @FXML
-    private void uploadImageAlbum(){
+    private void uploadImageAlbum() {
 
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG", "*.jpg");
@@ -136,7 +138,7 @@ public class ArtistOptionsController extends Controller implements Initializable
 
 
         File file = fileChooser.showOpenDialog(stage);
-        if(file!=null){
+        if (file != null) {
             try {
                 imageAlbum = new Image(file.toURI().toString());
                 imageViewAlbum.setImage(imageAlbum);
@@ -145,8 +147,9 @@ public class ArtistOptionsController extends Controller implements Initializable
             }
         }
     }
+
     @FXML
-    private void showRegisterPanel(){
+    private void showRegisterPanel() {
         addAlbumPane.setVisible(true);
         addAlbum.setText("Ocultar");
 
@@ -159,26 +162,26 @@ public class ArtistOptionsController extends Controller implements Initializable
         String albumName = albumNameTextField.getText();
         int year = Integer.parseInt(yearOfReleaseTextField.getText());
 
-        if( !albumName.isEmpty() && year!=0 && imageAlbum!=null){
+        if (!albumName.isEmpty() && year != 0 && imageAlbum != null) {
             byte[] bytesOfImage = imageToBytes(imageAlbum);
 
 
             User user = UserSession.UserSession().getUserLoggedIn();
-            if(user.getClass().equals(Artist.class)){
+            if (user.getClass().equals(Artist.class)) {
 
                 Artist artistToInsert = (Artist) user;
 
-                Album albumToInsert =new Album( albumName, bytesOfImage, year, artistToInsert);
+                Album albumToInsert = new Album(albumName, bytesOfImage, year, artistToInsert);
 
                 albumDAO = new AlbumDAO(albumToInsert);
 
-                if((AlbumDAO.findByArtistNameAndAlbumId(artistToInsert).getId()==0)){
+                if ((AlbumDAO.findByArtistNameAndAlbumId(artistToInsert).getId() == 0)) {
                     albumDAO.insert();
                     resultOfAlbumRegistered.setText("Album correctamente registrado");
                     resultOfAlbumRegistered.setStyle("-fx-text-fill: green;");
 
                     resultOfAlbumRegistered.setVisible(true);
-                }else{
+                } else {
                     resultOfAlbumRegistered.setText("El nombre album ya se encuentra registrado");
                     resultOfAlbumRegistered.setStyle("-fx-text-fill: red;");
                     resultOfAlbumRegistered.setVisible(true);
@@ -190,20 +193,19 @@ public class ArtistOptionsController extends Controller implements Initializable
         }
 
 
-
-
     }
 
 
     @FXML
     private void modifyData() throws IOException {
-        if(albumToBeModified!=null){
+        if (albumToBeModified != null) {
             changeToModifyAlbum(albumToBeModified);
         }
     }
 
     /**
      * Changes the scene to the modifyAlbum area.
+     *
      * @throws IOException If an error occurs while loading the admin view.
      */
     @FXML
@@ -211,7 +213,7 @@ public class ArtistOptionsController extends Controller implements Initializable
         changeScene(Scenes.MODIFYALBUM, mainPane, object);
     }
 
-    private void showAlbumsOfArtist(){
+    private void showAlbumsOfArtist() {
         User user = UserSession.UserSession().getUserLoggedIn();
         Artist artistToRetrieveAlbums = (Artist) user;
         AlbumDAO albumDAO = new AlbumDAO();
@@ -246,9 +248,13 @@ public class ArtistOptionsController extends Controller implements Initializable
             return new SimpleStringProperty(name);
         });
 
+
     }
 
-    private void setupTableSelectionListener() {
+
+
+
+    private void setupTableSelectionListenerAlbum() {
         albumTableView.setOnMouseClicked(event -> {
 
             modifyAlbumPane.setVisible(true);
@@ -257,8 +263,63 @@ public class ArtistOptionsController extends Controller implements Initializable
             if (selectedAlbum != null) {
                 albumToBeModified = selectedAlbum;
                 updateAlbumDetails();
+                showSongsOfAlbum(selectedAlbum);
             }
         });
+    }
+
+    private void setupTableSelectionListenerSong() {
+        songTableView.setOnMouseClicked(event -> {
+
+            Song songSelected = songTableView.getSelectionModel().getSelectedItem();
+
+            if (songSelected != null) {
+                startSong(songSelected.getSongFile());
+                updateAlbumDetails();
+            }
+        });
+    }
+
+    private void startSong(byte[] songFile) {
+
+
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(songFile);
+
+
+        try (AudioInputStream audioStream = AudioSystem.getAudioInputStream(byteArrayInputStream)) {
+
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+
+
+            clip.start();
+
+
+            while (clip.isRunning()) {
+                Thread.sleep(1000);
+            }
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showSongsOfAlbum(Album album) {
+
+        List<Song> songs = album.getSongsOfAlbum();
+
+        ObservableList<Song> songsObservableList = FXCollections.observableArrayList(songs);
+
+        songTableView.setItems(songsObservableList);
+
+        columnNameSong.setCellValueFactory(cellData -> {
+            Song song = cellData.getValue();
+            return new SimpleStringProperty(song.getName());
+        });
+        columnGenderSong.setCellValueFactory(cellData -> {
+            Song song = cellData.getValue();
+            return new SimpleStringProperty(song.getMusicalGender());
+        });
+
     }
 
     private void updateAlbumDetails() {
@@ -272,4 +333,7 @@ public class ArtistOptionsController extends Controller implements Initializable
             albumImageViewToBeModified.setImage(albumImage);
         }
     }
+
+
+
 }

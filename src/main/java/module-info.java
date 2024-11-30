@@ -6,6 +6,8 @@ module com.github.JoseAngelGiron {
     requires java.desktop;
     requires javafx.graphics;
 
+    requires uk.co.caprica.vlcj;
+
 
     opens com.github.JoseAngelGiron to javafx.fxml;
     opens com.github.JoseAngelGiron.model.connection to java.xml.bind;

@@ -5,9 +5,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface DAO<T,K> extends Closeable {
-    T save(T entity);
+    void save();
     T delete(T entity) throws SQLException;
-    Boolean insert();
+    boolean insert();
+    boolean update();
     T findById(int key);
     List<T> findAll();
 }

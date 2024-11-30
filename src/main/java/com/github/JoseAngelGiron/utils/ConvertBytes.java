@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
+
 public class ConvertBytes {
 
     private final static long MAXSIZEINMB = 16;
@@ -26,11 +27,11 @@ public class ConvertBytes {
      */
     public static byte[] fileToByte(File archivo) {
 
-        byte[] bytesPNG = null;
+        byte[] bytes = null;
 
         try (FileInputStream fis = new FileInputStream(archivo)) {
-            bytesPNG = new byte[(int) archivo.length()];
-            int bytesRead = fis.read(bytesPNG);
+            bytes= new byte[(int) archivo.length()];
+            int bytesRead = fis.read(bytes);
             if (bytesRead != archivo.length()) {
                 System.err.println("No se leyeron todos los bytes del archivo");
             }
@@ -38,7 +39,7 @@ public class ConvertBytes {
             e.printStackTrace();
         }
 
-        return bytesPNG;
+        return bytes;
     }
 
 
@@ -48,7 +49,7 @@ public class ConvertBytes {
      * @param event The ActionEvent triggered by the user.
      * @return The selected image file, or null if no file is selected or the file exceeds the maximum size.
      */
-    public static File assignImage(ActionEvent event){
+    public static File assignImage(ActionEvent event) {
         File fileToReturn;
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG", "*.jpg");
@@ -78,7 +79,7 @@ public class ConvertBytes {
         ByteArrayInputStream bis;
         if (bytes == null || bytes.length == 0) {
             imageToReturn = null;
-        }else{
+        } else {
             bis = new ByteArrayInputStream(bytes);
             imageToReturn = new Image(bis);
         }
@@ -116,6 +117,24 @@ public class ConvertBytes {
         return byteArrayOutputStream.toByteArray();
     }
 
+    public static File selectMP3(Stage stage) {
+        FileChooser fileChooser = new FileChooser();
 
+        // Configurar el filtro para aceptar solo archivos MP3
+        FileChooser.ExtensionFilter filtroMP3 = new FileChooser.ExtensionFilter("Archivos WAV (*.wav)", "*.wav");
+        fileChooser.getExtensionFilters().add(filtroMP3);
 
+        // Mostrar el diálogo de selección de archivo
+        File archivoSeleccionado = fileChooser.showOpenDialog(stage);
+
+        // Validar si el usuario seleccionó un archivo
+        if (archivoSeleccionado != null) {
+            System.out.println("Archivo seleccionado: " + archivoSeleccionado.getAbsolutePath());
+        } else {
+            System.out.println("No se seleccionó ningún archivo.");
+        }
+
+        // Devuelve el archivo seleccionado o null si no se seleccionó nada
+        return archivoSeleccionado;
+    }
 }
