@@ -29,7 +29,7 @@
         </rowConstraints>
          <children>
             <TextField fx:id="emailText" prefHeight="31.0" prefWidth="335.0" text="JangelGiron@gmail.com" GridPane.rowIndex="3" />
-            <TextField fx:id="passwordText" prefHeight="26.0" prefWidth="338.0" text="Patata56" GridPane.rowIndex="5" />
+            <TextField fx:id="passwordText" prefHeight="26.0" prefWidth="338.0" text="Patata57" GridPane.rowIndex="5" />
             <Label prefHeight="39.0" prefWidth="62.0" text="E-mail:" GridPane.rowIndex="2" />
             <Label prefHeight="38.0" text="Contraseña: " GridPane.rowIndex="4" />
             <Button fx:id="primaryButton" onAction="#LogUser" prefHeight="45.0" prefWidth="216.0" text="Iniciar sesión" GridPane.rowIndex="7" />

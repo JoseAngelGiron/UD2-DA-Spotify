@@ -5,18 +5,16 @@ import com.github.JoseAngelGiron.App;
 import com.github.JoseAngelGiron.model.UserSession;
 import com.github.JoseAngelGiron.model.entity.Admin;
 import com.github.JoseAngelGiron.model.entity.Artist;
+import com.github.JoseAngelGiron.model.entity.Song;
 import com.github.JoseAngelGiron.model.entity.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 
 
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -24,7 +22,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import static com.github.JoseAngelGiron.model.dao.SongDAO.findSongAlbumAndArtist;
 
 
 public class AppController extends Controller implements Initializable {
@@ -54,6 +56,9 @@ public class AppController extends Controller implements Initializable {
 
     @FXML
     private MenuItem closeSession;
+
+    @FXML
+    private Label noResultsFound;
 
 
 
@@ -142,6 +147,24 @@ public class AppController extends Controller implements Initializable {
         return view;
     }
 
+
+    @FXML
+    public void changeToSearch() throws IOException {
+        String search = searchField.getText();
+        if(search!=null && !search.isEmpty()){
+            List<Song> listOfSongs = findSongAlbumAndArtist(search);
+            if(listOfSongs.isEmpty()){
+                noResultsFound.setVisible(true);
+                noResultsFound.setStyle("-fx-text-fill: red;");
+            }else{
+                noResultsFound.setVisible(false);
+                changeScene(Scenes.SEARCH, mainPane, listOfSongs);
+            }
+
+        }
+
+
+    }
 
     /**
      * Changes the scene to the administration area.

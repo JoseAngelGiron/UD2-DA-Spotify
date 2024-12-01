@@ -5,6 +5,7 @@ public class Song extends SpotifyElement{
 
     protected byte[] songFile;
     protected byte[] photoSong;
+    protected int numberOfPlays;
     protected String musicalGender;
     protected Album album;
 
@@ -49,6 +50,14 @@ public class Song extends SpotifyElement{
 
     public void setPhotoSong(byte[] photoSong) {
         this.photoSong = photoSong;
+    }
+
+    public int getNumberOfPlays() {
+        return numberOfPlays;
+    }
+
+    public void setNumberOfPlays(int numberOfPlays) {
+        this.numberOfPlays = numberOfPlays;
     }
 
     public String getMusicalGender() {

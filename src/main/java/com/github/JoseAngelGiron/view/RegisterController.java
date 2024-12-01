@@ -158,7 +158,7 @@ public class RegisterController extends Controller implements Initializable {
      * @param password The password to validate.
      * @return true if the password is valid, false otherwise.
      */
-    private static boolean validatePassword(String password){
+    public static boolean validatePassword(String password){
         Pattern pattern = Pattern.compile("^(?=.*[A-Z])(?!.*\\s).{8,}$");
         return pattern.matcher(password).matches();
 

@@ -25,6 +25,8 @@ public class UserDAO extends User implements DAO<User, String> {
                     "WHERE U.Email = ?";
 
     private static final String INSERT = "INSERT INTO USER (Nick, Password, Email) VALUES (?,?,?)";
+    private final static String UPDATE = "UPDATE USER SET Nick=?, Password=?, Photo=?, Name=?, Surname=? ,DNI=?, Adress=? WHERE IDUser=?;";
+    private final static String DELETE= "DELETE FROM USER WHERE IDuser=?";
 
 
     private  static Connection connection ;
@@ -41,6 +43,13 @@ public class UserDAO extends User implements DAO<User, String> {
 
     }
 
+    public UserDAO(User user) {
+        super(user.getId(), user.getName(), user.getPassword(), user.getPhoto(),
+                user.getUserName(), user.getSurname(), user.getEmail(),
+                user.getDni(), user.getAddress());
+        connection = ConnectionMariaDB.getConnection();
+    }
+
     @Override
     public void save() {
 
@@ -48,6 +57,14 @@ public class UserDAO extends User implements DAO<User, String> {
 
     @Override
     public void delete() throws SQLException {
+        if(id>0){
+            try(PreparedStatement statement = ConnectionMariaDB.getConnection().prepareStatement(DELETE)){
+
+                statement.setInt(1, id);
+                statement.executeUpdate();
+            }
+        }
+
 
     }
 
@@ -73,7 +90,29 @@ public class UserDAO extends User implements DAO<User, String> {
 
     @Override
     public boolean update() {
-        return false;
+        boolean updated =false;
+        if(id>0){
+            try(PreparedStatement preparedStatement = connection.prepareStatement(UPDATE)) {
+
+                preparedStatement.setString(1, name);
+                preparedStatement.setString(2, password);
+                preparedStatement.setBytes(3, photo);
+                preparedStatement.setString(4, userName);
+                preparedStatement.setString(5, surname);
+                preparedStatement.setString(6, dni);
+                preparedStatement.setString(7, address);
+
+                preparedStatement.setInt(8, id);
+
+
+                preparedStatement.executeQuery();
+                updated = true;
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+
+        return updated;
     }
 
     @Override

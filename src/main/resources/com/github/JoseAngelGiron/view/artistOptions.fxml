@@ -35,7 +35,7 @@
               </columns>
             </TableView>
             <Button fx:id="addAlbum" layoutX="24.0" layoutY="306.0" mnemonicParsing="false" onAction="#showRegisterPanel" prefHeight="26.0" prefWidth="276.0" text="Añadir un nuevo album" />
-            <TitledPane fx:id="reproductor" animated="false" layoutX="447.0" layoutY="306.0" prefHeight="114.0" prefWidth="495.0" text="Reproductor">
+            <TitledPane fx:id="reproductor" animated="false" expanded="false" layoutX="447.0" layoutY="306.0" prefHeight="114.0" prefWidth="495.0" text="Reproductor">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="88.0" prefWidth="503.0">
                      <children>

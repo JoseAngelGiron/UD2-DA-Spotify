@@ -2,6 +2,8 @@ package com.github.JoseAngelGiron.model.dao;
 
 import com.github.JoseAngelGiron.model.connection.ConnectionMariaDB;
 
+import com.github.JoseAngelGiron.model.entity.Album;
+import com.github.JoseAngelGiron.model.entity.Artist;
 import com.github.JoseAngelGiron.model.entity.Song;
 
 import java.io.IOException;
@@ -12,12 +14,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.github.JoseAngelGiron.utils.Utils.intToBoolean;
+
 public class SongDAO extends Song implements DAO<Song, String> {
 
-    private final static String FINDSONGBYALBUM = "SELECT S.* FROM SONG S WHERE S.IDAlbum = ?";
+
     private final static String INSERT = "INSERT INTO SONG (Name, PhotoSong, SongFile, Gender, IDAlbum) VALUES (?,?,?,?,?)";
     private final static String UPDATE = "UPDATE SONG SET Name=?, PhotoSong=?, SongFile=?, Gender=? WHERE IDSong=?;";
     private final static String DELETE= "DELETE FROM SONG WHERE IDSong=?";
+
+    private final static String FINDSONGSBYALBUM = "SELECT S.* FROM SONG S WHERE S.IDAlbum = ?";
+
+    private final static String FINDSONGALBUMANDARTIST = "SELECT S.*,A.*,Ar.*,U.* FROM SONG S " +
+            "JOIN Album A ON S.IDAlbum = A.IDAlbum " +
+            "JOIN Artist Ar ON A.IDArtist = Ar.IDArtist " +
+            "JOIN User u ON A.IDArtist = U.IDuser "+
+            "WHERE S.Name = ? "+
+            "ORDER BY S.NumberOfPlays "+
+            "LIMIT 5;";
 
 
     private static Connection connection;
@@ -106,14 +120,6 @@ public class SongDAO extends Song implements DAO<Song, String> {
 
     @Override
     public Song findById(int key) {
-
-
-
-
-
-
-
-
         return null;
     }
 
@@ -121,7 +127,7 @@ public class SongDAO extends Song implements DAO<Song, String> {
 
         List<Song> songsToReturn = new ArrayList<>();
         if (key != 0) {
-            try (PreparedStatement statement = ConnectionMariaDB.getConnection().prepareStatement(FINDSONGBYALBUM)) {
+            try (PreparedStatement statement = ConnectionMariaDB.getConnection().prepareStatement(FINDSONGSBYALBUM)) {
                 statement.setInt(1, key);
                 ResultSet res = statement.executeQuery();
                 while (res.next()) {
@@ -142,8 +148,63 @@ public class SongDAO extends Song implements DAO<Song, String> {
 
         }
         return songsToReturn;
+    }
+
+    public static List<Song> findSongAlbumAndArtist(String name){
+        List<Song> songList = new ArrayList<>();
+        connection = ConnectionMariaDB.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(FINDSONGALBUMANDARTIST)) {
+            statement.setString(1, name);
+            ResultSet res = statement.executeQuery();
+
+            while (res.next()) {
+                Song songToBeAdded = new Song();
+                songToBeAdded.setId(res.getInt("S.IDSong"));
+                songToBeAdded.setName(res.getString("S.Name"));
+                songToBeAdded.setPhotoSong(res.getBytes("S.PhotoSong"));
+                songToBeAdded.setSongFile(res.getBytes("S.SongFile"));
+                songToBeAdded.setNumberOfPlays(res.getInt("S.NumberOfPlays"));
+                songToBeAdded.setMusicalGender(res.getString("S.Gender"));
+
+                Album album = new Album();
+                album.setId(res.getInt("A.IDAlbum"));
+                album.setName(res.getString("A.Name"));
+                album.setImage(res.getBytes("A.Photo"));
+                album.setYear(res.getInt("A.YearOfRelease"));
+
+
+                Artist artist = new Artist();
+                artist.setId(res.getInt("Ar.IDArtist"));
+                artist.setName(res.getString("Ar.MusicalGender"));
+                artist.setVerified(intToBoolean(res.getInt("Ar.verified")));
+
+                artist.setName(res.getString("U.Nick"));
+                artist.setPassword(res.getString("U.Password"));
+                artist.setPhoto(res.getBytes("U.Photo"));
+                artist.setUserName(res.getString("U.Name"));
+                artist.setSurname(res.getString("U.Surname"));
+                artist.setEmail(res.getString("U.Email"));
+                artist.setDni(res.getString("U.DNI"));
+                artist.setAddress(res.getString("U.Adress"));
+
+                album.setArtist(artist);
+                songToBeAdded.setAlbum(album);
+
+                songList.add(songToBeAdded);
+            }
+
+            res.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return songList;
+
 
     }
+
+
 
     @Override
     public List<Song> findAll() {
