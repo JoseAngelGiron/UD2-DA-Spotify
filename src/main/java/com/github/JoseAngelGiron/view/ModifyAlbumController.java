@@ -1,5 +1,6 @@
 package com.github.JoseAngelGiron.view;
 
+import com.github.JoseAngelGiron.model.dao.AlbumDAO;
 import com.github.JoseAngelGiron.model.dao.SongDAO;
 import com.github.JoseAngelGiron.model.entity.Album;
 import com.github.JoseAngelGiron.model.entity.Song;
@@ -21,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import static com.github.JoseAngelGiron.utils.ConvertBytes.*;
@@ -37,10 +39,10 @@ public class ModifyAlbumController  extends Controller implements Initializable 
     private ImageView imageViewAlbum;
 
     @FXML
-    private Label albumNameLabel;
+    private TextField albumNameTextField;
 
     @FXML
-    private Label yearOfReleaseLabel;
+    private TextField yearOfReleaseField;
 
 
     @FXML
@@ -72,18 +74,26 @@ public class ModifyAlbumController  extends Controller implements Initializable 
     private Label labelSongAdd;
 
     @FXML
-    private Button deleteButton;
+    private Button registerSongButton;
+
     @FXML
-    private Button updateButton;
+    private Button deleteAlbumButton;
+    @FXML
+    private Button updateAlbumButton;
+
+    @FXML
+    private Button deleteSongButton;
+    @FXML
+    private Button updateSongButton;
 
 
     private File fileSong;
     private File fileImage;
     private Song selectedSong;
 
-
-
     private Album albumToBeModified;
+    private AlbumDAO albumDAO;
+    private SongDAO songDAO;
     private ObservableList<Song> songsOfTheAlbum;
 
 
@@ -91,6 +101,7 @@ public class ModifyAlbumController  extends Controller implements Initializable 
     public void onOpen(Object input, Object input2) throws IOException {
 
         albumToBeModified = (Album) input;
+
         showAlbumData();
 
     }
@@ -104,6 +115,7 @@ public class ModifyAlbumController  extends Controller implements Initializable 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupTableSelectionListenerSong();
 
+
     }
 
     @FXML
@@ -113,7 +125,15 @@ public class ModifyAlbumController  extends Controller implements Initializable 
 
     @FXML
     public void setPaneSongVisible(){
+        selectedSong = null;
         paneSong.setVisible(true);
+        deleteSongButton.setVisible(false);
+        updateSongButton.setVisible(false);
+
+        nameSongField.setText("");
+        genderSongField.setText("");
+        imageSong.setImage(null);
+
     }
 
     @FXML
@@ -123,6 +143,10 @@ public class ModifyAlbumController  extends Controller implements Initializable 
         if(fileSong!=null){
             labelSongAdd.setText("Canción aceptada");
             labelSongAdd.setStyle("-fx-text-fill: green;");
+            labelSongAdd.setVisible(true);
+        }else{
+            labelSongAdd.setText("introduzca un formato valido");
+            labelSongAdd.setStyle("-fx-text-fill: red;");
             labelSongAdd.setVisible(true);
         }
     }
@@ -149,7 +173,7 @@ public class ModifyAlbumController  extends Controller implements Initializable 
     }
 
     @FXML
-    public void save(){
+    public void saveSong(){
         String nameSong = nameSongField.getText();
         String genderSong = genderSongField.getText();
 
@@ -159,10 +183,9 @@ public class ModifyAlbumController  extends Controller implements Initializable 
             if(songInBytes!=null){
 
                 Song songToBeInserted = new Song(nameSong, songInBytes, imageInBytes, genderSong, albumToBeModified);
-                SongDAO songDAO = new SongDAO(songToBeInserted);
+                songDAO = new SongDAO(songToBeInserted);
                 songDAO.save();
                 paneSong.setVisible(false);
-
 
             }
 
@@ -176,16 +199,74 @@ public class ModifyAlbumController  extends Controller implements Initializable 
     }
 
     @FXML
-    public void update(){
+    public void updateSong(){
+        String nameSong = nameSongField.getText();
+        String genderText = genderSongField.getText();
 
-        //A selected song, le añades los atributos de arriba
+        if(selectedSong!=null && nameSong !=null && genderText != null && selectedSong.getSongFile() !=null && selectedSong.getPhotoSong()!=null){
+            selectedSong.setAlbum(albumToBeModified);
+            selectedSong.setName(nameSong);
+            selectedSong.setMusicalGender(genderText);
+            if(fileSong!=null){
+                selectedSong.setSongFile(fileToByte(fileSong));
+            }
+            if(fileImage!=null){
+                selectedSong.setPhotoSong(fileToByte(fileImage));
+            }
+
+            songDAO = new SongDAO(selectedSong);
+            songDAO.save();
+
+        }else{
+            labelSongAdd.setText("Rellene todos los campos");
+            labelSongAdd.setVisible(true);
+        }
+    }
+
+    @FXML
+    public void deleteSong() throws SQLException {
+
+        if(selectedSong!=null){
+
+            songDAO = new SongDAO(selectedSong);
+            songDAO.delete();
+
+        }else{
+            labelSongAdd.setText("Canción borrada");
+            labelSongAdd.setVisible(true);
+        }
+    }
+
+    @FXML
+    public void changeAlbumPhoto(){
+        File file =selectPhoto(new Stage());
+        byte[] imageInBytes = fileToByte(file);
+        albumToBeModified.setImage(imageInBytes);
+        imageViewAlbum.setImage(bytesToImage(imageInBytes));
 
     }
 
     @FXML
-    public void delete(){
+    public void updateAlbum(){
+        String albumName = albumNameTextField.getText();
+        int yearAlbum = Integer.parseInt(String.valueOf(yearOfReleaseField.getText()));
 
-        //comparte lógica con update, pero borra igual
+        albumToBeModified.setName(albumName);
+        albumToBeModified.setYear(yearAlbum);
+
+        albumDAO = new AlbumDAO(albumToBeModified);
+
+        albumDAO.save();
+
+    }
+
+    @FXML
+    public void deleteAlbum() throws SQLException, IOException, InterruptedException {
+
+        albumDAO = new AlbumDAO(albumToBeModified);
+        albumDAO.delete();
+        Thread.sleep(5000);
+        changeToArtistOptions();
 
     }
 
@@ -193,30 +274,26 @@ public class ModifyAlbumController  extends Controller implements Initializable 
         tableOfSongs.setOnMouseClicked(event -> {
 
             selectedSong = tableOfSongs.getSelectionModel().getSelectedItem();
+            paneSong.setVisible(true);
+            registerSongButton.setVisible(false);
+            deleteSongButton.setVisible(true);
+            updateSongButton.setVisible(true);
 
             if (selectedSong != null) {
-
-                updateButton.setVisible(true);
-                deleteButton.setVisible(true);
-                /**imageSong.setImage(bytesToImage(selectedSong.getPhotoSong()));
-                byte[] imageInBytes = selectedSong.getPhotoSong();
+                imageSong.setImage(bytesToImage(selectedSong.getPhotoSong()));
                 nameSongField.setText(selectedSong.getName());
                 genderSongField.setText(selectedSong.getMusicalGender());
-                byte[] songInBytes = selectedSong.getSongFile();**/
-
-
-
             }
+
+
         });
     }
-
-
 
     private void showAlbumData(){
         Image image = bytesToImage(albumToBeModified.getImage());
         imageViewAlbum.setImage(image);
-        albumNameLabel.setText(albumToBeModified.getName());
-        yearOfReleaseLabel.setText(String.valueOf(albumToBeModified.getYear()));
+        albumNameTextField.setText(albumToBeModified.getName());
+        yearOfReleaseField.setText(String.valueOf(albumToBeModified.getYear()));
 
         songsOfTheAlbum = FXCollections.observableArrayList(albumToBeModified.getSongsOfAlbum());
         tableOfSongs.setItems(songsOfTheAlbum);

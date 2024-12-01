@@ -42,8 +42,8 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
     }
 
     @Override
-    public Artist delete(Artist entity) throws SQLException {
-        return null;
+    public void delete() throws SQLException {
+
     }
 
     @Override

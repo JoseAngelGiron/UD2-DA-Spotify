@@ -18,8 +18,8 @@ public class ListSongsDAO extends ListSongs implements DAO<ListSongs, String> {
     }
 
     @Override
-    public ListSongs delete(ListSongs entity) throws SQLException {
-        return null;
+    public void delete() throws SQLException {
+
     }
 
     @Override

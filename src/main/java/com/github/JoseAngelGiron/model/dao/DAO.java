@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface DAO<T,K> extends Closeable {
     void save();
-    T delete(T entity) throws SQLException;
+    void delete() throws SQLException;
     boolean insert();
     boolean update();
     T findById(int key);

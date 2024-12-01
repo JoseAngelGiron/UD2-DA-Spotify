@@ -26,6 +26,14 @@ public class Song extends SpotifyElement{
         this.album = album;
     }
 
+    public Song(int id, String name, byte[] songFile, byte[] photoSong, String musicalGender, Album album) {
+        super(id, name);
+        this.songFile = songFile;
+        this.photoSong = photoSong;
+        this.musicalGender = musicalGender;
+        this.album = album;
+    }
+
 
     public byte[] getSongFile() {
         return songFile;

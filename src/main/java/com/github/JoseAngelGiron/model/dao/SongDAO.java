@@ -16,6 +16,8 @@ public class SongDAO extends Song implements DAO<Song, String> {
 
     private final static String FINDSONGBYALBUM = "SELECT S.* FROM SONG S WHERE S.IDAlbum = ?";
     private final static String INSERT = "INSERT INTO SONG (Name, PhotoSong, SongFile, Gender, IDAlbum) VALUES (?,?,?,?,?)";
+    private final static String UPDATE = "UPDATE SONG SET Name=?, PhotoSong=?, SongFile=?, Gender=? WHERE IDSong=?;";
+    private final static String DELETE= "DELETE FROM SONG WHERE IDSong=?";
 
 
     private static Connection connection;
@@ -23,8 +25,10 @@ public class SongDAO extends Song implements DAO<Song, String> {
     public SongDAO() {
     }
 
+
+
     public SongDAO(Song song) {
-        super( song.getName(), song.getSongFile(), song.getPhotoSong(),  song.getMusicalGender(), song.getAlbum());
+        super(song.getId(), song.getName(), song.getSongFile(), song.getPhotoSong(),  song.getMusicalGender(), song.getAlbum());
         connection = ConnectionMariaDB.getConnection();
     }
 
@@ -40,8 +44,16 @@ public class SongDAO extends Song implements DAO<Song, String> {
     }
 
     @Override
-    public Song delete(Song entity) throws SQLException {
-        return null;
+    public void delete() throws SQLException {
+
+        if(id>0){
+            try(PreparedStatement statement = ConnectionMariaDB.getConnection().prepareStatement(DELETE)){
+
+                statement.setInt(1, id);
+                statement.executeUpdate();
+            }
+        }
+
     }
 
     @Override
@@ -70,7 +82,26 @@ public class SongDAO extends Song implements DAO<Song, String> {
 
     @Override
     public boolean update() {
-        return false;
+        boolean updated = false;
+
+        if(songFile!=null && photoSong!=null && name!=null && musicalGender !=null){
+            try(PreparedStatement preparedStatement = connection.prepareStatement(UPDATE)) {
+
+                preparedStatement.setString(1, name);
+                preparedStatement.setBytes(2, photoSong);
+                preparedStatement.setBytes(3, songFile);
+                preparedStatement.setString(4, musicalGender);
+
+                preparedStatement.setInt(5, id);
+
+                preparedStatement.executeQuery();
+                updated = true;
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+
+        return updated;
     }
 
     @Override

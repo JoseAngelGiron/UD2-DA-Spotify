@@ -89,6 +89,7 @@ public class ArtistOptionsController extends Controller implements Initializable
     private Label resultOfAlbumRegistered;
 
 
+
     @FXML
     private Pane modifyAlbumPane;
 
@@ -174,9 +175,25 @@ public class ArtistOptionsController extends Controller implements Initializable
     private void registerAlbum() throws IOException {
 
         String albumName = albumNameTextField.getText();
-        int year = Integer.parseInt(yearOfReleaseTextField.getText());
+        String yearText = yearOfReleaseTextField.getText();
+        int year = -1;
 
-        if (!albumName.isEmpty() && year != 0 && imageAlbum != null) {
+        if (yearText == null || yearText.isEmpty()) {
+
+        } else {
+            try {
+                 year = Integer.parseInt(yearText);
+
+            } catch (NumberFormatException e) {
+                resultOfAlbumRegistered.setText("Número no valido");
+                resultOfAlbumRegistered.setStyle("-fx-text-fill: red;");
+                resultOfAlbumRegistered.setVisible(true);
+
+            }
+        }
+
+
+        if (!albumName.isEmpty() && year > 0 && imageAlbum != null) {
             byte[] bytesOfImage = imageToBytes(imageAlbum);
 
 
@@ -185,11 +202,11 @@ public class ArtistOptionsController extends Controller implements Initializable
 
                 Artist artistToInsert = (Artist) user;
 
-                Album albumToInsert = new Album(albumName, bytesOfImage, year, artistToInsert);
+                Album albumToInsert = new Album( albumName, bytesOfImage, year, artistToInsert);
 
                 albumDAO = new AlbumDAO(albumToInsert);
 
-                if ((AlbumDAO.findByArtistNameAndAlbumId(artistToInsert).getId() == 0)) {
+                if ((AlbumDAO.findByArtistNameAndAlbumId(artistToInsert, albumToInsert).getId() == 0)) {
                     albumDAO.insert();
                     resultOfAlbumRegistered.setText("Album correctamente registrado");
                     resultOfAlbumRegistered.setStyle("-fx-text-fill: green;");
@@ -204,6 +221,10 @@ public class ArtistOptionsController extends Controller implements Initializable
 
             }
 
+        }else{
+            resultOfAlbumRegistered.setText("Rellene todos los campos correctamente");
+            resultOfAlbumRegistered.setStyle("-fx-text-fill: red;");
+            resultOfAlbumRegistered.setVisible(true);
         }
 
 

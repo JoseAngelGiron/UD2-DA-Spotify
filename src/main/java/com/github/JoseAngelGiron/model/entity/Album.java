@@ -26,9 +26,15 @@ public class Album extends SpotifyElement{
         this.image = image;
         this.year = year;
     }
-
     public Album( String name, byte[] image, int year, Artist artist) {
         super(name);
+        this.image = image;
+        this.year = year;
+        this.artist = artist;
+    }
+
+    public Album(int id, String name, byte[] image, int year, Artist artist) {
+        super(id, name);
         this.image = image;
         this.year = year;
         this.artist = artist;

@@ -18,8 +18,8 @@ public class AdminDAO extends Admin implements DAO<Admin, String> {
     }
 
     @Override
-    public Admin delete(Admin entity) throws SQLException {
-        return null;
+    public void delete() throws SQLException {
+
     }
 
     @Override

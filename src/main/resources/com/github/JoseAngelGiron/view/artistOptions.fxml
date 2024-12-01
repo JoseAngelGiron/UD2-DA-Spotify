@@ -55,7 +55,7 @@
       </Pane>
       <Pane fx:id="addAlbumPane" layoutX="14.0" layoutY="475.0" prefHeight="197.0" prefWidth="485.0" visible="false" AnchorPane.bottomAnchor="168.20000000000005" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="810.8000000000001" AnchorPane.topAnchor="475.0">
          <children>
-            <GridPane layoutY="2.0" prefHeight="171.0" prefWidth="449.0">
+            <GridPane layoutY="2.0" prefHeight="198.0" prefWidth="449.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="349.20001220703125" minWidth="10.0" prefWidth="195.60004425048828" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="497.39995117187505" minWidth="10.0" prefWidth="253.19995574951173" />
@@ -66,8 +66,8 @@
                   <RowConstraints maxHeight="54.799993896484374" minHeight="6.600018310546872" prefHeight="17.600024414062503" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="46.800012207031244" minHeight="7.7999839782714915" prefHeight="28.400036621093747" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="77.60001220703126" minHeight="10.0" prefHeight="31.000030517578125" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="77.60001220703126" minHeight="10.0" prefHeight="38.19996948242189" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="77.60001220703126" minHeight="10.0" prefHeight="17.39997558593751" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="77.60001220703126" minHeight="10.0" prefHeight="35.600012207031256" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="77.60001220703126" minHeight="10.0" prefHeight="24.399987792968744" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Button mnemonicParsing="false" onAction="#uploadImageAlbum" prefHeight="26.0" prefWidth="194.0" text="Añadir imagen del album" GridPane.rowIndex="5" />

@@ -47,8 +47,8 @@ public class UserDAO extends User implements DAO<User, String> {
     }
 
     @Override
-    public User delete(User entity) throws SQLException {
-        return null;
+    public void delete() throws SQLException {
+
     }
 
     @Override

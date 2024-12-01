@@ -19,6 +19,8 @@ import java.util.List;
 public class AlbumDAO extends Album implements DAO<Album, String> {
 
     private final static String INSERT = "INSERT INTO ALBUM (Name, Photo, IDArtist, YearOfRelease) VALUES (?,?,?,?)";
+    private final static String UPDATE = "UPDATE ALBUM SET Name=?, Photo=?, YearOfRelease=? WHERE IDAlbum=?;";
+    private final static String DELETE= "DELETE FROM ALBUM WHERE IDAlbum=?";
 
     private final static String FINDALBUMBYARTIST = "SELECT A.* FROM ALBUM A " +
             "JOIN ARTIST Ar ON Ar.IDArtist = A.IDArtist " +
@@ -34,18 +36,31 @@ public class AlbumDAO extends Album implements DAO<Album, String> {
     }
 
     public AlbumDAO(Album album) {
-        super(album.getName(), album.getImage(), album.getYear(), album.getArtist());
+        super(album.getId() ,album.getName(), album.getImage(), album.getYear(), album.getArtist());
         connection = ConnectionMariaDB.getConnection();
     }
 
+
+
     @Override
     public void save() {
-
+        System.out.println(id);
+        if(this.id>0){
+            update();
+        }else{
+            insert();
+        }
     }
 
     @Override
-    public Album delete(Album entity) throws SQLException {
-        return null;
+    public void delete() throws SQLException {
+        if(id>0){
+            try(PreparedStatement statement = ConnectionMariaDB.getConnection().prepareStatement(DELETE)){
+
+                statement.setInt(1, id);
+                statement.executeUpdate();
+            }
+        }
     }
 
     @Override
@@ -72,7 +87,26 @@ public class AlbumDAO extends Album implements DAO<Album, String> {
 
     @Override
     public boolean update() {
-        return false;
+        boolean updated = false;
+
+        if(name != null && image!=null  && year != 0){
+            try(PreparedStatement preparedStatement = connection.prepareStatement(UPDATE)) {
+
+                preparedStatement.setString(1, name);
+                preparedStatement.setBytes(2, image);
+                preparedStatement.setInt(3, year);
+
+                preparedStatement.setInt(4, id);
+
+
+                preparedStatement.executeQuery();
+                updated = true;
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+
+        return updated;
     }
 
     @Override
@@ -116,7 +150,7 @@ public class AlbumDAO extends Album implements DAO<Album, String> {
         return listOfAlbums;
     }
 
-    public static Album findByArtistNameAndAlbumId(Artist artist) {
+    public static Album findByArtistNameAndAlbumId(Artist artist, Album album) {
         connection = ConnectionMariaDB.getConnection();
         Album albumToReturn = new Album();
 
@@ -124,7 +158,7 @@ public class AlbumDAO extends Album implements DAO<Album, String> {
 
             try (PreparedStatement statement = connection.prepareStatement(FINDALBUMBYARTIST)) {
                 statement.setInt(1, artist.getId());
-                statement.setString(2, artist.getName());
+                statement.setString(2, album.getName());
 
 
                 ResultSet res = statement.executeQuery();

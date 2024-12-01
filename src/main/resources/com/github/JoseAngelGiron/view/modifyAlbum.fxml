@@ -22,10 +22,8 @@
           <TableColumn fx:id="columnGenderSong" prefWidth="154.39993896484373" text="Genero" />
         </columns>
       </TableView>
-      <ImageView fx:id="imageViewAlbum" fitHeight="176.0" fitWidth="308.0" layoutX="38.0" layoutY="294.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="albumNameLabel" layoutX="38.0" layoutY="267.0" prefHeight="18.0" prefWidth="118.0" text="Nombre" />
-      <Label fx:id="yearOfReleaseLabel" layoutX="47.0" layoutY="503.0" prefHeight="18.0" prefWidth="75.0" text="Año" />
-      <Pane fx:id="paneSong" layoutX="401.0" layoutY="382.0" prefHeight="200.0" prefWidth="469.0">
+      <ImageView fx:id="imageViewAlbum" fitHeight="176.0" fitWidth="308.0" layoutX="48.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" />
+      <Pane fx:id="paneSong" layoutX="397.0" layoutY="402.0" prefHeight="228.0" prefWidth="518.0" visible="false">
          <children>
             <GridPane layoutX="2.0" layoutY="-17.0" prefHeight="225.0" prefWidth="490.0">
               <columnConstraints>
@@ -37,31 +35,36 @@
                 <RowConstraints maxHeight="110.4" minHeight="10.0" prefHeight="39.4000244140625" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="142.8000244140625" minHeight="0.0" prefHeight="19.599975585937507" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="140.19998779296876" minHeight="10.0" prefHeight="25.20001220703125" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="154.40001220703127" minHeight="2.79998779296875" prefHeight="12.200000000000003" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="154.40001220703127" minHeight="10.0" prefHeight="30.999999999999986" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="154.40001220703127" minHeight="9.0" prefHeight="9.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="154.40001220703127" minHeight="10.0" prefHeight="43.20000000000002" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="154.40001220703127" minHeight="10.0" prefHeight="43.20000000000002" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="154.40001220703127" minHeight="2.79998779296875" prefHeight="18.000012207031247" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="154.40001220703127" minHeight="10.0" prefHeight="24.39998779296876" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="154.40001220703127" minHeight="5.800012207031244" prefHeight="21.19999999999999" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="154.40001220703127" minHeight="10.0" prefHeight="30.799999999999983" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="154.40001220703127" minHeight="10.0" prefHeight="32.20001220703125" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label prefHeight="18.0" prefWidth="87.0" text="Nombre:" />
                   <TextField fx:id="nameSongField" promptText="Nombre de la canción..." GridPane.rowIndex="1" />
                   <Label prefHeight="18.0" prefWidth="267.0" text="Género:" GridPane.rowIndex="2" />
                   <TextField fx:id="genderSongField" promptText="Género musical..." GridPane.rowIndex="3" />
-                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#delete" prefHeight="26.0" prefWidth="226.0" text="Borrar canción" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <Button mnemonicParsing="false" onAction="#save" prefHeight="26.0" prefWidth="267.0" text="Registrar una nueva canción" GridPane.rowIndex="7" />
+                  <Button fx:id="registerSongButton" mnemonicParsing="false" onAction="#saveSong" prefHeight="26.0" prefWidth="267.0" text="Registrar una nueva canción" GridPane.rowIndex="7" />
                   <Button mnemonicParsing="false" onAction="#storageSong" prefHeight="26.0" prefWidth="269.0" text="Añadir canción" GridPane.rowIndex="5">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
                   </Button>
-                  <Label fx:id="labelSongAdd" prefHeight="18.0" prefWidth="195.0" text="Canción añadida" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <ImageView fx:id="imageSong" fitHeight="125.0" fitWidth="199.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label fx:id="labelSongAdd" prefHeight="18.0" prefWidth="262.0" text="Canción añadida" visible="false" GridPane.rowIndex="8" />
+                  <ImageView fx:id="imageSong" fitHeight="112.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets bottom="30.0" left="15.0" right="10.0" />
-                     </GridPane.margin></ImageView>
+                     </GridPane.margin>
+                  </ImageView>
                   <Button mnemonicParsing="false" onAction="#storagePhotoSong" prefHeight="26.0" prefWidth="230.0" text="Añadir foto de la canción" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Button fx:id="updateButton" mnemonicParsing="false" onAction="#update" prefHeight="26.0" prefWidth="269.0" text="Actualizar canción" visible="false" GridPane.rowIndex="8">
+                  <Button fx:id="deleteSongButton" mnemonicParsing="false" onAction="#deleteSong" prefHeight="26.0" prefWidth="269.0" text="Borrar" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </Button>
+                  <Button fx:id="updateSongButton" mnemonicParsing="false" onAction="#updateSong" prefHeight="26.0" prefWidth="269.0" text="Actualizar" GridPane.columnIndex="1" GridPane.rowIndex="8">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -70,8 +73,12 @@
             </GridPane>
          </children>
       </Pane>
-      <Button layoutX="44.0" layoutY="582.0" mnemonicParsing="false" onAction="#setPaneSongVisible" prefHeight="26.0" prefWidth="295.0" text="Añadir nueva canción al album" />
-      <Label layoutX="26.0" layoutY="54.0" text="Hola... poner datos usuario" />
+      <Button layoutX="389.0" layoutY="348.0" mnemonicParsing="false" onAction="#setPaneSongVisible" prefHeight="26.0" prefWidth="283.0" text="Añadir nueva canción al album" />
       <Button layoutX="21.0" layoutY="14.0" mnemonicParsing="false" onAction="#changeToArtistOptions" prefHeight="26.0" prefWidth="106.0" text="Volver" />
+      <TextField fx:id="albumNameTextField" layoutX="44.0" layoutY="54.0" promptText="Inserte el nuevo nombre..." />
+      <TextField fx:id="yearOfReleaseField" layoutX="202.0" layoutY="54.0" promptText="Inserte el nuevo año..." />
+      <Button fx:id="updateAlbumButton" layoutX="48.0" layoutY="348.0" mnemonicParsing="false" onAction="#updateAlbum" prefHeight="26.0" prefWidth="283.0" text="Actualizar datos" />
+      <Button fx:id="deleteAlbumButton" layoutX="48.0" layoutY="402.0" mnemonicParsing="false" onAction="#deleteAlbum" prefHeight="2.0" prefWidth="283.0" text="Borrar album" />
+      <Button layoutX="48.0" layoutY="293.0" mnemonicParsing="false" onAction="#changeAlbumPhoto" text="Cambiar foto" />
    </children>
 </AnchorPane>
