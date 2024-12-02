@@ -1,7 +1,9 @@
 package com.github.JoseAngelGiron.view;
 
 import com.github.JoseAngelGiron.model.UserSession;
+import com.github.JoseAngelGiron.model.dao.ArtistDAO;
 import com.github.JoseAngelGiron.model.entity.Admin;
+import com.github.JoseAngelGiron.model.entity.Artist;
 import com.github.JoseAngelGiron.model.entity.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,10 +14,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static com.github.JoseAngelGiron.model.dao.ArtistDAO.findArtistById;
+
 public class ConfigurationController extends Controller implements Initializable {
 
     @FXML
     private Label requestLabel;
+
+    @FXML
+    private Label resultRequestLabel;
 
     @FXML
     private Button registerArtistButton;
@@ -35,6 +42,34 @@ public class ConfigurationController extends Controller implements Initializable
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+    @FXML
+    private void registerAsArtist(){
+        User currentUser = UserSession.UserSession().getUserLoggedIn();
+        Artist artistToInsert = new Artist(currentUser.getId(), "por ahora de prueba", false);
+
+
+        ArtistDAO artistDAO = new ArtistDAO(artistToInsert);
+        artistDAO.findById(currentUser.getId());
+
+        boolean inserted = false;
+
+        if(artistDAO.findById(currentUser.getId()).getId()<0){
+            inserted = artistDAO.insert();
+        }
+
+        if (inserted) {
+            Artist artistLogged = findArtistById(currentUser.getId());
+
+            UserSession.UserSession().setUserIntoSession(artistLogged);
+
+
+        }else{
+            resultRequestLabel.setText("Ya esta ud registrado como artista");
+            resultRequestLabel.setVisible(true);
+        }
+
 
     }
 

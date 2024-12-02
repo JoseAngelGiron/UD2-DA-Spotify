@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JoseAngelGiron.view.HomeController">
+   <children>
+      <Label layoutX="36.0" layoutY="26.0" prefHeight="18.0" prefWidth="209.0" text="Artistas mas populares:" />
+      <TableView fx:id="artistTableView" layoutX="41.0" layoutY="69.0" prefHeight="286.0" prefWidth="541.0">
+        <columns>
+          <TableColumn fx:id="photoArtistTableColumn" editable="false" prefWidth="185.60003662109375" resizable="false" text="Foto" />
+          <TableColumn fx:id="nameArtistTableColumn" prefWidth="176.0" text="Nombre" />
+            <TableColumn fx:id="totalOfPlays" prefWidth="176.79998779296875" text="Total reproducciones" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

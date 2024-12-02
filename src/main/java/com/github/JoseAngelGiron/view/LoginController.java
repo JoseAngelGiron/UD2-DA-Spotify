@@ -8,7 +8,7 @@ import com.github.JoseAngelGiron.App;
 
 
 import com.github.JoseAngelGiron.model.UserSession;
-import com.github.JoseAngelGiron.model.dao.UserDAO;
+
 import com.github.JoseAngelGiron.model.entity.User;
 
 import javafx.fxml.FXML;
@@ -19,7 +19,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import static com.github.JoseAngelGiron.view.AppController.changeScene;
+import static com.github.JoseAngelGiron.model.dao.UserDAO.findByEmail;
+import static com.github.JoseAngelGiron.utils.security.Security.encryptPassword;
+
 
 
 public class LoginController extends Controller implements Initializable {
@@ -55,14 +57,11 @@ public class LoginController extends Controller implements Initializable {
     private void LogUser() throws IOException {
         userToLogin = new User();
         String email = emailText.getText();
-        String password = passwordText.getText();
+        String password = encryptPassword(passwordText.getText());
 
-        UserDAO userDAO = new UserDAO();
+        userToLogin = findByEmail(email);
 
-        userToLogin = userDAO.findByEmailAndPassword(email, password);
-
-        if(userToLogin.getId()>-1){
-
+        if(userToLogin.getId()>0 && userToLogin.getPassword().equals(password)){
             UserSession session = UserSession.UserSession();
             session.setUserIntoSession(userToLogin);
             changeToMainWindow();
@@ -90,10 +89,19 @@ public class LoginController extends Controller implements Initializable {
      */
     @FXML
     private void changeToMainWindow() throws IOException {
+        Stage stage = (Stage) App.scene.getWindow();
 
-        App.scene.getWindow().setWidth(1100);
-        App.scene.getWindow().setHeight(720);
-        App.scene.getWindow().centerOnScreen();
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+
+
+        stage.setWidth(bounds.getWidth());
+        stage.setHeight(bounds.getHeight());
+
+
+        stage.setX(bounds.getMinX());
+        stage.setY(bounds.getMinY());
+
 
         App.setRoot(Scenes.ROOT.getURL());
 

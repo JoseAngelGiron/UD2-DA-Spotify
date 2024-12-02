@@ -2,6 +2,8 @@ package com.github.JoseAngelGiron.model.dao;
 
 
 import com.github.JoseAngelGiron.model.connection.ConnectionMariaDB;
+import com.github.JoseAngelGiron.model.entity.Admin;
+import com.github.JoseAngelGiron.model.entity.Artist;
 import com.github.JoseAngelGiron.model.entity.User;
 
 import java.io.IOException;
@@ -11,128 +13,206 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import static com.github.JoseAngelGiron.utils.Utils.intToBoolean;
+
 
 public class UserDAO extends User implements DAO<User, String> {
 
-    private final static String FINDBYNICKANDPASSWORD ="SELECT * FROM USER WHERE Email = ? AND Password= ?";
-    private final static String FINDBYEMAIL = "SELECT * FROM USER WHERE Email = ? ";
-    private final static String INSERT = "INSERT INTO USER (Nick, Password, Email) VALUES (?,?,?)";
+
+    private static final String FINDUSERANDARTISTRBYEMAIL = "SELECT U.*, A.*, AD.* FROM USER U " +
+                    "LEFT JOIN ARTIST A ON U.IDUser = A.IDArtist " +
+                    "LEFT JOIN ADMIN AD ON U.IDUser = AD.IDAdmin "+
+                    "WHERE U.Email = ?";
+    private static final String FINDKEYSINFRIENDS = "SELECT IDUser, IDFriend FROM FRIENDS WHERE IDUser=? AND IDFriend=?";
 
 
-    private Connection connection;
+    private static final String INSERT = "INSERT INTO USER (Nick, Password, Email) VALUES (?,?,?)";
+    private static final String INSERTINTOFRIENDS = "INSERT INTO FRIENDS (IDUser, IDFriend) VALUES (?,?)";
+    private final static String UPDATE = "UPDATE USER SET Nick=?, Password=?, Photo=?, Name=?, Surname=? ,DNI=?, Adress=? WHERE IDUser=?;";
+    private final static String DELETE= "DELETE FROM USER WHERE IDuser=?";
+
+
+    private static Connection connection ;
 
     public UserDAO() {
-        this.connection = ConnectionMariaDB.getConnection();
+        connection = ConnectionMariaDB.getConnection();
+
     }
 
     public UserDAO(String name, String password, String email) {
         super(name, password, email);
         connection = ConnectionMariaDB.getConnection();
 
+
+    }
+
+    public UserDAO(User user) {
+        super(user.getId(), user.getName(), user.getPassword(), user.getPhoto(),
+                user.getUserName(), user.getSurname(), user.getEmail(),
+                user.getDni(), user.getAddress());
+        connection = ConnectionMariaDB.getConnection();
     }
 
     @Override
-    public User save(User entity) {
-        return null;
+    public void save() {
+
     }
 
     @Override
-    public User delete(User entity) throws SQLException {
-        return null;
+    public void delete() throws SQLException {
+        if(id>0){
+            try(PreparedStatement statement = ConnectionMariaDB.getConnection().prepareStatement(DELETE)){
+
+                statement.setInt(1, id);
+                statement.executeUpdate();
+            }
+        }
+
+
     }
 
     @Override
-    public void insert() {
+    public boolean insert() {
 
         if(name != null && password != null && email != null){
-            try(PreparedStatement statement = connection.prepareStatement(INSERT)) {
+            try(PreparedStatement preparedStatement = connection.prepareStatement(INSERT)) {
 
-                statement.setString(1, name);
-                statement.setString(2, password);
-                statement.setString(3, email);
+                preparedStatement.setString(1, name);
+                preparedStatement.setString(2, password);
+                preparedStatement.setString(3, email);
 
-                statement.executeQuery();
+                preparedStatement.executeQuery();
 
             }catch (SQLException e){
                 e.printStackTrace();
             }
         }
+        return false;
 
+    }
+
+    public static boolean insertIntoFriends(int keyUser, int keyFollower){
+        connection = ConnectionMariaDB.getConnection();
+        boolean inserted = false;
+        if (!findIfAlreadyFriends(keyUser, keyFollower)){
+            if( keyUser != keyFollower){
+                try(PreparedStatement preparedStatement = connection.prepareStatement(INSERTINTOFRIENDS)) {
+
+                    preparedStatement.setInt(1, keyUser);
+                    preparedStatement.setInt(2, keyFollower);
+
+
+                    preparedStatement.executeQuery();
+                    inserted = true;
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return inserted;
+    }
+
+
+
+    @Override
+    public boolean update() {
+        boolean updated =false;
+        if(id>0){
+            try(PreparedStatement preparedStatement = connection.prepareStatement(UPDATE)) {
+
+                preparedStatement.setString(1, name);
+                preparedStatement.setString(2, password);
+                preparedStatement.setBytes(3, photo);
+                preparedStatement.setString(4, userName);
+                preparedStatement.setString(5, surname);
+                preparedStatement.setString(6, dni);
+                preparedStatement.setString(7, address);
+
+                preparedStatement.setInt(8, id);
+
+
+                preparedStatement.executeQuery();
+                updated = true;
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+
+        return updated;
     }
 
     @Override
-    public User findById(String key) {
+    public User findById(int key) {
         return null;
     }
-    
-    
 
-    public User findByEmailAndPassword(String email, String password){
-
-        if(email != null && password != null){
-
-            try(PreparedStatement statement = connection.prepareStatement(FINDBYNICKANDPASSWORD)) {
-                statement.setString(1, email);
-                statement.setString(2, password);
-
-                ResultSet res = statement.executeQuery();
-
-                if(res.next()){
-                    this.id = res.getInt("IDUser");
-                    this.name = res.getString("Nick");
-
-                    this.password = res.getString("Password");
-                    this.photo = res.getString("URLPhoto");
-                    this.userName = res.getString("Name");
-                    this.surname = res.getString("Surname");
-                    this.email = res.getString("Email");
-                    this.dni = res.getString("DNI");
-                    this.address = res.getString("Adress");
-                    return this;
-                }
-
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-
-        }
-
-        return this;
-        
-    }
-
-    public User findByEmail(String email) {
-
+    public static User findByEmail(String email) {
+        User userToReturn = new User();
+        connection = ConnectionMariaDB.getConnection();
         if(email!=null){
 
-            try(PreparedStatement statement = connection.prepareStatement(FINDBYEMAIL)) {
+            try(PreparedStatement statement = connection.prepareStatement(FINDUSERANDARTISTRBYEMAIL)) {
                 statement.setString(1, email);
 
 
                 ResultSet res = statement.executeQuery();
 
                 if(res.next()){
-                    this.id = res.getInt("IDUser");
-                    this.name = res.getString("Nick");
+                    userToReturn.setId(res.getInt("IDUser"));
+                    userToReturn.setName(res.getString("Nick"));
+                    userToReturn.setPassword(res.getString("Password"));
+                    userToReturn.setPhoto(res.getBytes("Photo"));
+                    userToReturn.setUserName(res.getString("Name"));
+                    userToReturn.setSurname(res.getString("Surname"));
+                    userToReturn.setEmail(res.getString("Email"));
+                    userToReturn.setDni(res.getString("DNI"));
+                    userToReturn.setAddress(res.getString("Adress"));
 
-                    this.password = res.getString("Password");
-                    this.photo = res.getString("URLPhoto");
-                    this.userName = res.getString("Name");
-                    this.surname = res.getString("Surname");
-                    this.email = res.getString("Email");
-                    this.dni = res.getString("DNI");
-                    this.address = res.getString("Adress");
-                    return this;
+                    if(res.getInt("IDArtist") != 0){
+                        return new Artist(userToReturn, res.getString("MusicalGender"),
+                                intToBoolean(res.getInt("Verified")));
+
+                    } else if (res.getInt("IDAdmin") != 0) {
+                        return new Admin(userToReturn,
+                                intToBoolean(res.getInt("ISAdmin")));
+                    }
+
                 }
 
             }catch (SQLException e){
                 e.printStackTrace();
             }
         }
-        return this;
+        return userToReturn;
 
     }
 
+    public static boolean findIfAlreadyFriends(int keyUser, int keyFriend){
+        connection = ConnectionMariaDB.getConnection();
+        boolean friends = false;
+        if(keyUser>0 && keyFriend>0){
+
+            try(PreparedStatement statement = connection.prepareStatement(FINDKEYSINFRIENDS)) {
+                statement.setInt(1, keyUser);
+                statement.setInt(2, keyFriend);
+
+
+                ResultSet res = statement.executeQuery();
+                if(res.next()){
+                    friends = true;
+                }
+
+
+
+                } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+        return friends;
+    }
 
     public static UserDAO build(){
         return new UserDAO();

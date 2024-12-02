@@ -13,22 +13,27 @@ public class ListSongsDAO extends ListSongs implements DAO<ListSongs, String> {
 
     private Connection connection;
     @Override
-    public ListSongs save(ListSongs entity) {
-        return null;
-    }
-
-    @Override
-    public ListSongs delete(ListSongs entity) throws SQLException {
-        return null;
-    }
-
-    @Override
-    public void insert() {
+    public void save() {
 
     }
 
     @Override
-    public ListSongs findById(String key) {
+    public void delete() throws SQLException {
+
+    }
+
+    @Override
+    public boolean insert() {
+        return false;
+    }
+
+    @Override
+    public boolean update() {
+        return false;
+    }
+
+    @Override
+    public ListSongs findById(int key) {
         return null;
     }
 

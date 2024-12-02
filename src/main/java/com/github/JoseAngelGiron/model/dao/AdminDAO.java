@@ -13,22 +13,27 @@ public class AdminDAO extends Admin implements DAO<Admin, String> {
     private Connection connection;
 
     @Override
-    public Admin save(Admin entity) {
-        return null;
-    }
-
-    @Override
-    public Admin delete(Admin entity) throws SQLException {
-        return null;
-    }
-
-    @Override
-    public void insert() {
+    public void save() {
 
     }
 
     @Override
-    public Admin findById(String key) {
+    public void delete() throws SQLException {
+
+    }
+
+    @Override
+    public boolean insert() {
+        return false;
+    }
+
+    @Override
+    public boolean update() {
+        return false;
+    }
+
+    @Override
+    public Admin findById(int key) {
         return null;
     }
 

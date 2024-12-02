@@ -7,9 +7,15 @@ public class Admin extends User{
     public Admin() {
     }
 
-    public Admin(int id, String nick, String password, String photo,String userName, String surname, String email, String dni, String address, boolean isAdmin) {
+    public Admin(int id, String nick, String password, byte[] photo,String userName, String surname, String email, String dni, String address, boolean isAdmin) {
         super(id, nick, password, photo, userName, surname, email, dni, address);
         this.isAdmin = isAdmin;
+    }
+
+    public Admin(User user, boolean verified) {
+        super(user.getId(), user.getName(), user.getPassword(), user.getPhoto(), user.getUserName(),
+                user.getSurname(), user.getEmail(), user.getDni(), user.getAddress());
+        this.isAdmin = verified;
     }
 
     public boolean isAdmin() {

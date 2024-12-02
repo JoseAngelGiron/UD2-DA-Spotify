@@ -1,0 +1,745 @@
+/* Estilo para el botón de "Eliminar" */
+.delete-button {
+    -fx-background-color: #ff4d4d; /* Fondo rojo */
+    -fx-text-fill: white; /* Texto blanco */
+    -fx-font-size: 14px; /* Tamaño de fuente */
+    -fx-font-weight: bold; /* Negrita */
+     /* Relleno alrededor del texto */
+    -fx-border-radius: 5px; /* Bordes redondeados */
+    -fx-background-radius: 5px; /* Bordes redondeados para el fondo */
+    -fx-cursor: hand; /* Cambio de cursor para indicar que es clickeable */
+    -fx-transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
+}
+
+/* Efecto hover cuando el ratón pasa sobre el botón */
+.delete-button:hover {
+    -fx-background-color: #ff1a1a; /* Cambio de color al pasar el mouse */
+}
+
+/* Efecto cuando el botón está presionado */
+.delete-button:pressed {
+    -fx-background-color: #cc0000; /* Cambio de color cuando el botón es presionado */
+}
+
+
+
+/* Estilo para las cabeceras */
+.table-column-header {
+    -fx-background-color: #1a1a1a; /* Fondo oscuro para las cabeceras */
+    -fx-text-fill: #FFFFFF; /* Texto blanco */
+    -fx-font-size: 16px; /* Tamaño de fuente más grande */
+    -fx-font-family: 'Arial', sans-serif; /* Fuente moderna y limpia */
+    -fx-font-weight: bold; /* Hacer el texto en negrita */
+    -fx-alignment: CENTER; /* Alinear el texto al centro */
+    -fx-padding: 10px; /* Espaciado alrededor del texto */
+}
+
+/* Estilo cuando el mouse pasa sobre la cabecera */
+.table-column-header:hover {
+    -fx-background-color: #333333; /* Cambio de color en hover */
+}
+
+
+/* Estilo general para el TableView */
+.table-view {
+    -fx-background-color: #121212; /* Fondo oscuro, similar a Spotify */
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-font-size: 14px;
+    -fx-text-fill: white; /* Texto blanco */
+    -fx-font-family: 'Arial', sans-serif; /* Usamos Arial como fuente */
+}
+
+/* Estilo para las filas */
+.table-row-cell {
+    -fx-background-color: #121212; /* Fondo oscuro para las filas */
+    -fx-text-fill: white;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #333333; /* Cambio de color cuando el mouse pasa por encima */
+}
+
+/* Estilo para las columnas */
+.table-column {
+    -fx-text-fill: white; /* Texto de las cabeceras en blanco */
+    -fx-background-color: #1a1a1a; /* Fondo oscuro de las cabeceras */
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* Alineación para celdas dentro de las columnas */
+.table-column-cell {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+/* Bordes sutiles en las celdas */
+.table-column-cell > .table-cell {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}
+
+/* Efecto de sombra para dar profundidad */
+.table-view {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0.0, 2, 2);
+}
+
+/* Estilo de las cabeceras */
+.table-header-row {
+    -fx-background-color: #1a1a1a; /* Fondo de las cabeceras */
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}
+
+/* Estilo cuando el TableView tiene el foco */
+.table-view:focused {
+    -fx-effect: dropshadow(gaussian, rgba(0, 255, 0, 0.5), 8, 0.0, 0, 0);
+}
+
+
+
+/* Estilo del fondo principal oscuro */
+.root {
+    -fx-background-color: #36393F;
+    -fx-font-family: 'Segoe UI', sans-serif;
+    -fx-text-fill: #FFFFFF;
+}
+
+.root2 {
+    -fx-border-color: #7289DA; /* Color de borde */
+    -fx-border-width: 2px; /* Ancho del borde */
+    -fx-border-radius: 10px; /* Bordes redondeados */
+    -fx-background-radius: 10px; /* Fondo redondeado */
+}
+
+/* Contenedor del formulario de inicio de sesión */
+.login-container {
+    -fx-background-color: #181818;  /* Color de fondo oscuro similar al de Spotify */
+    -fx-padding: 20px;
+    -fx-border-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(40, 40, 40, 0.8), 8, 1, 1, 12);
+    -fx-min-width: 600px;   /* Ancho mínimo */
+    -fx-min-height: 440px;  /* Altura mínima */
+    -fx-pref-width: 700px;  /* Ancho preferido (opcional) */
+    -fx-pref-height: 500px; /* Altura preferida (opcional) */
+    -fx-max-width: 800px;   /* Ancho máximo */
+    -fx-max-height: 800px;  /* Altura máxima */
+    -fx-alignment: center;
+}
+/* Etiqueta (Label) */
+.label {
+    -fx-text-fill: #E0E0E0;  /* Color de texto blanco metálico */
+    -fx-font-size: 14px;     /* Tamaño de la fuente */
+    -fx-font-weight: bold;   /* Fuente en negrita */
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.4), 2, 1, 1, 3); /* Sombra sutil */
+}
+
+/* Botón principal (verde brillante metálico) */
+.button-login {
+    -fx-background-color: linear-gradient(to bottom, #1DB954, #159441); /* Gradiente metálico */
+    -fx-text-fill: white;             /* Texto blanco */
+    -fx-font-weight: bold;           /* Texto en negrita */
+    -fx-border-radius: 50px;         /* Bordes redondeados para botón circular */
+    -fx-background-radius: 50px;     /* Fondo circular */
+    -fx-padding: 10px 20px;          /* Relleno interno */
+    -fx-font-size: 16px;             /* Tamaño de fuente */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 6, 0.2, 0, 2); /* Sombra sutil negra */
+    -fx-border-color: #1ED760;       /* Borde verde brillante */
+    -fx-border-width: 2px;           /* Grosor del borde */
+}
+
+/* Botón al pasar el ratón encima */
+.button-login:hover {
+    -fx-background-color: linear-gradient(to bottom, #1ED760, #1DB954); /* Más brillante al hover */
+    -fx-cursor: hand;                /* Cambiar a cursor de mano */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 8, 0.3, 0, 4); /* Sombra más intensa */
+}
+
+/* Botón al ser presionado */
+.button-login:pressed {
+    -fx-background-color: linear-gradient(to bottom, #159441, #1DB954); /* Invertir el gradiente */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 4, 0.2, 0, 2); /* Sombra menos difusa */
+}
+
+/* Botón principal (azul brillante metálico) */
+.button-register {
+    -fx-background-color: linear-gradient(to bottom, #3498db, #2980b9); /* Gradiente metálico azul */
+    -fx-text-fill: white;             /* Texto blanco */
+    -fx-font-weight: bold;           /* Texto en negrita */
+    -fx-border-radius: 50px;         /* Bordes redondeados para botón circular */
+    -fx-background-radius: 50px;     /* Fondo circular */
+    -fx-padding: 10px 20px;          /* Relleno interno */
+    -fx-font-size: 16px;             /* Tamaño de fuente */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 6, 0.2, 0, 2); /* Sombra sutil negra */
+    -fx-border-color: #5dade2;       /* Borde azul brillante */
+    -fx-border-width: 2px;           /* Grosor del borde */
+}
+
+/* Botón al pasar el ratón encima */
+.button-register:hover {
+    -fx-background-color: linear-gradient(to bottom, #5dade2, #3498db); /* Más brillante al hover */
+    -fx-cursor: hand;                /* Cambiar a cursor de mano */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 8, 0.3, 0, 4); /* Sombra más intensa */
+}
+
+/* Botón al ser presionado */
+.button-register:pressed {
+    -fx-background-color: linear-gradient(to bottom, #2980b9, #3498db); /* Invertir el gradiente */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 4, 0.2, 0, 2); /* Sombra menos difusa */
+}
+
+.button-yellow {
+    -fx-background-color: linear-gradient(#FFCC00, #FFD700); /* Degradado amarillo metálico */
+    -fx-text-fill: white; /* Texto en blanco */
+    -fx-font-size: 16px; /* Tamaño de fuente */
+    -fx-font-weight: bold; /* Negrita */
+    -fx-padding: 10px 20px; /* Espaciado interno */
+    -fx-border-radius: 25px; /* Bordes redondeados */
+    -fx-background-radius: 25px; /* Fondo redondeado */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0.3, 0, 2); /* Sombra metálica */
+    -fx-cursor: hand; /* Cursor de mano */
+}
+.button-yellow:hover {
+    -fx-background-color: linear-gradient(#FFD700, #FFC000); /* Más brillante al pasar el mouse */
+}
+.button-yellow:pressed {
+    -fx-background-color: linear-gradient(#FFC000, #FFA500); /* Tono más oscuro al hacer clic */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 4, 0.2, 0, 2); /* Efecto más pronunciado */
+}
+
+
+.navbar {
+    -fx-background-color: linear-gradient(to bottom, #1e1e1e, #181818); /* Fondo negro con degradado */
+    -fx-padding: 10px 20px; /* Espaciado interno */
+    -fx-border-color: rgba(255, 255, 255, 0.1); /* Línea sutil */
+    -fx-border-width: 0 0 1px 0; /* Solo línea inferior */
+    -fx-border-style: solid;
+    -fx-alignment: center-left; /* Alinear contenido a la izquierda */
+    -fx-font-family: 'Arial', sans-serif; /* Fuente */
+    -fx-font-size: 14px; /* Tamaño de fuente */
+    -fx-text-fill: white; /* Color del texto */
+}
+
+.navbar-button {
+    -fx-background-color: transparent; /* Botones sin fondo inicial */
+    -fx-text-fill: white; /* Texto en blanco */
+    -fx-font-weight: bold; /* Negrita */
+    -fx-font-size: 14px;
+    -fx-padding: 5px 15px; /* Espaciado interno */
+    -fx-border-radius: 15px; /* Bordes redondeados */
+    -fx-cursor: hand; /* Cambiar cursor a mano */
+}
+
+.navbar-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1); /* Fondo sutil al pasar el ratón */
+    -fx-text-fill: #1DB954; /* Color verde brillante estilo Spotify */
+}
+
+.navbar-button:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.2); /* Fondo más claro al hacer clic */
+}
+
+.navbar-logo {
+    -fx-font-size: 20px; /* Tamaño más grande para el logo o nombre */
+    -fx-font-weight: bold; /* Negrita */
+    -fx-text-fill: #1DB954; /* Verde estilo Spotify */
+    -fx-padding: 0 20px; /* Espaciado del logo */
+}
+
+
+.search-button {
+    -fx-background-color: linear-gradient(to bottom, #1DB954, #1AA34A); /* Verde degradado */
+    -fx-text-fill: white; /* Texto blanco */
+    -fx-font-weight: bold; /* Texto en negrita */
+    -fx-font-size: 14px; /* Tamaño de texto */
+    -fx-padding: 10px 20px; /* Espaciado interno */
+    -fx-border-radius: 25px; /* Bordes redondeados */
+    -fx-background-radius: 25px; /* Asegurar que el fondo sea redondeado */
+    -fx-border-color: rgba(255, 255, 255, 0.2); /* Borde sutil */
+    -fx-border-width: 1px;
+    -fx-alignment: center; /* Centrar texto */
+    -fx-cursor: hand; /* Cambiar cursor a mano */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 8, 0.5, 0, 4); /* Sombra */
+}
+
+.search-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #1ED760, #1DB954); /* Verde más claro al pasar el ratón */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.6, 0, 4); /* Aumentar sombra */
+}
+
+.search-button:pressed {
+    -fx-background-color: linear-gradient(to bottom, #16993F, #138337); /* Verde más oscuro al presionar */
+    -fx-effect: none; /* Quitar sombra al presionar */
+}
+
+
+.menu-item {
+    -fx-background-color: transparent; /* Fondo transparente por defecto */
+    -fx-text-fill: #FFFFFF; /* Texto blanco */
+    -fx-font-size: 16px; /* Tamaño de fuente */
+    -fx-font-family: "Arial", sans-serif; /* Fuente */
+    -fx-padding: 10px 15px; /* Espaciado interno */
+    -fx-border-radius: 5px; /* Bordes redondeados */
+    -fx-alignment: center-left; /* Texto alineado a la izquierda */
+    -fx-cursor: hand; /* Cursor tipo mano */
+}
+
+.menu-item:hover {
+    -fx-background-color: #1DB954; /* Verde brillante al pasar el ratón */
+    -fx-text-fill: #FFFFFF; /* Asegurar que el texto siga siendo blanco */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 6, 0.2, 0, 2); /* Sombra sutil */
+}
+
+.menu-item:focused {
+    -fx-background-color: #121212; /* Fondo negro oscuro al seleccionarlo */
+    -fx-text-fill: #1DB954; /* Texto verde */
+    -fx-border-color: #1DB954; /* Borde verde */
+    -fx-border-width: 2px; /* Borde visible */
+}
+
+.menu-item:pressed {
+    -fx-background-color: #0D7333; /* Verde más oscuro al presionarlo */
+    -fx-text-fill: #FFFFFF; /* Texto sigue blanco */
+}
+
+
+.button-update {
+    -fx-background-color: linear-gradient(to bottom, #4CAF50, #388E3C); /* Verde degradado */
+    -fx-text-fill: #FFFFFF; /* Texto blanco */
+    -fx-font-size: 14px; /* Tamaño de la fuente */
+    -fx-font-family: "Arial", sans-serif; /* Fuente moderna */
+    -fx-border-radius: 5px; /* Bordes redondeados */
+    -fx-border-color: #2E7D32; /* Borde verde oscuro */
+    -fx-border-width: 2px; /* Ancho del borde */
+    -fx-cursor: hand; /* Cursor tipo mano */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 6, 0.2, 0, 2); /* Sombra para efecto 3D */
+}
+
+.button-update:hover {
+    -fx-background-color: linear-gradient(to bottom, #66BB6A, #43A047); /* Verde más claro */
+    -fx-border-color: #66BB6A; /* Borde más claro */
+}
+
+.button-update:pressed {
+    -fx-background-color: linear-gradient(to bottom, #2E7D32, #1B5E20); /* Verde oscuro al presionar */
+    -fx-effect: none; /* Eliminar sombra para efecto de pulsación */
+}
+
+.button-update:focused {
+    -fx-border-color: #81C784; /* Borde verde brillante */
+    -fx-border-width: 3px; /* Borde más ancho para indicar foco */
+}
+
+
+.button-update-photo {
+    -fx-background-color: linear-gradient(to bottom, #FFEB3B, #FBC02D); /* Amarillo brillante degradado */
+    -fx-text-fill: #FFFFFF; /* Texto blanco */
+    -fx-font-size: 14px; /* Tamaño de la fuente */
+    -fx-font-family: "Arial", sans-serif; /* Fuente moderna */
+    -fx-padding: 10px 20px; /* Espaciado interno */
+     -fx-border-radius: 0px; /* Sin bordes redondeados */
+    -fx-border-color: #F57F17; /* Borde amarillo anaranjado */
+    -fx-border-width: 2px; /* Ancho del borde */
+    -fx-cursor: hand; /* Cursor tipo mano */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0.3, 0, 4); /* Sombra sutil */
+    -fx-background-insets: 0; /* Asegura que el fondo no se expanda más allá del borde */
+}
+
+.button-update-photo:hover {
+    -fx-background-color: linear-gradient(to bottom, #FFEB3B, #FF9800); /* Amarillo a naranja en hover */
+    -fx-border-color: #FF9800; /* Cambia el borde a un naranja más brillante */
+}
+
+.button-update-photo:pressed {
+    -fx-background-color: #F57F17; /* Fondo más oscuro al presionar */
+    -fx-effect: none; /* Eliminar sombra al presionar */
+}
+
+.button-update-photo:focused {
+    -fx-border-color: #FFC107; /* Resalta el borde en amarillo brillante */
+    -fx-border-width: 3px; /* Borde más grueso para indicar foco */
+}
+
+
+/* Estilo del TitlePanel (Cabecera del Reproductor) */
+.titlePanel {
+    -fx-background-color: #181818 /* Gris oscuro similar al de Spotify */
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 4);
+    -fx-alignment: center-left;
+    -fx-text-fill: #1DB954;; /* Texto blanco */
+    -fx-font-size: 12px; /* Ajusta el tamaño de la fuente a 16px */
+    -fx-font-weight: bold;
+}
+
+
+/* Contenedor del Reproductor */
+.reproductor-container {
+    -fx-background-color: #181818; /* Fondo oscuro */
+    -fx-padding: 15px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 15, 0.5, 0, 5);
+    -fx-min-width: 500px;
+    -fx-pref-width: 600px;
+    -fx-alignment: center;
+}
+
+/* Estilos para los botones del Reproductor */
+.playButton {
+    -fx-background-color: #1DB954; /* Color verde similar a Spotify */
+    -fx-text-fill: white; /* Texto en blanco */
+    -fx-padding: 5px 15px; /* Reduce el espacio dentro del botón */
+    -fx-font-size: 14px; /* Ajusta el tamaño de la fuente */
+    -fx-border-radius: 4px; /* Bordes redondeados */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 4, 0, 0, 2); /* Efecto de sombra */
+    -fx-pref-width: 125px; /* Ancho preferido ajustado */
+    -fx-pref-height: 35px; /* Alto preferido ajustado */
+}
+
+/* Efectos de Hover para los Botones */
+.button-reproductor:hover {
+    -fx-background-color: #1ED760; /* Verde brillante al pasar el mouse */
+    -fx-border-color: #1ED760; /* Cambia el borde al verde más brillante */
+}
+
+/* Efectos de presionar el botón */
+.button-reproductor:pressed {
+    -fx-background-color: #1AA34A; /* Fondo más oscuro al presionar */
+    -fx-effect: none;
+}
+
+/* Estilo para el Botón de Reproducir/Pausar */
+.button-play-pause {
+    -fx-background-color: linear-gradient(to bottom, #1DB954, #1ED760); /* Verde degradado */
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 16px; /* Tamaño de la fuente más pequeño */
+    -fx-padding: 5px 15px; /* Reduce el padding para hacerlo más pequeño */
+    -fx-border-radius: 5px;
+    -fx-pref-width: 125px; /* Ajusta el ancho del botón */
+    -fx-pref-height: 35px;
+}
+
+.button-modify-data {
+    -fx-background-color: linear-gradient(to bottom, #4CAF50, #66BB6A); /* Verde degradado */
+    -fx-text-fill: #FFFFFF; /* Color del texto blanco */
+    -fx-font-size: 16px; /* Tamaño de la fuente */
+    -fx-padding: 10px 25px; /* Espaciado interior del botón */
+    -fx-border-radius: 8px; /* Bordes redondeados */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 6, 0.2, 0, 2); /* Efecto sombra */
+    -fx-font-weight: bold; /* Texto en negrita */
+}
+
+
+/* Estilo para el Botón de Volumen */
+.button-volume {
+    -fx-background-color: #FFEB3B; /* Amarillo brillante */
+    -fx-text-fill: #212121;
+    -fx-font-size: 18px;
+    -fx-padding: 10px 18px;
+    -fx-border-radius: 5px;
+}
+
+/* Efectos de Hover para el Botón de Volumen */
+.button-volume:hover {
+    -fx-background-color: #FF9800; /* Amarillo a naranja al pasar el mouse */
+}
+
+/* Estilo para el Botón de Siguiente/Canción */
+.button-next {
+    -fx-background-color: #0288D1; /* Azul Spotify */
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 16px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+}
+
+/* Efectos de Hover para el Botón de Siguiente */
+.button-next:hover {
+    -fx-background-color: #03A9F4; /* Azul más brillante al pasar el mouse */
+}
+
+/* Estilo para el Botón de Anterior/Canción */
+.button-previous {
+    -fx-background-color: #0288D1; /* Azul Spotify */
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 16px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+}
+
+/* Efectos de Hover para el Botón de Anterior */
+.button-previous:hover {
+    -fx-background-color: #03A9F4; /* Azul más brillante al pasar el mouse */
+}
+
+/* Barra de Progreso */
+.progress-bar {
+    -fx-background-color: #424242; /* Gris oscuro de fondo */
+    -fx-accent: #1DB954; /* Verde brillante de Spotify */
+    -fx-border-radius: 10px;
+    -fx-pref-width: 100%;
+    -fx-pref-height: 10px;
+    -fx-alignment: center;
+}
+
+/* Contenedor del Reproductor (Con controles como volumen, reproducción, etc.) */
+.controls-container {
+    -fx-padding: 15px;
+    -fx-spacing: 20px;
+    -fx-alignment: center;
+    -fx-hgap: 20px;
+    -fx-vgap: 15px;
+}
+
+
+
+
+.text-field {
+    -fx-background-color: #1e1e1e; /* Fondo oscuro elegante */
+    -fx-text-fill: #eaeaea;        /* Texto en un blanco suave */
+    -fx-font-size: 14px;          /* Tamaño de fuente cómodo */
+    -fx-padding: 10px;            /* Espaciado interno */
+    -fx-border-radius: 5px;       /* Bordes redondeados */
+    -fx-background-radius: 5px;   /* Fondo redondeado */
+    -fx-border-color: #444;       /* Borde gris oscuro */
+    -fx-border-width: 1px;        /* Grosor del borde */
+}
+
+/* Efecto al pasar el ratón por encima */
+.text-field:hover {
+    -fx-border-color: #5dade2;    /* Borde azul claro */
+    -fx-effect: dropshadow(gaussian, rgba(90, 173, 226, 0.3), 6, 0.3, 0, 2); /* Sombra sutil azul */
+}
+
+/* Efecto al tener el foco */
+.text-field:focused {
+    -fx-background-color: #2a2a2a; /* Fondo un poco más claro */
+    -fx-border-color: #3498db;     /* Borde azul más brillante */
+    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.5), 8, 0.4, 0, 2); /* Sombra más intensa */
+}
+
+/* Texto de placeholder */
+.text-field .text {
+    -fx-fill: #888;               /* Color gris claro para el placeholder */
+}
+
+/* Desactivado */
+.text-field:disabled {
+    -fx-background-color: #2f2f2f; /* Fondo más oscuro */
+    -fx-border-color: #555;       /* Borde gris opaco */
+    -fx-text-fill: #666;          /* Texto gris opaco */
+}
+
+/* Botón de inicio de sesión */
+.login-button {
+    -fx-background-color: #5865F2;
+    -fx-background-radius: 6px;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 6px;
+    -fx-alignment: center;
+}
+
+.login-button:hover {
+    -fx-background-color: #4752C4;
+}
+
+.login-button:pressed {
+    -fx-background-color: #3C45A5;
+}
+
+/* Estilo para el botón */
+.custom-button {
+    -fx-background-color: #4CAF50; /* Color de fondo normal */
+    -fx-text-fill: white;           /* Color del texto */
+    -fx-font-size: 16px;            /* Tamaño de fuente */
+    -fx-padding: 10px 20px;         /* Espaciado interno */
+    -fx-background-radius: 5px;     /* Bordes redondeados */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 4, 0, 0, 3); /* Sombra */
+    -fx-border-color: transparent;   /* Sin borde */
+}
+
+/* Cambios al pasar el mouse (hover) */
+.custom-button:hover {
+    -fx-background-color: #45a049; /* Color de fondo al pasar el mouse */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 8, 0, 0, 4); /* Sombra más pronunciada */
+}
+
+/* Cambios al hacer clic (pressed) */
+.custom-button:pressed {
+    -fx-background-color: #388E3C; /* Color de fondo al hacer clic */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 4, 0, 0, 2); /* Sombra más ligera */
+}
+
+.register-link {
+    -fx-font-size: 14px;
+    -fx-text-fill: #FFFFFF; /* Texto en blanco */
+    -fx-background-color: #57F287; /* Fondo verde */
+    -fx-padding: 10px 20px; /* Espaciado interno */
+    -fx-background-radius: 5px; /* Bordes redondeados */
+    -fx-cursor: hand;
+}
+
+/* Estilo para el botón con degradado */
+.gradient-button {
+    -fx-background-color: linear-gradient(to right, #6A82FB, #FC5C7D); /* Degradado de colores */
+    -fx-text-fill: white;                /* Color del texto */
+    -fx-font-size: 16px;                 /* Tamaño de fuente */
+    -fx-padding: 10px 20px;              /* Espaciado interno */
+    -fx-border-radius: 8px;              /* Bordes redondeados */
+    -fx-border-color: transparent;        /* Sin borde */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 6, 0, 0, 2); /* Sombra */
+}
+
+/* Cambios al pasar el mouse (hover) */
+.gradient-button:hover {
+    -fx-background-color: linear-gradient(to right, #5A72E6, #EA4A67); /* Degradado diferente en hover */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 4); /* Sombra más pronunciada */
+}
+
+/* Cambios al hacer clic (pressed) */
+.gradient-button:pressed {
+    -fx-background-color: linear-gradient(to right, #5056E3, #D43C58); /* Degradado más oscuro al hacer clic */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 4, 0, 0, 2); /* Sombra más ligera */
+}
+
+
+/* Estilo para el botón de cerrar sesión */
+.logout-button {
+    -fx-background-color: #FF4C4C; /* Color de fondo rojo */
+    -fx-text-fill: white;            /* Color del texto */
+    -fx-font-size: 16px;             /* Tamaño de fuente */
+    -fx-padding: 10px 20px;          /* Espaciado interno */
+    -fx-border-radius: 8px;          /* Bordes redondeados */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 4, 0, 0, 3); /* Sombra */
+    -fx-cursor: hand;                 /* Cambia el cursor al pasar sobre el botón */
+}
+
+/* Cambios al pasar el mouse (hover) */
+.logout-button:hover {
+    -fx-background-color: #FF3B3B; /* Color de fondo más oscuro al pasar el mouse */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0, 0, 4); /* Sombra más pronunciada */
+}
+
+/* Cambios al hacer clic (pressed) */
+.logout-button:pressed {
+    -fx-background-color: #FF2D2D; /* Color de fondo aún más oscuro al hacer clic */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 4, 0, 0, 2); /* Sombra más ligera */
+}
+
+
+/* Estilo para el botón de solicitudes de amistad */
+.friend-request-button {
+    -fx-background-color: #007BFF; /* Color de fondo azul */
+    -fx-text-fill: white;            /* Color del texto */
+    -fx-font-size: 16px;             /* Tamaño de fuente */
+    -fx-padding: 10px 20px;          /* Espaciado interno */
+    -fx-border-radius: 5px;          /* Bordes redondeados */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 2); /* Sombra */
+    -fx-cursor: hand;                 /* Cambia el cursor al pasar sobre el botón */
+}
+
+/* Cambios al pasar el mouse (hover) */
+.friend-request-button:hover {
+    -fx-background-color: #0056b3; /* Color de fondo más oscuro al pasar el mouse */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 6, 0, 0, 4); /* Sombra más pronunciada */
+}
+
+/* Cambios al hacer clic (pressed) */
+.friend-request-button:pressed {
+    -fx-background-color: #004085; /* Color de fondo aún más oscuro al hacer clic */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 4, 0, 0, 2); /* Sombra más ligera */
+}
+
+
+
+
+
+/* Estilo para la barra de texto de entrada */
+.text-input-bar {
+    -fx-background-color: #f0f0f0;          /* Fondo claro para resaltar el texto */
+    -fx-text-fill: #000000;                 /* Color del texto en negro */
+    -fx-border-color: #d1d5db;              /* Borde gris claro */
+    -fx-border-radius: 5px;                 /* Bordes redondeados */
+    -fx-background-radius: 5px;             /* Fondo redondeado */
+    -fx-padding: 8px;                       /* Espaciado interno */
+    -fx-font-size: 14px;                    /* Tamaño de fuente */
+}
+
+/* Placeholder en gris oscuro para diferenciarse del texto principal */
+.text-input-bar:empty {
+    -fx-prompt-text-fill: #6b7280;          /* Color del placeholder en gris oscuro */
+}
+
+
+
+.register-link:hover {
+    -fx-background-color: #45C16E; /* Tono verde más oscuro en hover */
+}
+
+.register-link:pressed {
+    -fx-background-color: #3AB769; /* Aún más oscuro al hacer clic */
+}
+
+/* Estilo para el nombre */
+.contact-name {
+    -fx-font-size: 18px;               /* Tamaño de fuente */
+    -fx-text-fill: #4A90E2;            /* Color de texto azul */
+    -fx-font-weight: bold;              /* Negrita */
+    -fx-padding: 5px;                   /* Espaciado interno */
+    -fx-background-color: #2F3136;     /* Color de fondo opcional */
+    -fx-border-radius: 5px;            /* Bordes redondeados */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 4, 0, 0, 2); /* Sombra */
+    -fx-cursor: hand;                   /* Cambia el cursor al pasar sobre el texto */
+}
+
+/* Estilo adicional para nombres al pasar el mouse (hover) */
+.contact-name:hover {
+    -fx-text-fill: #007BFF;            /* Cambia a azul más brillante al pasar el mouse */
+    -fx-effect: dropshadow(gaussian, rgba(0, 123, 255, 0.4), 6, 0, 0, 4); /* Sombra más intensa */
+}
+
+/* Estilo general para la ListView */
+.list-view {
+    -fx-background-color: #E0E7FF; /* Color de fondo azul claro */
+    -fx-border-color: #3B82F6;      /* Color del borde azul */
+    -fx-border-width: 1px;          /* Ancho del borde */
+    -fx-padding: 10px;              /* Espaciado interno */
+}
+
+/* Estilo para las filas de la ListView */
+.list-view .list-view-cell {
+    -fx-background-color: transparent; /* Color de fondo por defecto */
+    -fx-text-fill: #1E3A8A;            /* Color del texto azul oscuro */
+    -fx-font-size: 14px;               /* Tamaño de fuente */
+    -fx-padding: 10px;                 /* Espaciado interno en las filas */
+}
+
+/* Cambios al pasar el mouse (hover) */
+.list-view .list-view-cell:hover {
+    -fx-background-color: #3B82F6; /* Color de fondo azul al pasar el mouse */
+    -fx-text-fill: white;          /* Cambia el color del texto a blanco al pasar el mouse */
+}
+
+/* Cambios al seleccionar una fila */
+.list-view .list-view-cell:filled:selected {
+    -fx-background-color: #1D4ED8; /* Color de fondo azul más oscuro al seleccionar */
+    -fx-text-fill: white;           /* Color del texto al s
+}
+
+
+
+
+
+
+
+/* Espaciado entre los elementos */
+.spacing {
+    -fx-padding: 10px 0;
+}
+
+
+

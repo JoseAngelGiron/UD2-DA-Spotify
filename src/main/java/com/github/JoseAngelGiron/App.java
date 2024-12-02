@@ -42,7 +42,7 @@ public class App extends Application {
         stage.setResizable(false);
 
 
-        stage.setTitle("Login");
+        stage.setTitle("Spotify");
         stage.show();
 
     }

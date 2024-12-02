@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="685.0" minWidth="441.0" prefHeight="685.0" prefWidth="555.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JoseAngelGiron.view.RegisterController">
+<VBox alignment="CENTER" maxHeight="685.0" minWidth="441.0" prefHeight="685.0" prefWidth="555.0" spacing="20.0" styleClass="register-container" stylesheets="@../../../../assets/aplication.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JoseAngelGiron.view.RegisterController">
     <children>
       <GridPane>
         <columnConstraints>
@@ -107,8 +107,8 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" onAction="#registerUser" prefHeight="26.0" prefWidth="238.0" text="REGISTRARSE" />
-                  <Button mnemonicParsing="false" onAction="#returnToLogin" prefHeight="26.0" prefWidth="238.0" text="VOLVER" GridPane.rowIndex="4" />
+                  <Button mnemonicParsing="false" onAction="#registerUser" prefHeight="26.0" prefWidth="238.0" styleClass="button-login" stylesheets="@../../../../assets/aplication.css" text="REGISTRARSE" />
+                  <Button mnemonicParsing="false" onAction="#returnToLogin" prefHeight="26.0" prefWidth="238.0" styleClass="button-yellow" stylesheets="@../../../../assets/aplication.css" text="VOLVER" GridPane.rowIndex="4" />
                </children>
             </GridPane>
          </children>
