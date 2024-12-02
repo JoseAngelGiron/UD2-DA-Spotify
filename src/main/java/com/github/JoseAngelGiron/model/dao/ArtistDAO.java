@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.github.JoseAngelGiron.utils.Utils.booleanToInt;
@@ -30,12 +31,17 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
             "WHERE Ar.IDArtist = ? " +
             "GROUP BY Ar.IDArtist";
 
-    private final static String FINDARTISTSPLAYS = "SELECT U.Name, U.Photo, SUM(S.NumberOfPlays) AS TotalPlays FROM Song S " +
-            "JOIN Album A ON A.IDAlbum = S.IDAlbum " +
-            "JOIN Artist Ar ON Ar.IDArtist = A.IDArtist " +
-            "JOIN User U ON U.IDArtist = Ar.IDArtist " +
-            "WHERE Ar.IDArtist = ? " +
-            "GROUP BY Ar.IDArtist, U.Name, U.Photo";
+    private final static String FINDARTISTSPLAYS =
+            "SELECT Ar.IDArtist, U.Name, U.Photo, Ar.Verified, SUM(S.NumberOfPlays) AS TotalPlays " +
+                    "FROM Song S " +
+                    "JOIN Album A ON A.IDAlbum = S.IDAlbum " +
+                    "JOIN Artist Ar ON Ar.IDArtist = A.IDArtist " +
+                    "JOIN User U ON U.IDUser = Ar.IDArtist " +
+                    "GROUP BY Ar.IDArtist, U.Name, U.Photo, Ar.Verified " +
+                    "ORDER BY TotalPlays DESC " +
+                    "LIMIT 5";
+
+
 
     private final static String INSERT = "INSERT INTO ARTIST (IDArtist, MusicalGender, Verified) VALUES (?,?,?)";
 
@@ -174,6 +180,38 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
 
         return totalPlays;
     }
+
+    public static List<Artist> findMostPopularArtists(){
+
+        List<Artist> artistsList = new ArrayList<>();
+        connection = ConnectionMariaDB.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(FINDARTISTSPLAYS)) {
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+
+
+                Artist artistToAdd = new Artist();
+
+                artistToAdd.setId(resultSet.getInt("IDArtist"));
+                artistToAdd.setName(resultSet.getString("Name"));
+                artistToAdd.setVerified(intToBoolean(resultSet.getInt("Verified")));
+                artistToAdd.setTotalPlays(resultSet.getInt("TotalPlays"));
+                artistToAdd.setPhoto(resultSet.getBytes("Photo"));
+
+                artistsList.add(artistToAdd);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return artistsList;
+
+    }
+
+
 
 
     @Override

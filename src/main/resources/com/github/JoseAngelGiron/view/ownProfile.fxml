@@ -6,30 +6,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 
 <AnchorPane prefHeight="502.0" prefWidth="1060.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JoseAngelGiron.view.OwnProfileController">
    <children>
-      <GridPane layoutX="96.0" layoutY="386.4" prefHeight="118.0" prefWidth="961.0" AnchorPane.leftAnchor="96.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="386.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="670.4000179290772" minWidth="10.0" prefWidth="648.8000442504883" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="113.59998168945313" minHeight="10.0" prefHeight="41.79999294281006" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="225.6000150680542" minHeight="10.0" prefHeight="74.99999389648437" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="241.3999542236328" minHeight="0.0" prefHeight="40.59999389648439" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="241.3999542236328" minHeight="9.40003356933596" prefHeight="55.59999084472656" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="241.3999542236328" minHeight="10.0" prefHeight="56.00001525878906" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="241.3999542236328" minHeight="10.0" prefHeight="132.79998474121095" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label prefHeight="18.0" prefWidth="280.0" text="Artistas mas escuchados:" />
-            <Label text="Canciones escuchadas recientemente" GridPane.rowIndex="2" />
-            <Label prefHeight="18.0" prefWidth="170.0" text="Listas " GridPane.rowIndex="4" />
-         </children>
-      </GridPane>
       <Label layoutX="27.0" layoutY="14.0" prefHeight="18.0" prefWidth="170.0" text="Opciones de perfil" />
       <TextField fx:id="nick" layoutX="46.0" layoutY="64.0" prefHeight="26.0" prefWidth="170.0" promptText="Inserte su nuevo nick..." />
       <Label layoutX="46.0" layoutY="45.0" prefHeight="18.0" prefWidth="98.0" text="Nick de usuario:" />
@@ -41,11 +20,11 @@
       <Label layoutX="272.0" layoutY="45.0" prefHeight="18.0" prefWidth="42.0" text="DNI:" />
       <Label layoutX="275.0" layoutY="108.0" prefHeight="18.0" prefWidth="114.0" text="Dirección:" />
       <TextField fx:id="adress" layoutX="272.0" layoutY="127.0" prefHeight="26.0" prefWidth="170.0" promptText="Dirección" />
-      <ImageView fx:id="photoUser" fitHeight="150.0" fitWidth="200.0" layoutX="506.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="506.0" layoutY="176.0" mnemonicParsing="false" onAction="#updateImage" prefHeight="26.0" prefWidth="200.0" text="Actualize su foto de perfil" />
+      <ImageView fx:id="photoUser" fitHeight="150.0" fitWidth="435.0" layoutX="506.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="517.0" layoutY="222.0" mnemonicParsing="false" onAction="#updateImage" prefHeight="40.0" prefWidth="246.0" styleClass="button-update-photo" stylesheets="@../../../../assets/aplication.css" text="Actualize su foto de perfil" />
       <PasswordField fx:id="passwordField" layoutX="272.0" layoutY="188.0" prefHeight="26.0" prefWidth="170.0" promptText="Nueva contraseña.." />
       <Label layoutX="275.0" layoutY="171.0" prefHeight="18.0" prefWidth="98.0" text="Contraseña:" />
-      <Button layoutX="46.0" layoutY="259.0" mnemonicParsing="false" onAction="#updateUserData" prefHeight="26.0" prefWidth="200.0" text="Actualizar datos" />
+      <Button layoutX="46.0" layoutY="259.0" mnemonicParsing="false" onAction="#updateUserData" prefHeight="26.0" prefWidth="200.0" styleClass="button-update" stylesheets="@../../../../assets/aplication.css" text="Actualizar datos" />
       <Label fx:id="passwordLabel" layoutX="279.0" layoutY="226.0" prefHeight="18.0" prefWidth="252.0" text="La contraseña debe estar entre 4-12 caracteres" visible="false" />
    </children>
 </AnchorPane>

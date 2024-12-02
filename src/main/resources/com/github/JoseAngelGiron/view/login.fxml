@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" minHeight="400.0" minWidth="399.0" prefHeight="455.0" prefWidth="618.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JoseAngelGiron.view.LoginController">
+<VBox alignment="CENTER" minHeight="400.0" minWidth="399.0" prefHeight="455.0" prefWidth="618.0" spacing="20.0" styleClass="login-container" stylesheets="@../../../../assets/aplication.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JoseAngelGiron.view.LoginController">
    <children>
       <GridPane prefHeight="381.0" prefWidth="470.0">
         <columnConstraints>
@@ -32,8 +32,8 @@
             <TextField fx:id="passwordText" prefHeight="26.0" prefWidth="338.0" text="Patata57" GridPane.rowIndex="5" />
             <Label prefHeight="39.0" prefWidth="62.0" text="E-mail:" GridPane.rowIndex="2" />
             <Label prefHeight="38.0" text="Contraseña: " GridPane.rowIndex="4" />
-            <Button fx:id="primaryButton" onAction="#LogUser" prefHeight="45.0" prefWidth="216.0" text="Iniciar sesión" GridPane.rowIndex="7" />
-            <Label prefHeight="46.0" prefWidth="251.0" text="Inicia sesión con tu E-mail y contraseña" />
+            <Button fx:id="primaryButton" onAction="#LogUser" prefHeight="45.0" prefWidth="216.0" styleClass="button-login" text="Iniciar sesión" GridPane.rowIndex="7" />
+            <Label prefHeight="46.0" prefWidth="348.0" text="Inicia sesión con tu E-mail y contraseña" />
          </children>
       </GridPane>
       <Separator prefHeight="10.0" prefWidth="520.0" />
@@ -60,7 +60,7 @@
         </rowConstraints>
          <children>
             <Label prefHeight="24.0" prefWidth="214.0" text="¿No tienes cuenta? ¡Registrate!" />
-            <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#changeToRegister" prefHeight="31.0" prefWidth="207.0" text="Crear una nueva cuenta" textAlignment="CENTER" GridPane.columnIndex="2" />
+            <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#changeToRegister" prefHeight="43.0" prefWidth="258.0" styleClass="button-register" text="Crear una nueva cuenta" textAlignment="CENTER" GridPane.columnIndex="2" />
          </children>
       </GridPane>
    </children>

@@ -24,7 +24,7 @@ public class UserDAO extends User implements DAO<User, String> {
                     "LEFT JOIN ADMIN AD ON U.IDUser = AD.IDAdmin "+
                     "WHERE U.Email = ?";
     private static final String FINDKEYSINFRIENDS = "SELECT IDUser, IDFriend FROM FRIENDS WHERE IDUser=? AND IDFriend=?";
-    
+
 
     private static final String INSERT = "INSERT INTO USER (Nick, Password, Email) VALUES (?,?,?)";
     private static final String INSERTINTOFRIENDS = "INSERT INTO FRIENDS (IDUser, IDFriend) VALUES (?,?)";
@@ -213,8 +213,6 @@ public class UserDAO extends User implements DAO<User, String> {
 
         return friends;
     }
-
-
 
     public static UserDAO build(){
         return new UserDAO();

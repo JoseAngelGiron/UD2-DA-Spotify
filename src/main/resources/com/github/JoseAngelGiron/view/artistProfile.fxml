@@ -16,8 +16,8 @@
       <GridPane layoutX="3.0" layoutY="1.0" prefHeight="200.0" prefWidth="764.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="1.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.3999847412109" minWidth="10.0" prefWidth="197.60001220703126" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="371.1999877929687" minWidth="10.0" prefWidth="179.1999694824219" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="339.0000305175781" minWidth="10.0" prefWidth="339.0000305175781" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="447.20000000000005" minWidth="10.0" prefWidth="447.20000000000005" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="339.0000305175781" minWidth="10.0" prefWidth="95.19999999999993" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="87.59998168945313" minHeight="10.0" prefHeight="21.599990844726562" vgrow="SOMETIMES" />
@@ -25,8 +25,8 @@
           <RowConstraints maxHeight="49.80002441406249" minHeight="5.800024414062477" prefHeight="38.60001220703124" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fx:id="artistPhoto" fitHeight="110.0" fitWidth="197.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="artistName" prefHeight="55.0" prefWidth="214.0" text="Nombre_Artista" GridPane.rowIndex="1" />
+            <ImageView fx:id="artistPhoto" fitHeight="120.0" fitWidth="352.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="artistName" prefHeight="25.0" prefWidth="214.0" text="Nombre_Artista" GridPane.rowIndex="1" />
             <Label fx:id="totalPlays" prefHeight="18.0" prefWidth="182.0" text="Reproducciones totales" GridPane.rowIndex="2" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
@@ -61,7 +61,7 @@
          </children>
       </GridPane>
       <Button layoutX="14.0" layoutY="223.0" mnemonicParsing="false" onAction="#followArtist" prefHeight="26.0" prefWidth="128.0" text="Seguir" />
-      <TableView fx:id="listOfSongsTable" layoutX="22.0" layoutY="308.0" prefHeight="143.0" prefWidth="710.0">
+      <TableView fx:id="listOfSongsTable" layoutX="22.0" layoutY="308.0" prefHeight="155.0" prefWidth="710.0">
         <columns>
           <TableColumn fx:id="photoColumn" editable="false" prefWidth="232.79998779296875" text="FotoAlbum" />
           <TableColumn fx:id="nameSongColumn" editable="false" prefWidth="224.0" text="NombreCancion" />
@@ -69,10 +69,10 @@
         </columns>
       </TableView>
       <Label layoutX="24.0" layoutY="272.0" prefHeight="18.0" prefWidth="140.0" text="Canciones mas popules" />
-      <TableView fx:id="albumsTable" layoutX="24.0" layoutY="521.0" prefHeight="87.0" prefWidth="710.0">
+      <TableView fx:id="albumsTable" layoutX="24.0" layoutY="521.0" prefHeight="143.0" prefWidth="710.0">
         <columns>
-          <TableColumn fx:id="albumPhotoColumn" editable="false" prefWidth="232.800048828125" text="AlbumPhoto" />
-          <TableColumn fx:id="nameAlbum" editable="false" prefWidth="292.0" text="Nombre" />
+          <TableColumn fx:id="albumPhotoColumn" editable="false" prefWidth="284.00006103515625" text="AlbumPhoto" />
+          <TableColumn fx:id="nameAlbum" editable="false" prefWidth="424.8000244140625" text="Nombre" />
         </columns>
       </TableView>
       <Label layoutX="22.0" layoutY="485.0" text="Albums del artista" />

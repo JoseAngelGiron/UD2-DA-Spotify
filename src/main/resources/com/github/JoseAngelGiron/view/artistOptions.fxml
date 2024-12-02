@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -34,15 +33,14 @@
                   <TableColumn fx:id="columnGenderSong" editable="false" prefWidth="150.4000244140625" resizable="false" text="Gender" />
               </columns>
             </TableView>
-            <Button fx:id="addAlbum" layoutX="24.0" layoutY="306.0" mnemonicParsing="false" onAction="#showRegisterPanel" prefHeight="26.0" prefWidth="276.0" text="Añadir un nuevo album" />
-            <TitledPane fx:id="reproductor" animated="false" expanded="false" layoutX="447.0" layoutY="306.0" prefHeight="114.0" prefWidth="495.0" text="Reproductor">
+            <Button fx:id="addAlbum" layoutX="24.0" layoutY="306.0" mnemonicParsing="false" onAction="#showRegisterPanel" prefHeight="26.0" prefWidth="276.0" styleClass="button-previous" stylesheets="@../../../../assets/aplication.css" text="Añadir un nuevo album" />
+            <TitledPane fx:id="reproductor" animated="false" expanded="false" layoutX="447.0" layoutY="306.0" prefHeight="114.0" prefWidth="495.0" styleClass="titlePanel" stylesheets="@../../../../assets/aplication.css" text="Reproductor">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="88.0" prefWidth="503.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="88.0" prefWidth="503.0" styleClass="reproductor-container" stylesheets="@../../../../assets/aplication.css">
                      <children>
-                        <Button layoutX="133.0" layoutY="47.0" mnemonicParsing="false" onAction="#startSong" prefHeight="26.0" prefWidth="106.0" text="Reproducir" />
-                        <Button layoutX="308.0" layoutY="47.0" mnemonicParsing="false" onAction="#stopSong" prefHeight="26.0" prefWidth="106.0" text="Pausar" />
+                        <Button layoutX="130.0" layoutY="29.0" mnemonicParsing="false" onAction="#startSong" prefHeight="34.0" prefWidth="125.0" styleClass="playButton" stylesheets="@../../../../assets/aplication.css" text="Reproducir" />
+                        <Button layoutX="267.0" layoutY="29.0" mnemonicParsing="false" onAction="#stopSong" prefHeight="34.0" prefWidth="106.0" styleClass="button-play-pause" stylesheets="@../../../../assets/aplication.css" text="Pausar" />
                         <Button layoutX="923.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" text="Cerrar" />
-                        <Slider layoutX="205.0" layoutY="21.0" />
                         <ImageView fx:id="imageSong" fitHeight="69.0" fitWidth="100.0" layoutX="7.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </AnchorPane>
@@ -53,12 +51,12 @@
             <Insets left="60.0" />
          </padding>
       </Pane>
-      <Pane fx:id="addAlbumPane" layoutX="14.0" layoutY="475.0" prefHeight="197.0" prefWidth="485.0" visible="false" AnchorPane.bottomAnchor="168.20000000000005" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="810.8000000000001" AnchorPane.topAnchor="475.0">
+      <Pane fx:id="addAlbumPane" layoutX="26.0" layoutY="462.0" prefHeight="197.0" prefWidth="518.0" AnchorPane.bottomAnchor="181.20000000000005" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="765.2" AnchorPane.topAnchor="462.0">
          <children>
             <GridPane layoutY="2.0" prefHeight="198.0" prefWidth="449.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="349.20001220703125" minWidth="10.0" prefWidth="195.60004425048828" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="497.39995117187505" minWidth="10.0" prefWidth="253.19995574951173" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="349.20001220703125" minWidth="10.0" prefWidth="206.39999389648438" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="497.39995117187505" minWidth="10.0" prefWidth="243.20000610351565" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints maxHeight="33.40000610351562" minHeight="10.0" prefHeight="22.80001220703125" vgrow="SOMETIMES" />
@@ -70,7 +68,7 @@
                   <RowConstraints maxHeight="77.60001220703126" minHeight="10.0" prefHeight="24.399987792968744" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" onAction="#uploadImageAlbum" prefHeight="26.0" prefWidth="194.0" text="Añadir imagen del album" GridPane.rowIndex="5" />
+                  <Button mnemonicParsing="false" onAction="#uploadImageAlbum" prefHeight="40.0" prefWidth="202.0" styleClass="button-update-photo" stylesheets="@../../../../assets/aplication.css" text="Añadir imagen del album" GridPane.rowIndex="5" />
                   <ImageView fx:id="imageViewAlbum" fitHeight="105.0" fitWidth="189.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
                   <TextField fx:id="albumNameTextField" prefHeight="22.0" prefWidth="254.0" promptText="Nombre del album..." GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
@@ -91,7 +89,10 @@
                         <TextField fx:id="yearOfReleaseTextField" prefHeight="26.0" prefWidth="66.0" promptText="Año de salida..." />
                      </children>
                   </GridPane>
-                  <Button mnemonicParsing="false" onAction="#registerAlbum" prefHeight="26.0" prefWidth="219.0" text="Registrar album" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Button mnemonicParsing="false" onAction="#registerAlbum" prefHeight="42.0" prefWidth="198.0" styleClass="search-button" stylesheets="@../../../../assets/aplication.css" text="Registrar album" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <GridPane.margin>
+                        <Insets left="15.0" right="15.0" />
+                     </GridPane.margin></Button>
                   <Label fx:id="resultOfAlbumRegistered" prefHeight="18.0" prefWidth="246.0" text="Result" textFill="#13d72a" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <font>
                         <Font name="System Bold" size="12.0" />
@@ -101,7 +102,7 @@
             </GridPane>
          </children>
       </Pane>
-      <Pane fx:id="modifyAlbumPane" layoutX="586.0" layoutY="475.0" prefHeight="197.0" prefWidth="495.0" visible="false">
+      <Pane fx:id="modifyAlbumPane" layoutX="638.0" layoutY="450.0" prefHeight="197.0" prefWidth="495.0" visible="false">
          <children>
             <GridPane layoutY="15.0" prefHeight="224.0" prefWidth="501.0">
                <columnConstraints>
@@ -120,7 +121,7 @@
                   <ImageView fx:id="albumImageViewToBeModified" fitHeight="168.0" fitWidth="204.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3" />
                   <Label fx:id="nameAlbumToBeModified" prefHeight="18.0" prefWidth="170.0" text="AlbumName" />
                   <Label fx:id="yearAlbumToBeModified" prefHeight="18.0" prefWidth="100.0" text="YearRelease" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button mnemonicParsing="false" onAction="#modifyData" prefHeight="26.0" prefWidth="219.0" text="ModificarDatos" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Button mnemonicParsing="false" onAction="#modifyData" prefHeight="37.0" prefWidth="219.0" styleClass="button-modify-data" stylesheets="@../../../../assets/aplication.css" text="ModificarDatos" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
          </children>

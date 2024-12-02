@@ -8,8 +8,7 @@ import com.github.JoseAngelGiron.App;
 
 
 import com.github.JoseAngelGiron.model.UserSession;
-import com.github.JoseAngelGiron.model.dao.UserDAO;
-import com.github.JoseAngelGiron.model.entity.Artist;
+
 import com.github.JoseAngelGiron.model.entity.User;
 
 import javafx.fxml.FXML;

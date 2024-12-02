@@ -155,6 +155,10 @@ public class AppController extends Controller implements Initializable {
     @FXML
     public void changeToLogin() throws IOException {
         changeScene(Scenes.LOGIN, mainWindow, null);
+        App.scene.getWindow().setWidth(720);
+        App.scene.getWindow().setHeight(580);
+
+        App.scene.getWindow().centerOnScreen();
     }
 
     /**

@@ -4,6 +4,7 @@ public class Artist extends User{
 
     protected String musicalGender;
     protected boolean verified;
+    private int totalPlays;
 
     public Artist() {
     }
@@ -43,5 +44,13 @@ public class Artist extends User{
 
     public void setVerified(boolean verified) {
         this.verified = verified;
+    }
+
+    public int getTotalPlays() {
+        return totalPlays;
+    }
+
+    public void setTotalPlays(int totalPlays) {
+        this.totalPlays = totalPlays;
     }
 }
