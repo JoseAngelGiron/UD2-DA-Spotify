@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.github.JoseAngelGiron.utils.Utils.intToBoolean;
 
 
 public class AlbumDAO extends Album implements DAO<Album, String> {
@@ -25,6 +26,8 @@ public class AlbumDAO extends Album implements DAO<Album, String> {
     private final static String FINDALBUMBYARTIST = "SELECT A.* FROM ALBUM A " +
             "JOIN ARTIST Ar ON Ar.IDArtist = A.IDArtist " +
             "WHERE Ar.IDArtist = ? AND A.Name = ?";
+
+    private final static String FINDALBUMBYARTISTID = "SELECT A.* FROM ALBUM A WHERE A.IDArtist = ?";
 
     private final static String FINDALBUMSANDSONGSBYARTIST = "SELECT A.* FROM ALBUM A " +
             "WHERE A.IDArtist=?";
@@ -44,7 +47,7 @@ public class AlbumDAO extends Album implements DAO<Album, String> {
 
     @Override
     public void save() {
-        System.out.println(id);
+
         if(this.id>0){
             update();
         }else{
@@ -112,8 +115,33 @@ public class AlbumDAO extends Album implements DAO<Album, String> {
     @Override
     public Album findById(int key) {
 
-
         return null;
+    }
+
+
+    public List<Album> findListOfAlbumByArtistID(int key){
+        List<Album> albumListToReturn = new ArrayList<>();
+        if(key!=0) {
+
+            try(PreparedStatement statement = connection.prepareStatement(FINDALBUMBYARTISTID)){
+                statement.setInt(1, key);
+                ResultSet res = statement.executeQuery();
+
+                while (res.next()){
+                    Album albumToAdd = new Album();
+                    albumToAdd.setId(res.getInt("IDAlbum"));
+                    albumToAdd.setName(res.getString("Name"));
+                    albumToAdd.setImage(res.getBytes("Photo"));
+                    albumToAdd.setYear(res.getInt("YearOfRelease"));
+
+                    albumListToReturn.add(albumToAdd);
+                }
+
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return albumListToReturn;
     }
 
     public List<Album> findByArtist(Artist artist){
@@ -127,7 +155,7 @@ public class AlbumDAO extends Album implements DAO<Album, String> {
                 ResultSet res = statement.executeQuery();
 
                 while(res.next()){
-                    Album albumToAdd = new AlbumLazy(artist.getId());
+                    Album albumToAdd = new AlbumEager(artist.getId());
 
                     albumToAdd.setId(res.getInt("IDAlbum"));
                     albumToAdd.setName(res.getString("Name"));
@@ -190,8 +218,8 @@ public class AlbumDAO extends Album implements DAO<Album, String> {
 
     }
 
-    class AlbumLazy extends Album {
-        public AlbumLazy(int id) {
+    class AlbumEager extends Album {
+        public AlbumEager(int id) {
             super(id);
         }
 

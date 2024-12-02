@@ -23,13 +23,16 @@ public class UserDAO extends User implements DAO<User, String> {
                     "LEFT JOIN ARTIST A ON U.IDUser = A.IDArtist " +
                     "LEFT JOIN ADMIN AD ON U.IDUser = AD.IDAdmin "+
                     "WHERE U.Email = ?";
+    private static final String FINDKEYSINFRIENDS = "SELECT IDUser, IDFriend FROM FRIENDS WHERE IDUser=? AND IDFriend=?";
+    
 
     private static final String INSERT = "INSERT INTO USER (Nick, Password, Email) VALUES (?,?,?)";
+    private static final String INSERTINTOFRIENDS = "INSERT INTO FRIENDS (IDUser, IDFriend) VALUES (?,?)";
     private final static String UPDATE = "UPDATE USER SET Nick=?, Password=?, Photo=?, Name=?, Surname=? ,DNI=?, Adress=? WHERE IDUser=?;";
     private final static String DELETE= "DELETE FROM USER WHERE IDuser=?";
 
 
-    private  static Connection connection ;
+    private static Connection connection ;
 
     public UserDAO() {
         connection = ConnectionMariaDB.getConnection();
@@ -87,6 +90,30 @@ public class UserDAO extends User implements DAO<User, String> {
         return false;
 
     }
+
+    public static boolean insertIntoFriends(int keyUser, int keyFollower){
+        connection = ConnectionMariaDB.getConnection();
+        boolean inserted = false;
+        if (!findIfAlreadyFriends(keyUser, keyFollower)){
+            if( keyUser != keyFollower){
+                try(PreparedStatement preparedStatement = connection.prepareStatement(INSERTINTOFRIENDS)) {
+
+                    preparedStatement.setInt(1, keyUser);
+                    preparedStatement.setInt(2, keyFollower);
+
+
+                    preparedStatement.executeQuery();
+                    inserted = true;
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return inserted;
+    }
+
+
 
     @Override
     public boolean update() {
@@ -160,6 +187,33 @@ public class UserDAO extends User implements DAO<User, String> {
         return userToReturn;
 
     }
+
+    public static boolean findIfAlreadyFriends(int keyUser, int keyFriend){
+        connection = ConnectionMariaDB.getConnection();
+        boolean friends = false;
+        if(keyUser>0 && keyFriend>0){
+
+            try(PreparedStatement statement = connection.prepareStatement(FINDKEYSINFRIENDS)) {
+                statement.setInt(1, keyUser);
+                statement.setInt(2, keyFriend);
+
+
+                ResultSet res = statement.executeQuery();
+                if(res.next()){
+                    friends = true;
+                }
+
+
+
+                } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+        return friends;
+    }
+
 
 
     public static UserDAO build(){

@@ -91,21 +91,18 @@ public class LoginController extends Controller implements Initializable {
     @FXML
     private void changeToMainWindow() throws IOException {
         Stage stage = (Stage) App.scene.getWindow();
-        // Obtener las dimensiones de la pantalla principal (del sistema)
+
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
 
-        // Ajustar la ventana al tamaño máximo disponible de la pantalla
+
         stage.setWidth(bounds.getWidth());
         stage.setHeight(bounds.getHeight());
 
-        // Centrar la ventana en la pantalla
+
         stage.setX(bounds.getMinX());
         stage.setY(bounds.getMinY());
 
-        /*App.scene.getWindow().setWidth(1100);
-        App.scene.getWindow().setHeight(1200);
-        App.scene.getWindow().centerOnScreen();*/
 
         App.setRoot(Scenes.ROOT.getURL());
 

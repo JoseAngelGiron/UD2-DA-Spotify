@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.github.JoseAngelGiron.utils.Utils.intToBoolean;
@@ -19,8 +20,11 @@ import static com.github.JoseAngelGiron.utils.Utils.intToBoolean;
 public class SongDAO extends Song implements DAO<Song, String> {
 
 
-    private final static String INSERT = "INSERT INTO SONG (Name, PhotoSong, SongFile, Gender, IDAlbum) VALUES (?,?,?,?,?)";
+    private final static String INSERT = "INSERT INTO SONG (Name, PhotoSong, SongFile, Gender, IDAlbum, NumberOfPlays) VALUES (?,?,?,?,?,?)";
     private final static String UPDATE = "UPDATE SONG SET Name=?, PhotoSong=?, SongFile=?, Gender=? WHERE IDSong=?;";
+    private final static String UPDATENUMBEROFPLAYS = "UPDATE SONG SET NumberOfPlays = NumberOfPlays + 1 WHERE IDSong = ?";
+
+
     private final static String DELETE= "DELETE FROM SONG WHERE IDSong=?";
 
     private final static String FINDSONGSBYALBUM = "SELECT S.* FROM SONG S WHERE S.IDAlbum = ?";
@@ -32,6 +36,15 @@ public class SongDAO extends Song implements DAO<Song, String> {
             "WHERE S.Name = ? "+
             "ORDER BY S.NumberOfPlays "+
             "LIMIT 5;";
+
+    private final static String FINDSONGSBYARTIST = "SELECT S.* FROM Song S " +
+            "JOIN Album A ON A.IDAlbum = S.IDAlbum " +
+            "JOIN Artist Ar ON Ar.IDArtist = A.IDArtist " +
+            "WHERE Ar.IDArtist = ? " +
+            "ORDER BY S.NumberOfPlays DESC " +
+            "LIMIT 10;";
+
+
 
 
     private static Connection connection;
@@ -82,6 +95,7 @@ public class SongDAO extends Song implements DAO<Song, String> {
                 preparedStatement.setBytes(3, songFile);
                 preparedStatement.setString(4, musicalGender);
                 preparedStatement.setInt(5, album.getId());
+                preparedStatement.setInt(6, 0);
 
                 preparedStatement.executeQuery();
                 inserted = true;
@@ -110,6 +124,26 @@ public class SongDAO extends Song implements DAO<Song, String> {
 
                 preparedStatement.executeQuery();
                 updated = true;
+
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+
+        return updated;
+    }
+
+
+    public boolean updateNumberOfPlays() {
+        boolean updated = false;
+
+        if(songFile!=null && photoSong!=null && name!=null && musicalGender !=null){
+            try(PreparedStatement preparedStatement = connection.prepareStatement(UPDATENUMBEROFPLAYS)) {
+
+                preparedStatement.setInt(1, id);
+                preparedStatement.executeQuery();
+                updated = true;
+
             }catch (SQLException e){
                 e.printStackTrace();
             }
@@ -204,6 +238,35 @@ public class SongDAO extends Song implements DAO<Song, String> {
 
     }
 
+    public static List<Song> findMostPopularSongs(int key){
+        List<Song> songList = new ArrayList<>();
+        connection = ConnectionMariaDB.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(FINDSONGSBYARTIST)) {
+            statement.setInt(1, key);
+            ResultSet res = statement.executeQuery();
+
+            while (res.next()) {
+                Song songToBeAdded = new Song();
+                songToBeAdded.setId(res.getInt("IDSong"));
+                songToBeAdded.setName(res.getString("Name"));
+                songToBeAdded.setPhotoSong(res.getBytes("PhotoSong"));
+                songToBeAdded.setSongFile(res.getBytes("SongFile"));
+
+                songToBeAdded.setNumberOfPlays(res.getInt("NumberOfPlays"));
+                songToBeAdded.setMusicalGender(res.getString("Gender"));
+
+
+                songList.add(songToBeAdded);
+            }
+
+            res.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return songList;
+    }
 
 
     @Override

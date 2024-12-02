@@ -85,17 +85,11 @@ public class AppController extends Controller implements Initializable {
         try {
             changeToHome();
         } catch (IOException e) {
-            System.out.println("La vista de bienvenida no se pudo cargar "+e);
+            System.out.println("Error "+e);
         }
 
-        //Esto es para hacer el listener
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            // Realizar la búsqueda en vivo
-            System.out.println("Buscando: " + newValue);
-            // Lógica de búsqueda (ejemplo: filtrar una lista)
-        });
-
     }
+
     /**
      * Opens a modal dialog window.
      * @param scene The scene to be displayed in the modal window.
@@ -151,19 +145,7 @@ public class AppController extends Controller implements Initializable {
     @FXML
     public void changeToSearch() throws IOException {
         String search = searchField.getText();
-        if(search!=null && !search.isEmpty()){
-            List<Song> listOfSongs = findSongAlbumAndArtist(search);
-            if(listOfSongs.isEmpty()){
-                noResultsFound.setVisible(true);
-                noResultsFound.setStyle("-fx-text-fill: red;");
-            }else{
-                noResultsFound.setVisible(false);
-                changeScene(Scenes.SEARCH, mainPane, listOfSongs);
-            }
-
-        }
-
-
+        changeScene(Scenes.SEARCH, mainPane, search);
     }
 
     /**

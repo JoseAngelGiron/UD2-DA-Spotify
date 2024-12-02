@@ -23,6 +23,20 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
     private final static String FINDARTISTANDUSERBYID = "SELECT A.*, U.* FROM ARTIST A " +
             "JOIN USER U ON U.IDUser=A.IDArtist WHERE IDArtist=? AND IDUSER=?";
 
+    private final static String FINDAMOUNTOFPLAYS = "SELECT SUM(S.NumberOfPlays) AS TotalPlays " +
+            "FROM Song S " +
+            "JOIN Album A ON A.IDAlbum = S.IDAlbum " +
+            "JOIN Artist Ar ON Ar.IDArtist = A.IDArtist " +
+            "WHERE Ar.IDArtist = ? " +
+            "GROUP BY Ar.IDArtist";
+
+    private final static String FINDARTISTSPLAYS = "SELECT U.Name, U.Photo, SUM(S.NumberOfPlays) AS TotalPlays FROM Song S " +
+            "JOIN Album A ON A.IDAlbum = S.IDAlbum " +
+            "JOIN Artist Ar ON Ar.IDArtist = A.IDArtist " +
+            "JOIN User U ON U.IDArtist = Ar.IDArtist " +
+            "WHERE Ar.IDArtist = ? " +
+            "GROUP BY Ar.IDArtist, U.Name, U.Photo";
+
     private final static String INSERT = "INSERT INTO ARTIST (IDArtist, MusicalGender, Verified) VALUES (?,?,?)";
 
 
@@ -137,6 +151,28 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
         }
 
         return artistToReturn;
+    }
+
+    public static int findAmountOfPlays(int key){
+
+        int totalPlays = 0;
+        connection = ConnectionMariaDB.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(FINDAMOUNTOFPLAYS)) {
+
+            statement.setInt(1, key);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                totalPlays = resultSet.getInt("TotalPlays");
+            }
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+        return totalPlays;
     }
 
 

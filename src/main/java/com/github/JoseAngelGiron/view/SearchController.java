@@ -1,12 +1,14 @@
 package com.github.JoseAngelGiron.view;
 
 import com.github.JoseAngelGiron.model.SongPlayer;
+import com.github.JoseAngelGiron.model.dao.SongDAO;
 import com.github.JoseAngelGiron.model.entity.Artist;
 import com.github.JoseAngelGiron.model.entity.Song;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
@@ -16,8 +18,10 @@ import javafx.scene.layout.Pane;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import static com.github.JoseAngelGiron.model.dao.SongDAO.findSongAlbumAndArtist;
 import static com.github.JoseAngelGiron.utils.ConvertBytes.bytesToImage;
 import static com.github.JoseAngelGiron.view.AppController.changeScene;
 
@@ -53,18 +57,32 @@ public class SearchController extends Controller implements Initializable {
     @FXML
     private ImageView imageSong;
 
+    @FXML
+    private Label result;
+
     private ObservableList<Song> observableListOfSongs;
     private Song actualSong;
+    private List<Song> listOfSongs;
 
 
 
     @Override
     public void onOpen(Object input, Object input2) throws IOException {
         if(input!=null){
-            ArrayList<Song> games = (ArrayList<Song>) input;
-            this.observableListOfSongs = FXCollections.observableArrayList(games);
-            this.tableViewOfSongs.setItems(this.observableListOfSongs);
-            showData();
+            String search = (String) input;
+            listOfSongs = findSongAlbumAndArtist(search);
+
+            if(listOfSongs.isEmpty()){
+                result.setText("No se han encontrado resultados");
+                result.setStyle("-fx-text-fill: red;");
+            }else{
+                result.setText("Resultados principales");
+                showData();
+            }
+
+        }else{
+            result.setText("No se han encontrado resultados");
+            result.setStyle("-fx-text-fill: red;");
         }
 
 
@@ -85,6 +103,8 @@ public class SearchController extends Controller implements Initializable {
     @FXML
     public void startSong() throws InterruptedException {
         if(actualSong!=null){
+            SongDAO songDAO = new SongDAO(actualSong);
+            songDAO.updateNumberOfPlays();
             SongPlayer.playSong(actualSong.getSongFile());
         }
     }
@@ -96,10 +116,13 @@ public class SearchController extends Controller implements Initializable {
     }
 
     public void changeArtistProfile(Artist artist) throws IOException {
-        changeScene(Scenes.ARTISTPROFILE, mainPane,artist);
+        changeScene(Scenes.ARTISTPROFILE, mainPane, artist);
     }
 
     private void showData(){
+
+        observableListOfSongs = FXCollections.observableArrayList(listOfSongs);
+        tableViewOfSongs.setItems(observableListOfSongs);
 
         tableColumnArtistPhoto.setCellValueFactory(cellData -> {
             ImageView imageView = new ImageView();

@@ -13,17 +13,15 @@
    <children>
       <TableView fx:id="tableViewOfSongs" layoutX="167.0" layoutY="191.0" prefHeight="335.0" prefWidth="779.0">
         <columns>
-          <TableColumn fx:id="tableColumnArtistPhoto" prefWidth="104.0" text="ArtistPhoto">
-               <columns>
-                <TableColumn fx:id="tableColumnArtistName" prefWidth="120.79997253417969" text="ArtistName" />
-               </columns></TableColumn>
-            <TableColumn fx:id="tableColumnAlbumPhoto" prefWidth="137.5999755859375" text="AlbumPhoto" />
-            <TableColumn fx:id="tableColumnAlbumName" prefWidth="102.39996337890625" text="AlbumName" />
-            <TableColumn fx:id="tableColumnSongPhoto" prefWidth="159.20001220703125" text="SongPhoto" />
-            <TableColumn fx:id="tableColumnSongName" prefWidth="128.00006103515625" text="SongName" />
+          <TableColumn fx:id="tableColumnArtistPhoto" editable="false" prefWidth="104.0" resizable="false" text="ArtistPhoto" />
+          <TableColumn fx:id="tableColumnArtistName" editable="false" prefWidth="120.79997253417969" resizable="false" text="ArtistName" />
+            <TableColumn fx:id="tableColumnAlbumPhoto" editable="false" prefWidth="137.5999755859375" resizable="false" text="AlbumPhoto" />
+            <TableColumn fx:id="tableColumnAlbumName" editable="false" prefWidth="103.20001220703125" resizable="false" text="AlbumName" />
+            <TableColumn fx:id="tableColumnSongPhoto" editable="false" prefWidth="173.60003662109375" resizable="false" text="SongPhoto" />
+            <TableColumn fx:id="tableColumnSongName" editable="false" prefWidth="137.60002441406255" resizable="false" text="SongName" />
         </columns>
       </TableView>
-      <Label layoutX="167.0" layoutY="157.0" prefHeight="18.0" prefWidth="194.0" text="Resultados principales" />
+      <Label fx:id="result" layoutX="167.0" layoutY="157.0" prefHeight="18.0" prefWidth="194.0" text="Resultados principales" />
       <TitledPane fx:id="reproductor" animated="false" expanded="false" layoutY="6.0" prefHeight="114.0" prefWidth="543.0" text="Reproductor">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="88.0" prefWidth="503.0">

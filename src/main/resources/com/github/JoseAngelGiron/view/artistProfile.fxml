@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="952.0" prefWidth="775.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JoseAngelGiron.view.ArtistProfileController">
+<AnchorPane prefHeight="952.0" prefWidth="1010.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JoseAngelGiron.view.ArtistProfileController">
    <children>
       <GridPane layoutX="3.0" layoutY="1.0" prefHeight="200.0" prefWidth="764.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="1.0">
         <columnConstraints>
@@ -27,23 +27,21 @@
          <children>
             <ImageView fx:id="artistPhoto" fitHeight="110.0" fitWidth="197.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label fx:id="artistName" prefHeight="55.0" prefWidth="214.0" text="Nombre_Artista" GridPane.rowIndex="1" />
-            <Label prefHeight="18.0" prefWidth="182.0" text="Reproducciones totales" GridPane.rowIndex="2" />
+            <Label fx:id="totalPlays" prefHeight="18.0" prefWidth="182.0" text="Reproducciones totales" GridPane.rowIndex="2" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ImageView fitHeight="25.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
                   <Label prefHeight="18.0" prefWidth="65.0" text="Verified" />
+                  <ImageView fx:id="verified" fitHeight="25.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </HBox>
          </children>
       </GridPane>
-      <GridPane layoutX="4.0" layoutY="260.8" prefHeight="678.0" prefWidth="775.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="261.0">
+      <GridPane layoutX="4.0" layoutY="643.2" prefHeight="296.0" prefWidth="775.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="643.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="739.200048828125" minWidth="10.0" prefWidth="739.200048828125" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="99.59998168945313" minHeight="10.0" prefHeight="52.199988746643065" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="202.79999103546143" minHeight="10.0" prefHeight="67.60000000000001" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="199.59998168945313" minHeight="10.0" prefHeight="59.99997558593749" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="199.59998168945313" minHeight="10.0" prefHeight="76.7999755859375" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="199.59998168945313" minHeight="10.0" prefHeight="38.00002441406252" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="199.59998168945313" minHeight="10.0" prefHeight="108.99998779296874" vgrow="SOMETIMES" />
@@ -51,39 +49,33 @@
             <RowConstraints maxHeight="199.59998168945313" minHeight="10.0" prefHeight="153.00002441406252" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Albums del artista" GridPane.rowIndex="2" />
-            <Label text="Perfiles de artistas que sigue el artista:" GridPane.rowIndex="4" />
-            <TableView fx:id="listOfSongsTable" prefHeight="143.0" prefWidth="386.0" GridPane.rowIndex="1">
+            <Label prefHeight="18.0" prefWidth="231.0" text="Otros perfiles de artistas recomendados:" GridPane.rowIndex="2" />
+            <TableView fx:id="artistFollowersTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
               <columns>
-                <TableColumn fx:id="albumPhotoColumn" editable="false" prefWidth="125.60003662109375" text="FotoAlbum" />
-                <TableColumn fx:id="nameSongColumn" editable="false" prefWidth="168.0" text="NombreCancion" />
-                  <TableColumn fx:id="numberOfPlaysColumn" editable="false" prefWidth="270.39996337890625" text="Reproducciones" />
-                  <TableColumn fx:id="songDurationColumn" editable="false" prefWidth="170.400146484375" text="duración" />
+                <TableColumn fx:id="photoFollowerColumn" editable="false" prefWidth="119.20001220703125" text="PhotoArtist" />
+                <TableColumn fx:id="nameFollowerColumn" editable="false" prefWidth="151.20001220703125" text="Nombre" />
               </columns>
             </TableView>
-            <Label prefHeight="18.0" prefWidth="140.0" text="POPULARES" />
-            <TableView fx:id="albumsTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
-              <columns>
-                <TableColumn fx:id="nameAlbum" editable="false" prefWidth="113.6000075340271" text="Nombre">
-                     <columns>
-                      <TableColumn fx:id="photoColumn" editable="false" prefWidth="135.20000457763672" text="AlbumPhoto" />
-                     </columns>
-                  </TableColumn>
-              </columns>
-            </TableView>
-            <TableView fx:id="artistFollowersTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
-              <columns>
-                <TableColumn fx:id="photoFollowerColumn" editable="false" prefWidth="119.20001220703125" text="PhotoArtist">
-                     <columns>
-                      <TableColumn fx:id="nameFollowerColumn" editable="false" prefWidth="151.20001220703125" text="Nombre" />
-                     </columns>
-                  </TableColumn>
-              </columns>
-            </TableView>
-            <Label prefHeight="18.0" prefWidth="149.0" text="Información: " GridPane.rowIndex="6" />
-            <Label text="Descripción" GridPane.rowIndex="7" />
+            <Label prefHeight="18.0" prefWidth="149.0" text="Información: " GridPane.rowIndex="4" />
+            <Label text="Descripción" GridPane.rowIndex="5" />
          </children>
       </GridPane>
-      <Button layoutX="14.0" layoutY="223.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="128.0" text="Seguir" />
+      <Button layoutX="14.0" layoutY="223.0" mnemonicParsing="false" onAction="#followArtist" prefHeight="26.0" prefWidth="128.0" text="Seguir" />
+      <TableView fx:id="listOfSongsTable" layoutX="22.0" layoutY="308.0" prefHeight="143.0" prefWidth="710.0">
+        <columns>
+          <TableColumn fx:id="photoColumn" editable="false" prefWidth="232.79998779296875" text="FotoAlbum" />
+          <TableColumn fx:id="nameSongColumn" editable="false" prefWidth="224.0" text="NombreCancion" />
+            <TableColumn fx:id="numberOfPlaysColumn" editable="false" prefWidth="280.800048828125" text="Reproducciones" />
+        </columns>
+      </TableView>
+      <Label layoutX="24.0" layoutY="272.0" prefHeight="18.0" prefWidth="140.0" text="Canciones mas popules" />
+      <TableView fx:id="albumsTable" layoutX="24.0" layoutY="521.0" prefHeight="87.0" prefWidth="710.0">
+        <columns>
+          <TableColumn fx:id="albumPhotoColumn" editable="false" prefWidth="232.800048828125" text="AlbumPhoto" />
+          <TableColumn fx:id="nameAlbum" editable="false" prefWidth="292.0" text="Nombre" />
+        </columns>
+      </TableView>
+      <Label layoutX="22.0" layoutY="485.0" text="Albums del artista" />
+      <Label fx:id="resultFollow" layoutX="202.0" layoutY="228.0" prefHeight="18.0" prefWidth="119.0" text="resultFollow" />
    </children>
 </AnchorPane>
