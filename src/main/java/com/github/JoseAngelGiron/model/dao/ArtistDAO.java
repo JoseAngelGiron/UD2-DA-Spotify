@@ -32,12 +32,12 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
             "GROUP BY Ar.IDArtist";
 
     private final static String FINDARTISTSPLAYS =
-            "SELECT Ar.IDArtist, U.Name, U.Photo, Ar.Verified, SUM(S.NumberOfPlays) AS TotalPlays " +
+            "SELECT Ar.IDArtist, U.Nick, U.Photo, Ar.Verified, SUM(S.NumberOfPlays) AS TotalPlays " +
                     "FROM Song S " +
                     "JOIN Album A ON A.IDAlbum = S.IDAlbum " +
                     "JOIN Artist Ar ON Ar.IDArtist = A.IDArtist " +
                     "JOIN User U ON U.IDUser = Ar.IDArtist " +
-                    "GROUP BY Ar.IDArtist, U.Name, U.Photo, Ar.Verified " +
+                    "GROUP BY Ar.IDArtist, U.Nick, U.Photo, Ar.Verified " +
                     "ORDER BY TotalPlays DESC " +
                     "LIMIT 5";
 
@@ -195,7 +195,7 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
                 Artist artistToAdd = new Artist();
 
                 artistToAdd.setId(resultSet.getInt("IDArtist"));
-                artistToAdd.setName(resultSet.getString("Name"));
+                artistToAdd.setName(resultSet.getString("Nick"));
                 artistToAdd.setVerified(intToBoolean(resultSet.getInt("Verified")));
                 artistToAdd.setTotalPlays(resultSet.getInt("TotalPlays"));
                 artistToAdd.setPhoto(resultSet.getBytes("Photo"));

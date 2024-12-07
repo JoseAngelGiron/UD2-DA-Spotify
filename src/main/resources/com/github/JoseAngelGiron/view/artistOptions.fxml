@@ -51,7 +51,7 @@
             <Insets left="60.0" />
          </padding>
       </Pane>
-      <Pane fx:id="addAlbumPane" layoutX="26.0" layoutY="462.0" prefHeight="197.0" prefWidth="518.0" AnchorPane.bottomAnchor="181.20000000000005" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="765.2" AnchorPane.topAnchor="462.0">
+      <Pane fx:id="addAlbumPane" layoutX="26.0" layoutY="462.0" prefHeight="197.0" prefWidth="518.0" visible="false" AnchorPane.bottomAnchor="181.20000000000005" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="765.2" AnchorPane.topAnchor="462.0">
          <children>
             <GridPane layoutY="2.0" prefHeight="198.0" prefWidth="449.0">
               <columnConstraints>

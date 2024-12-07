@@ -47,7 +47,7 @@ public class ConfigurationController extends Controller implements Initializable
     @FXML
     private void registerAsArtist(){
         User currentUser = UserSession.UserSession().getUserLoggedIn();
-        Artist artistToInsert = new Artist(currentUser.getId(), "por ahora de prueba", false);
+        Artist artistToInsert = new Artist(currentUser.getId(), "ninguno", false);
 
 
         ArtistDAO artistDAO = new ArtistDAO(artistToInsert);

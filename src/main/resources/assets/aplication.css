@@ -1,3 +1,48 @@
+/* Estilo para el ScrollPane principal */
+.scroll-pane {
+    -fx-background-color: #1e1e1e; /* Fondo oscuro */
+    -fx-padding: 10px; /* Espaciado interno */
+    -fx-border-color: #3a3a3a; /* Color de borde */
+    -fx-border-width: 2px; /* Grosor del borde */
+    -fx-border-radius: 10px; /* Bordes redondeados */
+    -fx-background-insets: 0, 1; /* Inset para el fondo */
+}
+
+/* Estilo para la barra de desplazamiento */
+.scroll-pane .scroll-bar {
+    -fx-background-color: #3a3a3a; /* Color del fondo de la barra */
+    -fx-background-radius: 5px; /* Bordes redondeados para la barra */
+}
+
+/* Estilo para el área de desplazamiento */
+.scroll-pane .viewport {
+    -fx-background-color: transparent; /* Fondo transparente para el área de contenido */
+}
+
+/* Estilo para el contenido dentro del ScrollPane */
+.scroll-pane .content {
+    -fx-background-color: transparent; /* Fondo transparente para el contenido */
+    -fx-padding: 10px; /* Espaciado interno del contenido */
+}
+
+/* Estilo para la barra de desplazamiento horizontal */
+.scroll-pane .horizontal-bar {
+    -fx-background-color: #4a4a4a; /* Barra horizontal con color más claro */
+}
+
+/* Estilo para la barra de desplazamiento vertical */
+.scroll-pane .vertical-bar {
+    -fx-background-color: #4a4a4a; /* Barra vertical con color más claro */
+}
+
+/* Hover (cuando el mouse pasa sobre la barra de desplazamiento) */
+.scroll-pane .scroll-bar:hover {
+    -fx-background-color: #555555; /* Cambia de color cuando se pasa el mouse */
+}
+
+
+
+
 /* Estilo para el botón de "Eliminar" */
 .delete-button {
     -fx-background-color: #ff4d4d; /* Fondo rojo */
