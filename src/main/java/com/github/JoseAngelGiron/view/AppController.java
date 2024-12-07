@@ -34,7 +34,7 @@ public class AppController extends Controller implements Initializable {
     private Pane mainWindow;
 
     @FXML
-    private AnchorPane mainPane;
+    private ScrollPane scrollMainPane;
 
     @FXML
     private Button administrationButton;
@@ -82,6 +82,7 @@ public class AppController extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         showAdministrationButton();
         showArtistButton();
+
         try {
             changeToHome();
         } catch (IOException e) {
@@ -129,6 +130,20 @@ public class AppController extends Controller implements Initializable {
         centerController.onOpen(data, null);
     }
 
+    public static void changeScene(Scenes scene, ScrollPane scrollPane, Object data) throws IOException {
+
+        scrollPane.setContent(null);
+
+        View view = loadFXML(scene);
+
+        scrollPane.setContent(view.scene);
+
+        centerController = view.controller;
+        centerController.onOpen(data, null);
+    }
+
+
+
 
     public static View loadFXML(Scenes scenes) throws IOException {
         String url = scenes.getURL();
@@ -145,7 +160,7 @@ public class AppController extends Controller implements Initializable {
     @FXML
     public void changeToSearch() throws IOException {
         String search = searchField.getText();
-        changeScene(Scenes.SEARCH, mainPane, search);
+        changeScene(Scenes.SEARCH, scrollMainPane, search);
     }
 
     /**
@@ -167,7 +182,7 @@ public class AppController extends Controller implements Initializable {
      */
     @FXML
     public void changeToProfile() throws IOException {
-        changeScene(Scenes.OWNPROFILE, mainPane, null);
+        changeScene(Scenes.OWNPROFILE, scrollMainPane, null);
     }
 
     /**
@@ -176,7 +191,7 @@ public class AppController extends Controller implements Initializable {
      */
     @FXML
     public void changeToConfiguration() throws IOException {
-        changeScene(Scenes.CONFIGURATION, mainPane, null);
+        changeScene(Scenes.CONFIGURATION, scrollMainPane, null);
     }
 
     /**
@@ -185,7 +200,7 @@ public class AppController extends Controller implements Initializable {
      */
     @FXML
     public void changeToAdminArea() throws IOException {
-        changeScene(Scenes.ADMIN, mainPane, null);
+        changeScene(Scenes.ADMIN, scrollMainPane, null);
     }
 
     /**
@@ -194,7 +209,7 @@ public class AppController extends Controller implements Initializable {
      */
     @FXML
     public void changeToArtistOptions() throws IOException {
-        changeScene(Scenes.ARTISTOPTIONS, mainPane, null);
+        changeScene(Scenes.ARTISTOPTIONS, scrollMainPane, null);
     }
 
 
@@ -205,7 +220,7 @@ public class AppController extends Controller implements Initializable {
      */
     @FXML
     public void changeToHome() throws IOException {
-        changeScene(Scenes.HOME, mainPane, null);
+        changeScene(Scenes.HOME, scrollMainPane, null);
     }
 
 

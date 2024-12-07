@@ -10,13 +10,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.geometry.Orientation;
+import javafx.scene.control.*;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+
+import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +35,8 @@ public class ArtistProfileController extends Controller implements Initializable
     private final static String ICONVERIFIED ="C:\\Users\\the_l\\IdeaProjects\\Proyect-UD2-DA\\src\\main\\resources\\assets\\6928991.png";
     private final static String ICONNOTVERIFIED ="C:\\Users\\the_l\\IdeaProjects\\Proyect-UD2-DA\\src\\main\\resources\\assets\\not.png";
 
+    @FXML
+    private AnchorPane anchorPane;
 
     @FXML
     private Label artistName;
@@ -67,13 +70,8 @@ public class ArtistProfileController extends Controller implements Initializable
 
 
     @FXML
-    private TableView<Album> albumsTable;
+    private ListView<Album> albumsListView;
 
-    @FXML
-    private TableColumn<Album, ImageView> albumPhotoColumn;
-
-    @FXML
-    private TableColumn<Album, String> nameAlbum;
 
 
     @FXML
@@ -95,6 +93,7 @@ public class ArtistProfileController extends Controller implements Initializable
 
     @Override
     public void onOpen(Object input, Object input2) throws IOException {
+
         artistSelected = (Artist) input;
         showDataArtist();
         showMostPopularSongs();
@@ -126,8 +125,6 @@ public class ArtistProfileController extends Controller implements Initializable
             resultFollow.setStyle("-fx-text-fill: red;");
             resultFollow.setText("Ya sigues a este artista");
         }
-
-
 
     }
 
@@ -184,27 +181,48 @@ public class ArtistProfileController extends Controller implements Initializable
     }
 
     private void showAlbums() {
-
         AlbumDAO albumDAO = new AlbumDAO();
         List<Album> albumList = albumDAO.findListOfAlbumByArtistID(artistSelected.getId());
 
         AlbumsOfArtist = FXCollections.observableArrayList(albumList);
+        albumsListView.setItems(AlbumsOfArtist);
 
-        albumsTable.setItems(AlbumsOfArtist);
+        // Cambiar orientación a horizontal
+        albumsListView.setOrientation(Orientation.HORIZONTAL);
 
-        albumPhotoColumn.setCellValueFactory(cellData -> {
-            Album album = cellData.getValue();
-            ImageView imageView = new ImageView(bytesToImage(album.getImage()));
-            imageView.setFitHeight(50);
-            imageView.setFitWidth(50);
-            imageView.setPreserveRatio(true);
-            return new ReadOnlyObjectWrapper<>(imageView);
-        });
+        albumsListView.setCellFactory(param -> new ListCell<Album>() {
+            private final VBox content;
+            private final ImageView albumImage;
+            private final Label albumName;
 
-        nameAlbum.setCellValueFactory(cellData -> {
-            Album album = cellData.getValue();
-            return new SimpleStringProperty(album.getName());
+            {
+                albumImage = new ImageView();
+                albumImage.setFitHeight(100); // Tamaño de la imagen
+                albumImage.setFitWidth(100);
+                albumImage.setPreserveRatio(true);
+
+                albumName = new Label();
+                albumName.setStyle("-fx-font-size: 14; -fx-text-fill: white;"); // Estilo del texto
+
+                content = new VBox(albumImage, albumName);
+                content.setSpacing(5); // Espaciado entre imagen y texto
+                content.setStyle("-fx-alignment: center;"); // Centrar imagen y texto
+            }
+
+            @Override
+            protected void updateItem(Album album, boolean empty) {
+                super.updateItem(album, empty);
+                if (empty || album == null) {
+                    setGraphic(null);
+                } else {
+                    albumImage.setImage(bytesToImage(album.getImage()));
+                    albumName.setText(album.getName());
+                    setGraphic(content);
+                }
+            }
         });
     }
+
+
 
 }

@@ -9,6 +9,9 @@ import java.util.List;
 
 public class AdminDAO extends Admin implements DAO<Admin, String> {
 
+    private static final String INSERT = "INSERT INTO ADMIN (IDAdmin, ISAdmin) VALUES (?,?)";
+    private final static String UPDATE = "UPDATE ADMIN SET ISAdmin=? WHERE IDAdmin=?;";
+    private final static String DELETE= "DELETE FROM ADMIN WHERE IDAdmin=?";
 
     private Connection connection;
 
