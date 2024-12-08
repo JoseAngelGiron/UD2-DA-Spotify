@@ -21,13 +21,19 @@ public class AlbumDAO extends Album implements DAO<Album, String> {
 
     private final static String INSERT = "INSERT INTO ALBUM (Name, Photo, IDArtist, YearOfRelease) VALUES (?,?,?,?)";
     private final static String UPDATE = "UPDATE ALBUM SET Name=?, Photo=?, YearOfRelease=? WHERE IDAlbum=?;";
-    private final static String DELETE= "DELETE FROM ALBUM WHERE IDAlbum=?";
+    private final static String DELETE = "DELETE FROM ALBUM WHERE IDAlbum=?";
+
+    private final static String FINDALBUMBYARTISTID = "SELECT A.* FROM ALBUM A WHERE A.IDArtist = ?";
 
     private final static String FINDALBUMBYARTIST = "SELECT A.* FROM ALBUM A " +
             "JOIN ARTIST Ar ON Ar.IDArtist = A.IDArtist " +
             "WHERE Ar.IDArtist = ? AND A.Name = ?";
 
-    private final static String FINDALBUMBYARTISTID = "SELECT A.* FROM ALBUM A WHERE A.IDArtist = ?";
+    private final static String FINDARTISTBYALBUM = "SELECT Ar.*, U.* FROM ARTIST Ar " +
+            "JOIN ALBUM A ON A.IDArtist = Ar.IDArtist " +
+            "JOIN USER U ON U.IDUser = Ar.IDArtist "+
+            "WHERE IDAlbum = ?";
+
 
     private final static String FINDALBUMSANDSONGSBYARTIST = "SELECT A.* FROM ALBUM A " +
             "WHERE A.IDArtist=?";
@@ -119,6 +125,8 @@ public class AlbumDAO extends Album implements DAO<Album, String> {
     }
 
 
+
+
     public List<Album> findListOfAlbumByArtistID(int key){
         List<Album> albumListToReturn = new ArrayList<>();
         if(key!=0) {
@@ -144,7 +152,7 @@ public class AlbumDAO extends Album implements DAO<Album, String> {
         return albumListToReturn;
     }
 
-    public List<Album> findByArtist(Artist artist){
+    public List<Album> findAlbumsAndSongs(Artist artist){
         List<Album> listOfAlbums = new ArrayList<>();
 
 
@@ -176,6 +184,42 @@ public class AlbumDAO extends Album implements DAO<Album, String> {
 
 
         return listOfAlbums;
+    }
+
+    public static Artist findArtistByAlbumID(int key){
+
+        Artist artistToReturn = new Artist();
+        connection = ConnectionMariaDB.getConnection();
+
+        if(key>0){
+
+            try(PreparedStatement statement = connection.prepareStatement(FINDARTISTBYALBUM)) {
+                statement.setInt(1, key);
+                ResultSet res = statement.executeQuery();
+
+                if(res.next()){
+
+                    artistToReturn.setId(res.getInt("IDArtist"));
+                    artistToReturn.setName(res.getString("Nick"));
+                    artistToReturn.setPassword(res.getString("Password"));
+                    artistToReturn.setPhoto(res.getBytes("Photo"));
+                    artistToReturn.setName(res.getString("Name"));
+                    artistToReturn.setSurname(res.getString("Surname"));
+                    artistToReturn.setEmail(res.getString("Email"));
+                    artistToReturn.setDni(res.getString("DNI"));
+                    artistToReturn.setAddress(res.getString("Adress"));
+                    artistToReturn.setMusicalGender(res.getString("MusicalGender"));
+                    artistToReturn.setVerified(intToBoolean(res.getInt("Verified")));
+
+                }
+
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+
+        }
+
+        return artistToReturn;
     }
 
     public static Album findByArtistNameAndAlbumId(Artist artist, Album album) {
@@ -226,7 +270,7 @@ public class AlbumDAO extends Album implements DAO<Album, String> {
         @Override
         public List<Song> getSongsOfAlbum() {
             if (super.getSongsOfAlbum() == null) {
-                setSongsOfAlbum(SongDAO.build().findSongsById(id));
+                setSongsOfAlbum(SongDAO.build().findSongsByAlbumId(id));
             }
             return super.getSongsOfAlbum();
         }

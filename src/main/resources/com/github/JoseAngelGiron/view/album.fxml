@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="1143.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JoseAngelGiron.view.AlbumController">
+   <children>
+      <ImageView fx:id="albumImageView" fitHeight="180.0" fitWidth="219.0" layoutX="14.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="titleAlbum" layoutX="265.0" layoutY="94.0" prefHeight="49.0" prefWidth="316.0" text="Titulo" />
+      <Label layoutX="265.0" layoutY="56.0" prefHeight="18.0" prefWidth="100.0" text="Albúm" />
+      <Label fx:id="artistName" layoutX="315.0" layoutY="169.0" prefHeight="18.0" prefWidth="85.0" text="Artista" />
+      <ImageView fx:id="artistImage" fitHeight="38.0" fitWidth="43.0" layoutX="265.0" layoutY="159.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="yearOfRelease" layoutX="423.0" layoutY="169.0" prefHeight="18.0" prefWidth="113.0" text="AñoLanzamiento" />
+      <TableView fx:id="songsTableView" layoutX="45.0" layoutY="280.0" prefHeight="414.0" prefWidth="802.0">
+        <columns>
+          <TableColumn fx:id="numberColumn" prefWidth="75.0" text="#" />
+          <TableColumn fx:id="titleColumn" prefWidth="726.3999847412109" text="Titulo" />
+        </columns>
+      </TableView>
+      <Label layoutX="45.0" layoutY="252.0" prefHeight="18.0" prefWidth="157.0" text="Canciones" />
+      <Label layoutX="45.0" layoutY="714.0" prefHeight="18.0" prefWidth="194.0" text="Mas albums" />
+      <ListView fx:id="albumsRelated" layoutX="45.0" layoutY="752.0" prefHeight="189.0" prefWidth="802.0" />
+   </children>
+</AnchorPane>

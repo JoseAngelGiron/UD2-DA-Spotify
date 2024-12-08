@@ -2,7 +2,6 @@ package com.github.JoseAngelGiron.model.dao;
 
 import com.github.JoseAngelGiron.model.connection.ConnectionMariaDB;
 import com.github.JoseAngelGiron.model.entity.Artist;
-import com.github.JoseAngelGiron.model.entity.User;
 
 
 import java.io.IOException;
@@ -18,6 +17,8 @@ import static com.github.JoseAngelGiron.utils.Utils.intToBoolean;
 
 
 public class ArtistDAO extends Artist implements DAO <Artist, String> {
+
+    private final static String INSERT = "INSERT INTO ARTIST (IDArtist, MusicalGender, Verified) VALUES (?,?,?)";
 
     private final static String FINDBYID = "SELECT * FROM ARTIST WHERE IDArtist=?";
 
@@ -41,9 +42,15 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
                     "ORDER BY TotalPlays DESC " +
                     "LIMIT 5";
 
+    private final static String FINDARTISTSVERIFIED = "SELECT Ar.*, U.* " +
+            "FROM ARTIST Ar " +
+            "JOIN USER U ON Ar.IDArtist = U.IDUser " +
+            "JOIN FRIEND F ON U.IDUser = F.IDUser " +
+            "WHERE Ar.Verified = 1 AND Ar.IDArtist = ?";
 
 
-    private final static String INSERT = "INSERT INTO ARTIST (IDArtist, MusicalGender, Verified) VALUES (?,?,?)";
+
+
 
 
 
@@ -157,6 +164,45 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
         }
 
         return artistToReturn;
+    }
+
+    public static List<Artist> findArtistsVerifiedThatFollows(int key){
+        List<Artist> artistsRelatedToReturn = new ArrayList<>();
+        connection = ConnectionMariaDB.getConnection();
+
+        if(key>0){
+
+            try(PreparedStatement statement = connection.prepareStatement(FINDARTISTSVERIFIED)){
+                statement.setInt(1, key);
+                ResultSet res = statement.executeQuery();
+
+                while (res.next()){
+                    Artist artistToAdd = new Artist();
+
+                    artistToAdd.setId(res.getInt("IDArtist"));
+                    artistToAdd.setMusicalGender(res.getString("MusicalGender"));
+                    artistToAdd.setVerified(intToBoolean(res.getInt("Verified")));
+                    artistToAdd.setName(res.getString("Nick"));
+                    artistToAdd.setPassword(res.getString("Password"));
+                    artistToAdd.setPhoto(res.getBytes("Photo"));
+                    artistToAdd.setName(res.getString("Name"));
+                    artistToAdd.setSurname(res.getString("Surname"));
+                    artistToAdd.setEmail(res.getString("Email"));
+                    artistToAdd.setDni(res.getString("DNI"));
+                    artistToAdd.setAddress(res.getString("Adress"));
+                    artistToAdd.setMusicalGender(res.getString("MusicalGender"));
+                    artistToAdd.setVerified(intToBoolean(res.getInt("Verified")));
+
+                    artistsRelatedToReturn.add(artistToAdd);
+                }
+
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+
+        }
+
+        return artistsRelatedToReturn;
     }
 
     public static int findAmountOfPlays(int key){

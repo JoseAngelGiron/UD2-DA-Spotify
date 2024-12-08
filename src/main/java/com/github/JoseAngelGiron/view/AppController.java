@@ -143,8 +143,6 @@ public class AppController extends Controller implements Initializable {
     }
 
 
-
-
     public static View loadFXML(Scenes scenes) throws IOException {
         String url = scenes.getURL();
         FXMLLoader loader = new FXMLLoader(App.class.getResource(url + ".fxml"));
@@ -162,6 +160,7 @@ public class AppController extends Controller implements Initializable {
         String search = searchField.getText();
         changeScene(Scenes.SEARCH, scrollMainPane, search);
     }
+
 
     /**
      * Changes the scene to the administration area.
