@@ -1,6 +1,10 @@
 package com.github.JoseAngelGiron.view;
 
+import com.github.JoseAngelGiron.model.UserSession;
 import com.github.JoseAngelGiron.model.entity.Artist;
+import com.github.JoseAngelGiron.model.entity.Song;
+import com.github.JoseAngelGiron.model.entity.User;
+import com.github.JoseAngelGiron.view.modifiedClasses.SongCell;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -8,10 +12,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,6 +29,7 @@ import java.util.ResourceBundle;
 
 import static com.github.JoseAngelGiron.model.SongPlayer.stopSong;
 import static com.github.JoseAngelGiron.model.dao.ArtistDAO.findMostPopularArtists;
+import static com.github.JoseAngelGiron.model.dao.UserDAO.findLastSongsSearched;
 import static com.github.JoseAngelGiron.utils.ConvertBytes.bytesToImage;
 
 
@@ -38,11 +47,15 @@ public class HomeController extends Controller implements Initializable {
     @FXML
     private TableColumn<Artist, Integer> totalOfPlays;
 
+    @FXML
+    private FlowPane songFlowPane;
+
 
 
     @Override
     public void onOpen(Object input, Object input2) throws IOException {
         showData();
+        showLatestSongs();
     }
 
     @Override
@@ -88,5 +101,25 @@ public class HomeController extends Controller implements Initializable {
     }
 
 
+    private void showLatestSongs() {
+        User currentUser = UserSession.UserSession().getUserLoggedIn();
+        List<Song> songList = findLastSongsSearched(currentUser.getId());
 
+
+        ObservableList<Song> observableSongs = FXCollections.observableArrayList(songList);
+
+
+        songFlowPane.getChildren().clear();
+
+
+        for (Song song : observableSongs) {
+            SongCell songCell = new SongCell();
+            songCell.updateItem(song, false);
+
+            songFlowPane.getChildren().add(songCell.getGraphic());
+        }
+    }
 }
+
+
+

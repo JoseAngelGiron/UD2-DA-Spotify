@@ -1,6 +1,7 @@
 package com.github.JoseAngelGiron.view;
 
 import com.github.JoseAngelGiron.model.SongPlayer;
+import com.github.JoseAngelGiron.model.UserSession;
 import com.github.JoseAngelGiron.model.dao.SongDAO;
 import com.github.JoseAngelGiron.model.entity.Artist;
 import com.github.JoseAngelGiron.model.entity.Song;
@@ -17,15 +18,20 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import static com.github.JoseAngelGiron.model.dao.SongDAO.findSongAlbumAndArtist;
+import static com.github.JoseAngelGiron.model.dao.UserDAO.insertIntoSearch;
 import static com.github.JoseAngelGiron.utils.ConvertBytes.bytesToImage;
 import static com.github.JoseAngelGiron.view.AppController.changeScene;
 
 public class SearchController extends Controller implements Initializable {
+
+    private Instant lastClickTime = Instant.now().minusSeconds(1);
 
     @FXML
     private Pane mainPane;
@@ -103,6 +109,7 @@ public class SearchController extends Controller implements Initializable {
     @FXML
     public void startSong() throws InterruptedException {
         if(actualSong!=null){
+
             SongDAO songDAO = new SongDAO(actualSong);
             songDAO.updateNumberOfPlays();
             SongPlayer.playSong(actualSong.getSongFile());
@@ -208,13 +215,21 @@ public class SearchController extends Controller implements Initializable {
                     imageView.setFitHeight(50);
                     imageView.setFitWidth(50);
 
-
                     setOnMouseClicked(event -> {
                         Song song = getTableView().getItems().get(getIndex());
                         if (song != null) {
+                            Instant now = Instant.now();
+
+
+                            if (Duration.between(lastClickTime, now).toMillis() < 2000) {
+                                return;
+                            }
+                            lastClickTime = now;
+
                             actualSong = song;
                             try {
                                 startSong();
+                                insertIntoSearch(UserSession.UserSession().getUserLoggedIn().getId(), actualSong.getId());
                             } catch (InterruptedException e) {
                                 throw new RuntimeException(e);
                             }
