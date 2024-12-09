@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.github.JoseAngelGiron.utils.Utils.intToBoolean;
@@ -23,13 +24,25 @@ public class UserDAO extends User implements DAO<User, String> {
                     "LEFT JOIN ARTIST A ON U.IDUser = A.IDArtist " +
                     "LEFT JOIN ADMIN AD ON U.IDUser = AD.IDAdmin "+
                     "WHERE U.Email = ?";
-    private static final String FINDKEYSINFRIENDS = "SELECT IDUser, IDFriend FROM FRIENDS WHERE IDUser=? AND IDFriend=?";
 
+
+    private static final String FINDBYNAME = "SELECT * FROM USER WHERE Nick =?";
 
     private static final String INSERT = "INSERT INTO USER (Nick, Password, Email) VALUES (?,?,?)";
     private static final String INSERTINTOFRIENDS = "INSERT INTO FRIENDS (IDUser, IDFriend) VALUES (?,?)";
     private final static String UPDATE = "UPDATE USER SET Nick=?, Password=?, Photo=?, Name=?, Surname=? ,DNI=?, Adress=? WHERE IDUser=?;";
     private final static String DELETE= "DELETE FROM USER WHERE IDuser=?";
+
+    private static final String FINDKEYSINFRIENDS = "SELECT IDUser, IDFriend FROM FRIENDS WHERE IDUser=? AND IDFriend=?";
+
+
+
+    private static final String FINDFOLLOWERS = "SELECT U.* FROM USER U " +
+            "WHERE U.IDUser IN ( " +
+            "SELECT F.IDUser FROM FRIENDS F " +
+            "WHERE F.IDFriend = ? " +
+            ")";
+    private static final String DELETEFOLLOWER = "DELETE FROM FRIENDS WHERE IDUser = ? AND IDFriend = ?";
 
 
     private static Connection connection ;
@@ -73,7 +86,7 @@ public class UserDAO extends User implements DAO<User, String> {
 
     @Override
     public boolean insert() {
-
+        boolean inserted = false;
         if(name != null && password != null && email != null){
             try(PreparedStatement preparedStatement = connection.prepareStatement(INSERT)) {
 
@@ -82,35 +95,13 @@ public class UserDAO extends User implements DAO<User, String> {
                 preparedStatement.setString(3, email);
 
                 preparedStatement.executeQuery();
-
+                inserted = true;
             }catch (SQLException e){
                 e.printStackTrace();
             }
         }
-        return false;
-
-    }
-
-    public static boolean insertIntoFriends(int keyUser, int keyFollower){
-        connection = ConnectionMariaDB.getConnection();
-        boolean inserted = false;
-        if (!findIfAlreadyFriends(keyUser, keyFollower)){
-            if( keyUser != keyFollower){
-                try(PreparedStatement preparedStatement = connection.prepareStatement(INSERTINTOFRIENDS)) {
-
-                    preparedStatement.setInt(1, keyUser);
-                    preparedStatement.setInt(2, keyFollower);
-
-
-                    preparedStatement.executeQuery();
-                    inserted = true;
-                }catch (SQLException e){
-                    e.printStackTrace();
-                }
-            }
-        }
-
         return inserted;
+
     }
 
 
@@ -145,6 +136,42 @@ public class UserDAO extends User implements DAO<User, String> {
     @Override
     public User findById(int key) {
         return null;
+    }
+
+    public List<User> findByName(String name){
+        List<User> usersList = new ArrayList<>();
+
+
+        if(name!=null){
+
+            try(PreparedStatement statement = connection.prepareStatement(FINDBYNAME)) {
+                statement.setString(1, name);
+
+
+                ResultSet res = statement.executeQuery();
+
+                while(res.next()){
+                    User userToReturn = new User();
+
+                    userToReturn.setId(res.getInt("IDUser"));
+                    userToReturn.setName(res.getString("Nick"));
+                    userToReturn.setPassword(res.getString("Password"));
+                    userToReturn.setPhoto(res.getBytes("Photo"));
+                    userToReturn.setUserName(res.getString("Name"));
+                    userToReturn.setSurname(res.getString("Surname"));
+                    userToReturn.setEmail(res.getString("Email"));
+                    userToReturn.setDni(res.getString("DNI"));
+                    userToReturn.setAddress(res.getString("Adress"));
+
+                    usersList.add(userToReturn);
+
+                }
+
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return usersList;
     }
 
     public static User findByEmail(String email) {
@@ -221,6 +248,81 @@ public class UserDAO extends User implements DAO<User, String> {
     @Override
     public List findAll() {
         return List.of();
+    }
+
+
+    public static List<User> findFollowers(int id){
+        connection = ConnectionMariaDB.getConnection();
+
+        List<User> usersList = new ArrayList<>();
+
+
+        if(id>0){
+
+            try(PreparedStatement statement = connection.prepareStatement(FINDFOLLOWERS)) {
+                statement.setInt(1, id);
+
+
+                ResultSet res = statement.executeQuery();
+
+                while(res.next()){
+                    User userToReturn = new User();
+
+                    userToReturn.setId(res.getInt("U.IDUser"));
+                    userToReturn.setName(res.getString("Nick"));
+                    userToReturn.setPassword(res.getString("Password"));
+                    userToReturn.setPhoto(res.getBytes("Photo"));
+                    userToReturn.setUserName(res.getString("Name"));
+                    userToReturn.setSurname(res.getString("Surname"));
+                    userToReturn.setEmail(res.getString("Email"));
+                    userToReturn.setDni(res.getString("DNI"));
+                    userToReturn.setAddress(res.getString("Adress"));
+
+                    usersList.add(userToReturn);
+
+                }
+
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return usersList;
+
+    }
+
+    public static boolean insertIntoFriends(int keyUser, int keyFollower){
+        connection = ConnectionMariaDB.getConnection();
+        boolean inserted = false;
+        if (!findIfAlreadyFriends(keyUser, keyFollower)){
+            if( keyUser != keyFollower){
+                try(PreparedStatement preparedStatement = connection.prepareStatement(INSERTINTOFRIENDS)) {
+
+                    preparedStatement.setInt(1, keyUser);
+                    preparedStatement.setInt(2, keyFollower);
+
+
+                    preparedStatement.executeQuery();
+                    inserted = true;
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return inserted;
+    }
+
+
+    public void deleteFollower() throws SQLException {
+        if(id>0){
+            try(PreparedStatement statement = ConnectionMariaDB.getConnection().prepareStatement(DELETE)){
+
+                statement.setInt(1, id);
+                statement.executeUpdate();
+            }
+        }
+
+
     }
 
     @Override

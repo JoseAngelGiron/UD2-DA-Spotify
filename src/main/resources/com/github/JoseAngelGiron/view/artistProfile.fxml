@@ -29,12 +29,7 @@
       <Label layoutX="47.0" layoutY="193.0" prefHeight="18.0" prefWidth="140.0" text="Canciones más populares" />
       <ListView fx:id="albumsListView" layoutX="20.0" layoutY="444.0" prefHeight="166.0" prefWidth="707.0" />
       <Label layoutX="20.0" layoutY="629.0" prefHeight="18.0" prefWidth="231.0" text="Otros perfiles de artistas recomendados:" />
-      <TableView fx:id="artistFollowersTable" layoutX="20.0" layoutY="666.0" prefHeight="210.0" prefWidth="708.0">
-         <columns>
-            <TableColumn fx:id="photoFollowerColumn" editable="false" prefWidth="119.20001220703125" text="PhotoArtist" />
-            <TableColumn fx:id="nameFollowerColumn" editable="false" prefWidth="151.20001220703125" text="Nombre" />
-         </columns>
-      </TableView>
+      <ListView layoutX="22.0" layoutY="660.0" prefHeight="155.0" prefWidth="707.0" />
    </children>
    <padding>
       <Insets bottom="575.0" />

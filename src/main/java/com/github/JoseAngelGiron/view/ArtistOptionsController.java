@@ -253,7 +253,7 @@ public class ArtistOptionsController extends Controller implements Initializable
         User user = UserSession.UserSession().getUserLoggedIn();
         Artist artistToRetrieveAlbums = (Artist) user;
         AlbumDAO albumDAO = new AlbumDAO();
-        List<Album> albums = albumDAO.findByArtist(artistToRetrieveAlbums);
+        List<Album> albums = albumDAO.findAlbumsAndSongs(artistToRetrieveAlbums);
 
         ObservableList<Album> albumsToBeShown = FXCollections.observableArrayList(albums);
 
@@ -286,8 +286,6 @@ public class ArtistOptionsController extends Controller implements Initializable
 
 
     }
-
-
 
 
     private void setupTableSelectionListenerAlbum() {

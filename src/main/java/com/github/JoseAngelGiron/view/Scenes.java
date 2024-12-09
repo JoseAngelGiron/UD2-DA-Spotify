@@ -11,7 +11,9 @@ public enum Scenes {
     OWNPROFILE("view/ownProfile"),
     ARTISTOPTIONS("view/artistOptions"),
     MODIFYALBUM("view/modifyAlbum"),
+
     SEARCH("view/search"),
+    ALBUMVIEW("view/album"),
 
     ARTISTPROFILE("view/artistProfile"),
     USERPROFILE("view/userProfile"),

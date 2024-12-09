@@ -4,7 +4,6 @@ import com.github.JoseAngelGiron.model.UserSession;
 import com.github.JoseAngelGiron.model.dao.AlbumDAO;
 import com.github.JoseAngelGiron.model.entity.*;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,9 +25,11 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import static com.github.JoseAngelGiron.model.dao.ArtistDAO.findAmountOfPlays;
+import static com.github.JoseAngelGiron.model.dao.ArtistDAO.findArtistsVerifiedThatFollows;
 import static com.github.JoseAngelGiron.model.dao.SongDAO.findMostPopularSongs;
 import static com.github.JoseAngelGiron.model.dao.UserDAO.insertIntoFriends;
 import static com.github.JoseAngelGiron.utils.ConvertBytes.bytesToImage;
+import static com.github.JoseAngelGiron.view.AppController.changeScene;
 
 public class ArtistProfileController extends Controller implements Initializable {
 
@@ -75,12 +76,9 @@ public class ArtistProfileController extends Controller implements Initializable
 
 
     @FXML
-    private TableView<User> artistFollowersTable;
-    @FXML
-    private TableColumn<ImageView, User> photoFollowerColumn;
+    private ListView<User> userListView;
 
-    @FXML
-    private TableColumn<String, User> nameFollowerColumn;
+
 
     private Artist artistSelected;
     private ObservableList<Song> songsOfArtist; //las mas populares
@@ -187,7 +185,7 @@ public class ArtistProfileController extends Controller implements Initializable
         AlbumsOfArtist = FXCollections.observableArrayList(albumList);
         albumsListView.setItems(AlbumsOfArtist);
 
-        // Cambiar orientación a horizontal
+
         albumsListView.setOrientation(Orientation.HORIZONTAL);
 
         albumsListView.setCellFactory(param -> new ListCell<Album>() {
@@ -197,16 +195,16 @@ public class ArtistProfileController extends Controller implements Initializable
 
             {
                 albumImage = new ImageView();
-                albumImage.setFitHeight(100); // Tamaño de la imagen
+                albumImage.setFitHeight(100);
                 albumImage.setFitWidth(100);
                 albumImage.setPreserveRatio(true);
 
                 albumName = new Label();
-                albumName.setStyle("-fx-font-size: 14; -fx-text-fill: white;"); // Estilo del texto
+                albumName.setStyle("-fx-font-size: 14; -fx-text-fill: white;");
 
                 content = new VBox(albumImage, albumName);
-                content.setSpacing(5); // Espaciado entre imagen y texto
-                content.setStyle("-fx-alignment: center;"); // Centrar imagen y texto
+                content.setSpacing(5);
+                content.setStyle("-fx-alignment: center;");
             }
 
             @Override
@@ -220,8 +218,34 @@ public class ArtistProfileController extends Controller implements Initializable
                     setGraphic(content);
                 }
             }
+
+
+        });
+
+        albumsListView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                Album albumSelected = albumsListView.getSelectionModel().getSelectedItem();
+                if (albumSelected != null) {
+                    try {
+                        changeToAlbum(albumSelected);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
         });
     }
+
+    private void showRelatedUsers(){
+        List <Artist> artists = findArtistsVerifiedThatFollows(artistSelected.getId());
+
+        //
+    }
+
+    private void changeToAlbum(Album album) throws IOException {
+        changeScene(Scenes.ALBUMVIEW, anchorPane, album);
+    }
+
 
 
 

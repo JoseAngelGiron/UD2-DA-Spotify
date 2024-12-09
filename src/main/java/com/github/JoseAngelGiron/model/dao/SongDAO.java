@@ -156,7 +156,7 @@ public class SongDAO extends Song implements DAO<Song, String> {
         return null;
     }
 
-    public List<Song> findSongsById(int key) {
+    public List<Song> findSongsByAlbumId(int key) {
 
         List<Song> songsToReturn = new ArrayList<>();
         if (key != 0) {

@@ -2,22 +2,26 @@ package com.github.JoseAngelGiron.view;
 
 import com.github.JoseAngelGiron.model.UserSession;
 import com.github.JoseAngelGiron.model.dao.UserDAO;
+import com.github.JoseAngelGiron.model.entity.Song;
 import com.github.JoseAngelGiron.model.entity.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import static com.github.JoseAngelGiron.model.dao.UserDAO.build;
+import static com.github.JoseAngelGiron.model.dao.UserDAO.findFollowers;
 import static com.github.JoseAngelGiron.utils.ConvertBytes.bytesToImage;
 import static com.github.JoseAngelGiron.utils.ConvertBytes.fileToByte;
 import static com.github.JoseAngelGiron.utils.SelectFileChooser.selectPhoto;
@@ -48,10 +52,16 @@ public class OwnProfileController extends Controller implements Initializable {
     @FXML
     private Label passwordLabel;
 
+    @FXML
+    private ListView<User> users;
+
+    @FXML
+    private ListView<Song> songs;
+
 
     private User currentUser;
 
-    //Tablas y consultas para lo que me falta
+
 
 
     @Override
@@ -68,6 +78,7 @@ public class OwnProfileController extends Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentUser = UserSession.UserSession().getUserLoggedIn();
         showData();
+        showFollowers();
     }
 
     @FXML
@@ -105,7 +116,6 @@ public class OwnProfileController extends Controller implements Initializable {
         }
     }
 
-
     private void showData(){
         nick.setText(currentUser.getName());
         name.setText(currentUser.getUserName());
@@ -126,6 +136,55 @@ public class OwnProfileController extends Controller implements Initializable {
 
         }
 
+
+    }
+
+    private void showFollowers(){
+
+        List<User> followers = findFollowers(currentUser.getId());
+
+
+        users.setCellFactory(listView -> new ListCell<User>() {
+            private final ImageView imageView = new ImageView();
+            private final Label nameLabel = new Label();
+            private final VBox container = new VBox(10, imageView, nameLabel);
+
+            {
+                imageView.setFitHeight(75);
+                imageView.setFitWidth(50);
+            }
+
+            @Override
+            protected void updateItem(User user, boolean empty) {
+                super.updateItem(user, empty);
+
+                if (empty || user == null) {
+                    setGraphic(null);
+                    setText(null);
+                } else {
+
+                    byte[] photo = user.getPhoto();
+                    if (photo != null) {
+                        imageView.setImage(bytesToImage(photo));
+                    } else {
+
+                        File defaultFile = new File(DEFAULTIMAGE);
+                        if (defaultFile.exists()) {
+                            imageView.setImage(new Image(defaultFile.toURI().toString()));
+                        }
+                    }
+
+                    nameLabel.setText(user.getName());
+
+                    setGraphic(container);
+                }
+            }
+        });
+        users.getItems().setAll(followers);
+
+    }
+
+    private void showSearchs(){
 
     }
 
