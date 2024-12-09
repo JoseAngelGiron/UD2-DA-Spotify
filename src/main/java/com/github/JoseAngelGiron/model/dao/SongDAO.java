@@ -27,6 +27,7 @@ public class SongDAO extends Song implements DAO<Song, String> {
     private final static String DELETE= "DELETE FROM SONG WHERE IDSong=?";
 
     private final static String FINDSONGSBYALBUM = "SELECT S.* FROM SONG S WHERE S.IDAlbum = ?";
+    private final static String FINDSONGSBYNAME = "SELECT S.* FROM SONG S WHERE S.Name = ?";
 
     private final static String FINDSONGALBUMANDARTIST = "SELECT S.*,A.*,Ar.*,U.* FROM SONG S " +
             "JOIN Album A ON S.IDAlbum = A.IDAlbum " +
@@ -267,6 +268,34 @@ public class SongDAO extends Song implements DAO<Song, String> {
         return songList;
     }
 
+
+    public List<Song> findSongsByName(String name){
+        List<Song> songList = new ArrayList<>();
+
+
+        try (PreparedStatement statement = connection.prepareStatement(FINDSONGSBYNAME)) {
+            statement.setString(1, name);
+            ResultSet res = statement.executeQuery();
+
+            while (res.next()) {
+                Song songToBeAdded = new Song();
+                songToBeAdded.setId(res.getInt("IDSong"));
+                songToBeAdded.setName(res.getString("Name"));
+                songToBeAdded.setPhotoSong(res.getBytes("PhotoSong"));
+                songToBeAdded.setSongFile(res.getBytes("SongFile"));
+                songToBeAdded.setMusicalGender(res.getString("Gender"));
+
+
+                songList.add(songToBeAdded);
+            }
+
+            res.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return songList;
+    }
 
     @Override
     public List<Song> findAll() {

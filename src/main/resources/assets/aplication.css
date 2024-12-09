@@ -1,3 +1,23 @@
+/* Estilo para la tabla de artistas */
+#artistTableView {
+    -fx-background-color: #2C3E50; /* Color de fondo */
+    -fx-font-size: 14px; /* Tamaño de la fuente */
+    -fx-text-fill: white; /* Color del texto */
+    -fx-alignment: CENTER; /* Centrar el contenido de las celdas */
+}
+
+/* Estilo para las columnas */
+#photoArtistTableColumn {
+    -fx-alignment: CENTER; /* Alinear la imagen al centro */
+    -fx-padding: 5px; /* Espaciado alrededor de la imagen */
+}
+
+#nameArtistTableColumn, #totalOfPlays {
+    -fx-alignment: CENTER; /* Centrar los textos */
+    -fx-padding: 10px; /* Añadir un poco de padding */
+}
+
+
 /* Estilo para el FlowPane */
 .flow-pane {
     -fx-background-color: #1e1e1e; /* Fondo oscuro */
