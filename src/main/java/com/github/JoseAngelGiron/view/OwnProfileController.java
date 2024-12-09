@@ -4,12 +4,17 @@ import com.github.JoseAngelGiron.model.UserSession;
 import com.github.JoseAngelGiron.model.dao.UserDAO;
 import com.github.JoseAngelGiron.model.entity.Song;
 import com.github.JoseAngelGiron.model.entity.User;
+import com.github.JoseAngelGiron.view.modifiedClasses.SongCell;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -20,8 +25,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static com.github.JoseAngelGiron.model.dao.UserDAO.build;
-import static com.github.JoseAngelGiron.model.dao.UserDAO.findFollowers;
+import static com.github.JoseAngelGiron.model.dao.UserDAO.*;
 import static com.github.JoseAngelGiron.utils.ConvertBytes.bytesToImage;
 import static com.github.JoseAngelGiron.utils.ConvertBytes.fileToByte;
 import static com.github.JoseAngelGiron.utils.SelectFileChooser.selectPhoto;
@@ -53,10 +57,10 @@ public class OwnProfileController extends Controller implements Initializable {
     private Label passwordLabel;
 
     @FXML
-    private ListView<User> users;
+    private FlowPane users;
 
     @FXML
-    private ListView<Song> songs;
+    private FlowPane songFlowPane;
 
 
     private User currentUser;
@@ -79,6 +83,7 @@ public class OwnProfileController extends Controller implements Initializable {
         currentUser = UserSession.UserSession().getUserLoggedIn();
         showData();
         showFollowers();
+        showLatestSongs();
     }
 
     @FXML
@@ -139,53 +144,59 @@ public class OwnProfileController extends Controller implements Initializable {
 
     }
 
-    private void showFollowers(){
+    private void showFollowers() {
 
         List<User> followers = findFollowers(currentUser.getId());
 
 
-        users.setCellFactory(listView -> new ListCell<User>() {
-            private final ImageView imageView = new ImageView();
-            private final Label nameLabel = new Label();
-            private final VBox container = new VBox(10, imageView, nameLabel);
+        users.getChildren().clear();
 
-            {
-                imageView.setFitHeight(75);
-                imageView.setFitWidth(50);
-            }
+        for (User user : followers) {
 
-            @Override
-            protected void updateItem(User user, boolean empty) {
-                super.updateItem(user, empty);
+            VBox userBox = new VBox(10);
+            userBox.setAlignment(Pos.CENTER);
 
-                if (empty || user == null) {
-                    setGraphic(null);
-                    setText(null);
-                } else {
 
-                    byte[] photo = user.getPhoto();
-                    if (photo != null) {
-                        imageView.setImage(bytesToImage(photo));
-                    } else {
+            ImageView imageView = new ImageView();
+            imageView.setFitWidth(75);
+            imageView.setFitHeight(75);
 
-                        File defaultFile = new File(DEFAULTIMAGE);
-                        if (defaultFile.exists()) {
-                            imageView.setImage(new Image(defaultFile.toURI().toString()));
-                        }
-                    }
-
-                    nameLabel.setText(user.getName());
-
-                    setGraphic(container);
+            byte[] photo = user.getPhoto();
+            if (photo != null) {
+                imageView.setImage(bytesToImage(photo));
+            } else {
+                File defaultFile = new File(DEFAULTIMAGE);
+                if (defaultFile.exists()) {
+                    imageView.setImage(new Image(defaultFile.toURI().toString()));
                 }
             }
-        });
-        users.getItems().setAll(followers);
 
+            Label nameLabel = new Label(user.getName());
+            nameLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+
+            userBox.getChildren().addAll(imageView, nameLabel);
+
+            users.getChildren().add(userBox);
+        }
     }
 
-    private void showSearchs(){
+    private void showLatestSongs() {
+        User currentUser = UserSession.UserSession().getUserLoggedIn();
+        List<Song> songList = findLastSongsSearched(currentUser.getId());
 
+
+        ObservableList<Song> observableSongs = FXCollections.observableArrayList(songList);
+
+
+        songFlowPane.getChildren().clear();
+
+
+        for (Song song : observableSongs) {
+            SongCell songCell = new SongCell();
+            songCell.updateItem(song, false);
+
+            songFlowPane.getChildren().add(songCell.getGraphic());
+        }
     }
 
 

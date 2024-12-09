@@ -4,13 +4,13 @@ package com.github.JoseAngelGiron.model.dao;
 import com.github.JoseAngelGiron.model.connection.ConnectionMariaDB;
 import com.github.JoseAngelGiron.model.entity.Admin;
 import com.github.JoseAngelGiron.model.entity.Artist;
+import com.github.JoseAngelGiron.model.entity.Song;
 import com.github.JoseAngelGiron.model.entity.User;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +19,7 @@ import static com.github.JoseAngelGiron.utils.Utils.intToBoolean;
 
 public class UserDAO extends User implements DAO<User, String> {
 
-
+    /** USERQUERYS **/
     private static final String FINDUSERANDARTISTRBYEMAIL = "SELECT U.*, A.*, AD.* FROM USER U " +
                     "LEFT JOIN ARTIST A ON U.IDUser = A.IDArtist " +
                     "LEFT JOIN ADMIN AD ON U.IDUser = AD.IDAdmin "+
@@ -33,16 +33,33 @@ public class UserDAO extends User implements DAO<User, String> {
     private final static String UPDATE = "UPDATE USER SET Nick=?, Password=?, Photo=?, Name=?, Surname=? ,DNI=?, Adress=? WHERE IDUser=?;";
     private final static String DELETE= "DELETE FROM USER WHERE IDuser=?";
 
+    /** FRIENDQUERYS **/
     private static final String FINDKEYSINFRIENDS = "SELECT IDUser, IDFriend FROM FRIENDS WHERE IDUser=? AND IDFriend=?";
-
-
 
     private static final String FINDFOLLOWERS = "SELECT U.* FROM USER U " +
             "WHERE U.IDUser IN ( " +
             "SELECT F.IDUser FROM FRIENDS F " +
             "WHERE F.IDFriend = ? " +
             ")";
-    private static final String DELETEFOLLOWER = "DELETE FROM FRIENDS WHERE IDUser = ? AND IDFriend = ?";
+    private static final String DELETEFOLLOW = "DELETE FROM FRIENDS WHERE IDUser = ? AND IDFriend = ?";
+
+
+    /** SEARCHQUERYS **/
+    private static final String INSERTINTOSEARCH = "INSERT INTO SEARCH (IDUser, IDSong, Date) VALUES (?,?,?)";
+
+    private static final String DELETESEARCHS = "DELETE FROM SEARCH WHERE IDUser = ?";
+
+    private static final String FINDLASTSEARCHS = "SELECT S.* " +
+            "FROM SEARCH Se " +
+            "JOIN SONG S ON Se.IDSong = S.IDSong " +
+            "WHERE Se.IDUser = ? " +
+            "GROUP BY S.IDSong " +
+            "ORDER BY MAX(Se.Date) DESC " +
+            "LIMIT 5";
+
+
+
+
 
 
     private static Connection connection ;
@@ -215,31 +232,7 @@ public class UserDAO extends User implements DAO<User, String> {
 
     }
 
-    public static boolean findIfAlreadyFriends(int keyUser, int keyFriend){
-        connection = ConnectionMariaDB.getConnection();
-        boolean friends = false;
-        if(keyUser>0 && keyFriend>0){
 
-            try(PreparedStatement statement = connection.prepareStatement(FINDKEYSINFRIENDS)) {
-                statement.setInt(1, keyUser);
-                statement.setInt(2, keyFriend);
-
-
-                ResultSet res = statement.executeQuery();
-                if(res.next()){
-                    friends = true;
-                }
-
-
-
-                } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-
-        }
-
-        return friends;
-    }
 
     public static UserDAO build(){
         return new UserDAO();
@@ -313,17 +306,119 @@ public class UserDAO extends User implements DAO<User, String> {
     }
 
 
-    public void deleteFollower() throws SQLException {
-        if(id>0){
-            try(PreparedStatement statement = ConnectionMariaDB.getConnection().prepareStatement(DELETE)){
+    public static void deleteFollow(int idUser, int idFriend) throws SQLException {
+        connection = ConnectionMariaDB.getConnection();
+        if(idUser>0 && idFriend>0){
+            try(PreparedStatement statement = ConnectionMariaDB.getConnection().prepareStatement(DELETEFOLLOW)){
 
-                statement.setInt(1, id);
+                statement.setInt(1, idUser);
+                statement.setInt(2, idFriend);
                 statement.executeUpdate();
             }
         }
 
 
     }
+
+    public static boolean findIfAlreadyFriends(int keyUser, int keyFriend){
+        connection = ConnectionMariaDB.getConnection();
+        boolean friends = false;
+        if(keyUser>0 && keyFriend>0){
+
+            try(PreparedStatement statement = connection.prepareStatement(FINDKEYSINFRIENDS)) {
+                statement.setInt(1, keyUser);
+                statement.setInt(2, keyFriend);
+
+
+                ResultSet res = statement.executeQuery();
+                if(res.next()){
+                    friends = true;
+                }
+
+
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+        return friends;
+    }
+
+
+
+    public static boolean insertIntoSearch(int keyUser, int keySong){
+        connection = ConnectionMariaDB.getConnection();
+        boolean inserted = false;
+
+            if( keyUser >0 && keySong>0){
+                try(PreparedStatement preparedStatement = connection.prepareStatement(INSERTINTOSEARCH)) {
+
+                    preparedStatement.setInt(1, keyUser);
+                    preparedStatement.setInt(2, keySong);
+                    LocalDateTime now = LocalDateTime.now();
+                    preparedStatement.setTimestamp(3, Timestamp.valueOf(now));
+
+
+                    preparedStatement.executeQuery();
+                    inserted = true;
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+
+
+        return inserted;
+    }
+
+    public static void deleteSearchs(int userKey){
+        connection = ConnectionMariaDB.getConnection();
+        if(userKey>0){
+            try(PreparedStatement statement = ConnectionMariaDB.getConnection().prepareStatement(DELETESEARCHS)){
+
+                statement.setInt(1, userKey);
+
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public static List<Song> findLastSongsSearched(int userKey){
+        List<Song> songList = new ArrayList<>();
+        connection = ConnectionMariaDB.getConnection();
+
+        if(userKey>0){
+            try(PreparedStatement statement = connection.prepareStatement(FINDLASTSEARCHS)) {
+                statement.setInt(1, userKey);
+
+
+                ResultSet res = statement.executeQuery();
+
+                while(res.next()){
+                    Song songToBeAdded = new Song();
+                    songToBeAdded.setId(res.getInt("IDSong"));
+                    songToBeAdded.setName(res.getString("Name"));
+                    songToBeAdded.setPhotoSong(res.getBytes("PhotoSong"));
+                    songToBeAdded.setSongFile(res.getBytes("SongFile"));
+                    songToBeAdded.setMusicalGender(res.getString("Gender"));
+
+                    songList.add(songToBeAdded);
+
+                }
+
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+
+
+        }
+
+        return songList;
+    }
+
 
     @Override
     public void close() throws IOException {

@@ -14,9 +14,9 @@
       <Label layoutX="8.0" layoutY="13.0" prefHeight="18.0" prefWidth="65.0" text="Verified" />
       <ImageView fx:id="verified" fitHeight="25.0" fitWidth="32.0" layoutX="58.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="artistName" layoutX="8.0" layoutY="39.0" prefHeight="26.0" prefWidth="168.0" text="Nombre_Artista" />
-      <ImageView fx:id="artistPhoto" fitHeight="120.0" fitWidth="182.0" layoutX="174.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="53.0" layoutY="130.0" mnemonicParsing="false" onAction="#followArtist" prefHeight="26.0" prefWidth="128.0" text="Seguir" />
-      <Label fx:id="resultFollow" layoutX="189.0" layoutY="134.0" prefHeight="18.0" prefWidth="119.0" text="resultFollow" />
+      <ImageView fx:id="artistPhoto" fitHeight="107.0" fitWidth="199.0" layoutX="190.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="53.0" layoutY="117.0" mnemonicParsing="false" onAction="#followArtist" prefHeight="26.0" prefWidth="128.0" text="Seguir" />
+      <Label fx:id="resultFollow" layoutX="217.0" layoutY="121.0" prefHeight="18.0" prefWidth="119.0" text="resultFollow" />
       <TableView fx:id="listOfSongsTable" layoutX="20.0" layoutY="236.0" prefHeight="155.0" prefWidth="710.0">
          <columns>
             <TableColumn fx:id="photoColumn" editable="false" prefWidth="232.79998779296875" text="FotoAlbum" />
@@ -30,6 +30,7 @@
       <ListView fx:id="albumsListView" layoutX="20.0" layoutY="444.0" prefHeight="166.0" prefWidth="707.0" />
       <Label layoutX="20.0" layoutY="629.0" prefHeight="18.0" prefWidth="231.0" text="Otros perfiles de artistas recomendados:" />
       <ListView layoutX="22.0" layoutY="660.0" prefHeight="155.0" prefWidth="707.0" />
+      <Button fx:id="deleteButton" layoutX="53.0" layoutY="154.0" mnemonicParsing="false" onAction="#deleteFollow" prefHeight="26.0" prefWidth="128.0" text="Dejar de seguir" />
    </children>
    <padding>
       <Insets bottom="575.0" />

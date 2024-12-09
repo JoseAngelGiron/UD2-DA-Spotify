@@ -2,6 +2,7 @@ package com.github.JoseAngelGiron.view;
 
 import com.github.JoseAngelGiron.model.UserSession;
 import com.github.JoseAngelGiron.model.dao.AlbumDAO;
+import com.github.JoseAngelGiron.model.dao.UserDAO;
 import com.github.JoseAngelGiron.model.entity.*;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
@@ -21,12 +22,14 @@ import javafx.scene.layout.VBox;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import static com.github.JoseAngelGiron.model.dao.ArtistDAO.findAmountOfPlays;
 import static com.github.JoseAngelGiron.model.dao.ArtistDAO.findArtistsVerifiedThatFollows;
 import static com.github.JoseAngelGiron.model.dao.SongDAO.findMostPopularSongs;
+import static com.github.JoseAngelGiron.model.dao.UserDAO.findIfAlreadyFriends;
 import static com.github.JoseAngelGiron.model.dao.UserDAO.insertIntoFriends;
 import static com.github.JoseAngelGiron.utils.ConvertBytes.bytesToImage;
 import static com.github.JoseAngelGiron.view.AppController.changeScene;
@@ -67,19 +70,17 @@ public class ArtistProfileController extends Controller implements Initializable
     @FXML
     private TableColumn<Song, Integer> numberOfPlaysColumn;
 
-
-
-
     @FXML
     private ListView<Album> albumsListView;
-
-
 
     @FXML
     private ListView<User> userListView;
 
+    @FXML
+    private Button deleteButton;
 
 
+    private User currentUser;
     private Artist artistSelected;
     private ObservableList<Song> songsOfArtist; //las mas populares
     private ObservableList<Album> AlbumsOfArtist;
@@ -97,6 +98,12 @@ public class ArtistProfileController extends Controller implements Initializable
         showMostPopularSongs();
         showAlbums();
         resultFollow.setVisible(false);
+        currentUser = UserSession.UserSession().getUserLoggedIn();
+        boolean follow = findIfAlreadyFriends(currentUser.getId(), artistSelected.getId());
+
+        if(follow){
+            deleteButton.setVisible(true);
+        }
     }
 
     @Override
@@ -111,8 +118,7 @@ public class ArtistProfileController extends Controller implements Initializable
 
     @FXML
     public void followArtist(){
-        UserSession user = UserSession.UserSession();
-        boolean follow = insertIntoFriends(user.getUserLoggedIn().getId(), artistSelected.getId());
+        boolean follow = insertIntoFriends(currentUser.getId(), artistSelected.getId());
 
         if (follow){
             resultFollow.setVisible(true);
@@ -124,6 +130,16 @@ public class ArtistProfileController extends Controller implements Initializable
             resultFollow.setText("Ya sigues a este artista");
         }
 
+    }
+
+    @FXML
+    public void deleteFollow() throws SQLException {
+        UserDAO.deleteFollow(currentUser.getId(), artistSelected.getId());
+        resultFollow.setText("Ya no sigues a este usuario");
+        resultFollow.setStyle("-fx-text-fill: green;");
+        resultFollow.setVisible(true);
+
+        deleteButton.setVisible(false);
     }
 
     private void showDataArtist(){

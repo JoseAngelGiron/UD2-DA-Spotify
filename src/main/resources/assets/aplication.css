@@ -1,3 +1,77 @@
+/* Estilo para la tabla de artistas */
+#artistTableView {
+    -fx-background-color: #2C3E50; /* Color de fondo */
+    -fx-font-size: 14px; /* Tamaño de la fuente */
+    -fx-text-fill: white; /* Color del texto */
+    -fx-alignment: CENTER; /* Centrar el contenido de las celdas */
+}
+
+/* Estilo para las columnas */
+#photoArtistTableColumn {
+    -fx-alignment: CENTER; /* Alinear la imagen al centro */
+    -fx-padding: 5px; /* Espaciado alrededor de la imagen */
+}
+
+#nameArtistTableColumn, #totalOfPlays {
+    -fx-alignment: CENTER; /* Centrar los textos */
+    -fx-padding: 10px; /* Añadir un poco de padding */
+}
+
+
+/* Estilo para el FlowPane */
+.flow-pane {
+    -fx-background-color: #1e1e1e; /* Fondo oscuro */
+    -fx-hgap: 20px; /* Espaciado horizontal entre elementos */
+    -fx-vgap: 20px; /* Espaciado vertical entre elementos */
+    -fx-padding: 20px; /* Espaciado interno del FlowPane */
+    -fx-alignment: center; /* Centrar los elementos */
+    -fx-border-color: #2b2b2b; /* Borde oscuro */
+    -fx-border-width: 2px; /* Grosor del borde */
+    -fx-border-radius: 10px; /* Bordes redondeados */
+}
+
+/* Estilo para los elementos individuales (VBox o celdas) */
+.user-box, .song-box {
+    -fx-background-color: #2b2b2b; /* Fondo oscuro para las cajas */
+    -fx-border-color: #444; /* Borde gris */
+    -fx-border-radius: 10px; /* Bordes redondeados */
+    -fx-padding: 15px; /* Espaciado interno */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0); /* Sombra elegante */
+    -fx-alignment: center; /* Centrar el contenido */
+}
+
+/* Cambio de color al pasar el ratón por encima */
+.user-box:hover, .song-box:hover {
+    -fx-background-color: #3d3d3d; /* Fondo más claro */
+    -fx-border-color: #666; /* Borde más claro */
+    -fx-cursor: hand; /* Cambiar el cursor al pasar */
+}
+
+/* Estilo para las imágenes */
+.user-box ImageView, .song-box ImageView {
+    -fx-border-radius: 10px; /* Bordes redondeados */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 10, 0, 0, 0); /* Sombra elegante */
+}
+
+/* Estilo para los textos (nombres de usuarios y canciones) */
+.user-label, .song-label {
+    -fx-text-fill: white; /* Texto blanco */
+    -fx-font-size: 14px; /* Tamaño de fuente */
+    -fx-font-family: "Arial", sans-serif; /* Familia de fuente */
+    -fx-font-weight: bold; /* Texto en negrita */
+    -fx-wrap-text: true; /* Permitir texto en varias líneas */
+    -fx-text-alignment: center; /* Centrar el texto */
+    -fx-margin: 10px 0 0 0; /* Espaciado superior */
+}
+
+/* Estilo global para el ScrollPane si es necesario */
+.scroll-pane {
+    -fx-background: #1e1e1e; /* Fondo oscuro */
+    -fx-border-color: #2b2b2b; /* Borde oscuro */
+}
+
+
+
 /* Estilo para el ScrollPane principal */
 .scroll-pane {
     -fx-background-color: #1e1e1e; /* Fondo oscuro */

@@ -1,6 +1,7 @@
 package com.github.JoseAngelGiron.view;
 
 import com.github.JoseAngelGiron.model.SongPlayer;
+import com.github.JoseAngelGiron.model.UserSession;
 import com.github.JoseAngelGiron.model.dao.SongDAO;
 import com.github.JoseAngelGiron.model.entity.Artist;
 import com.github.JoseAngelGiron.model.entity.Song;
@@ -13,19 +14,26 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import static com.github.JoseAngelGiron.model.dao.SongDAO.findSongAlbumAndArtist;
+import static com.github.JoseAngelGiron.model.dao.UserDAO.insertIntoSearch;
 import static com.github.JoseAngelGiron.utils.ConvertBytes.bytesToImage;
 import static com.github.JoseAngelGiron.view.AppController.changeScene;
 
 public class SearchController extends Controller implements Initializable {
+
+    private Instant lastClickTime = Instant.now().minusSeconds(1);
 
     @FXML
     private Pane mainPane;
@@ -60,17 +68,25 @@ public class SearchController extends Controller implements Initializable {
     @FXML
     private Label result;
 
+    @FXML
+    private FlowPane flowPaneSongs;
+
     private ObservableList<Song> observableListOfSongs;
     private Song actualSong;
     private List<Song> listOfSongs;
+    private List<Song> allSongs;
+
+
 
 
 
     @Override
     public void onOpen(Object input, Object input2) throws IOException {
+        SongDAO songDAO = new SongDAO();
         if(input!=null){
             String search = (String) input;
             listOfSongs = findSongAlbumAndArtist(search);
+            allSongs = songDAO.findSongsByName(search);
 
             if(listOfSongs.isEmpty()){
                 result.setText("No se han encontrado resultados");
@@ -78,6 +94,7 @@ public class SearchController extends Controller implements Initializable {
             }else{
                 result.setText("Resultados principales");
                 showData();
+                showResults();
             }
 
         }else{
@@ -103,6 +120,7 @@ public class SearchController extends Controller implements Initializable {
     @FXML
     public void startSong() throws InterruptedException {
         if(actualSong!=null){
+
             SongDAO songDAO = new SongDAO(actualSong);
             songDAO.updateNumberOfPlays();
             SongPlayer.playSong(actualSong.getSongFile());
@@ -208,13 +226,21 @@ public class SearchController extends Controller implements Initializable {
                     imageView.setFitHeight(50);
                     imageView.setFitWidth(50);
 
-
                     setOnMouseClicked(event -> {
                         Song song = getTableView().getItems().get(getIndex());
                         if (song != null) {
+                            Instant now = Instant.now();
+
+
+                            if (Duration.between(lastClickTime, now).toMillis() < 2000) {
+                                return;
+                            }
+                            lastClickTime = now;
+
                             actualSong = song;
                             try {
                                 startSong();
+                                insertIntoSearch(UserSession.UserSession().getUserLoggedIn().getId(), actualSong.getId());
                             } catch (InterruptedException e) {
                                 throw new RuntimeException(e);
                             }
@@ -230,4 +256,62 @@ public class SearchController extends Controller implements Initializable {
 
         tableColumnSongName.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getName()));
     }
+
+    private void showResults() {
+
+        flowPaneSongs.getChildren().clear();
+
+        if (listOfSongs != null && !listOfSongs.isEmpty()) {
+            result.setText("Resultados encontrados: " + listOfSongs.size());
+            result.setStyle("-fx-text-fill: green;");
+
+
+            for (Song song : listOfSongs) {
+                VBox songBox = new VBox(10);
+                songBox.setStyle("-fx-alignment: center; -fx-padding: 10;");
+
+
+                ImageView songImageView = new ImageView(bytesToImage(song.getPhotoSong()));
+                songImageView.setFitWidth(100);
+                songImageView.setFitHeight(100);
+
+
+                Label songLabel = new Label(song.getName());
+                songLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14;");
+
+
+                songBox.getChildren().addAll(songImageView, songLabel);
+
+
+                songBox.setUserData(song);
+
+
+                flowPaneSongs.getChildren().add(songBox);
+
+
+                songBox.setOnMouseClicked(event -> {
+                    // Verificar el tiempo entre clics
+                    Instant now = Instant.now();
+                    if (Duration.between(lastClickTime, now).toMillis() < 2000) {
+                        return;
+                    }
+                    lastClickTime = now;
+
+                    Song selectedSong = (Song) songBox.getUserData();
+                    if (selectedSong != null) {
+                        actualSong = selectedSong;
+                        try {
+                            startSong(); // Reproducir la canción seleccionada
+                            insertIntoSearch(UserSession.UserSession().getUserLoggedIn().getId(), actualSong.getId()); // Guardar la búsqueda
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        imageSong.setImage(bytesToImage(selectedSong.getPhotoSong()));
+                        reproductor.setExpanded(true);
+                    }
+                });
+            }
+        }
+    }
+
 }
