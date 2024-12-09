@@ -23,7 +23,7 @@ public class User extends SpotifyElement{
     public User() {
     }
 
-    public User(int id, String nick, String password, byte[] photo,String userName, String surname, String email, String dni, String address) {
+    public User(int id, String nick, String password, byte[] photo, String userName, String surname, String email, String dni, String address) {
         super(id, nick);
         setPassword(password);
         this.photo = photo;

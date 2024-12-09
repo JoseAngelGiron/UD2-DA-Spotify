@@ -56,6 +56,10 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
 
     private static Connection connection;
 
+
+    public ArtistDAO() {
+    }
+
     public ArtistDAO(Artist artist) {
         this.id = artist.getId();
         this.musicalGender = artist.getMusicalGender();
@@ -258,6 +262,9 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
     }
 
 
+    public static ArtistDAO build(){
+        return new ArtistDAO();
+    }
 
 
     @Override

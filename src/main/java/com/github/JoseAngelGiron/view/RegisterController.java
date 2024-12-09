@@ -77,7 +77,6 @@ public class RegisterController extends Controller implements Initializable {
 
 
         User userToVerify = build().findByEmail(email);
-        System.out.println(userToVerify.getId());
 
         if(userToVerify.getId()!= 0 ){
 
@@ -90,6 +89,7 @@ public class RegisterController extends Controller implements Initializable {
 
             UserDAO userDAO = new UserDAO(nickName, password, email);
             userDAO.insert();
+            //mensaje para decir que se ha registrado con éxito
 
         }
     }

@@ -160,7 +160,7 @@ public class SearchController extends Controller implements Initializable {
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
-                            System.out.println("Artista seleccionado: " + artist.getName()); // Mostrar información del artista
+                            //System.out.println("Artista seleccionado: " + artist.getName()); // Mostrar información del artista
                         }
                     });
                 }
