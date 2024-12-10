@@ -261,12 +261,9 @@ public class SearchController extends Controller implements Initializable {
 
         flowPaneSongs.getChildren().clear();
 
-        if (listOfSongs != null && !listOfSongs.isEmpty()) {
-            result.setText("Resultados encontrados: " + listOfSongs.size());
-            result.setStyle("-fx-text-fill: green;");
+        if (allSongs != null && !allSongs.isEmpty()) {
 
-
-            for (Song song : listOfSongs) {
+            for (Song song : allSongs) {
                 VBox songBox = new VBox(10);
                 songBox.setStyle("-fx-alignment: center; -fx-padding: 10;");
 
@@ -290,7 +287,7 @@ public class SearchController extends Controller implements Initializable {
 
 
                 songBox.setOnMouseClicked(event -> {
-                    // Verificar el tiempo entre clics
+
                     Instant now = Instant.now();
                     if (Duration.between(lastClickTime, now).toMillis() < 2000) {
                         return;
@@ -301,8 +298,8 @@ public class SearchController extends Controller implements Initializable {
                     if (selectedSong != null) {
                         actualSong = selectedSong;
                         try {
-                            startSong(); // Reproducir la canción seleccionada
-                            insertIntoSearch(UserSession.UserSession().getUserLoggedIn().getId(), actualSong.getId()); // Guardar la búsqueda
+                            startSong();
+                            insertIntoSearch(UserSession.UserSession().getUserLoggedIn().getId(), actualSong.getId());
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

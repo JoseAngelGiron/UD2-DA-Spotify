@@ -10,23 +10,23 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="887.0" prefWidth="1281.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JoseAngelGiron.view.SearchController">
+<AnchorPane fx:id="mainPane" prefHeight="887.0" prefWidth="1520.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JoseAngelGiron.view.SearchController">
    <children>
-      <TableView fx:id="tableViewOfSongs" layoutX="167.0" layoutY="231.0" prefHeight="335.0" prefWidth="779.0">
+      <TableView fx:id="tableViewOfSongs" layoutX="116.0" layoutY="231.0" prefHeight="335.0" prefWidth="779.0">
         <columns>
-          <TableColumn fx:id="tableColumnArtistPhoto" editable="false" prefWidth="104.0" resizable="false" text="ArtistPhoto" />
-          <TableColumn fx:id="tableColumnArtistName" editable="false" prefWidth="120.79997253417969" resizable="false" text="ArtistName" />
-            <TableColumn fx:id="tableColumnAlbumPhoto" editable="false" prefWidth="137.5999755859375" resizable="false" text="AlbumPhoto" />
-            <TableColumn fx:id="tableColumnAlbumName" editable="false" prefWidth="103.20001220703125" resizable="false" text="AlbumName" />
-            <TableColumn fx:id="tableColumnSongPhoto" editable="false" prefWidth="174.39996337890625" resizable="false" text="SongPhoto" />
-            <TableColumn fx:id="tableColumnSongName" editable="false" prefWidth="138.4000244140625" resizable="false" text="SongName" />
+          <TableColumn fx:id="tableColumnArtistPhoto" editable="false" prefWidth="104.0" resizable="false" text="Foto" />
+          <TableColumn fx:id="tableColumnArtistName" editable="false" prefWidth="120.79997253417969" resizable="false" text="Autor" />
+            <TableColumn fx:id="tableColumnAlbumPhoto" editable="false" prefWidth="137.5999755859375" resizable="false" text="Foto del Album" />
+            <TableColumn fx:id="tableColumnAlbumName" editable="false" prefWidth="103.20001220703125" resizable="false" text="Nombre Album" />
+            <TableColumn fx:id="tableColumnSongPhoto" editable="false" prefWidth="174.39996337890625" resizable="false" text="Foto del EP" />
+            <TableColumn fx:id="tableColumnSongName" editable="false" prefWidth="138.4000244140625" resizable="false" text="Nombre artista" />
         </columns>
       </TableView>
-      <Label fx:id="result" layoutX="167.0" layoutY="152.0" prefHeight="18.0" prefWidth="295.0" text="Resultados mas relevantes">
+      <Label fx:id="result" layoutX="118.0" layoutY="58.0" prefHeight="18.0" prefWidth="295.0" text="Resultados mas relevantes">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <TitledPane fx:id="reproductor" animated="false" layoutY="6.0" prefHeight="114.0" prefWidth="543.0" styleClass="titlePanel" stylesheets="@../../../../assets/aplication.css" text="Reproductor">
+      <TitledPane fx:id="reproductor" animated="false" expanded="false" layoutX="962.0" layoutY="14.0" prefHeight="114.0" prefWidth="543.0" styleClass="titlePanel" stylesheets="@../../../../assets/aplication.css" text="Reproductor">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="88.0" prefWidth="503.0" styleClass="reproductor-container" stylesheets="@../../../../assets/aplication.css">
                <children>
@@ -38,10 +38,10 @@
             </AnchorPane>
          </content>
       </TitledPane>
-      <Label layoutX="167.0" layoutY="182.0" prefHeight="18.0" prefWidth="450.0" text="Para repoducir una canción, haz click en su foto" />
-      <Label layoutX="167.0" layoutY="200.0" prefHeight="18.0" prefWidth="522.0" text="Para ver el perfil de un artista, de nuevo, haz click en su foto" />
-      <FlowPane fx:id="flowPaneSongs" layoutX="167.0" layoutY="678.0" prefHeight="130.0" prefWidth="779.0" />
-      <Label fx:id="result1" layoutX="167.0" layoutY="628.0" prefHeight="26.0" prefWidth="339.0" text="Todos los resultados coincidentes:">
+      <Label layoutX="118.0" layoutY="109.0" prefHeight="18.0" prefWidth="450.0" text="Para reproducir una canción, haz click en su foto" />
+      <Label layoutX="118.0" layoutY="165.0" prefHeight="18.0" prefWidth="522.0" text="Para ver el perfil de un artista, de nuevo, haz click en su foto" />
+      <FlowPane fx:id="flowPaneSongs" layoutX="118.0" layoutY="680.0" prefHeight="130.0" prefWidth="779.0" />
+      <Label fx:id="result1" layoutX="118.0" layoutY="618.0" prefHeight="26.0" prefWidth="339.0" text="Todos los resultados coincidentes:">
          <font>
             <Font size="16.0" />
          </font>
