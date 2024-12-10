@@ -47,28 +47,30 @@ public class ConfigurationController extends Controller implements Initializable
     }
     @FXML
     private void registerAsArtist(){
+        boolean found = true;
         User currentUser = UserSession.UserSession().getUserLoggedIn();
         Artist artistToInsert = new Artist(currentUser.getId(), "ninguno", false);
 
-
         ArtistDAO artistDAO = new ArtistDAO(artistToInsert);
-        artistDAO.findById(currentUser.getId());
 
-        boolean inserted = false;
+        Artist artistTofind = artistDAO.findById(currentUser.getId());
 
-        if(artistDAO.findById(currentUser.getId()).getId()<0){
-            inserted = artistDAO.insert();
+        if (artistTofind.getId() > 0) {
+
+            resultRequestLabel.setText("Ya está registrado como artista");
+            resultRequestLabel.setVisible(true);
+            found = false;
         }
 
-        if (inserted) {
+        if (found) {
+            artistDAO.insert();
             Artist artistLogged = findArtistById(currentUser.getId());
 
             UserSession.UserSession().setUserIntoSession(artistLogged);
 
-
-        }else{
-            resultRequestLabel.setText("Ya esta ud registrado como artista");
+            resultRequestLabel.setText("Registro exitoso");
             resultRequestLabel.setVisible(true);
+
         }
 
 

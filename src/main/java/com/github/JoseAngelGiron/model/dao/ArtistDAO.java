@@ -86,14 +86,13 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
 
                 preparedStatement.setInt(1, id);
                 preparedStatement.setString(2, musicalGender);
-                preparedStatement.setInt(3, booleanToInt(isVerified()));
-
-                preparedStatement.executeQuery();
+                preparedStatement.setInt(3, booleanToInt(verified));
 
                 int rowsAffected = preparedStatement.executeUpdate();
                 if (rowsAffected > 0) {
                     inserted = true;
                 }
+
 
 
             } catch (SQLException e) {
@@ -112,12 +111,12 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
     @Override
     public Artist findById(int key) {
         Artist artistToSearch = new Artist();
+
         if(key!=0) {
 
             try(PreparedStatement statement = connection.prepareStatement(FINDBYID)){
                 statement.setInt(1, key);
                 ResultSet res = statement.executeQuery();
-
                 if (res.next()){
                     artistToSearch.setId(res.getInt("IDArtist"));
                     artistToSearch.setMusicalGender(res.getString("MusicalGender"));
@@ -157,7 +156,7 @@ public class ArtistDAO extends Artist implements DAO <Artist, String> {
                     artistToReturn.setDni(res.getString("DNI"));
                     artistToReturn.setAddress(res.getString("Adress"));
                     artistToReturn.setMusicalGender(res.getString("MusicalGender"));
-                    artistToReturn.setVerified(intToBoolean(res.getInt("IsVerified")));
+                    artistToReturn.setVerified(intToBoolean(res.getInt("Verified")));
 
                     return artistToReturn;
                 }
