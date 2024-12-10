@@ -20,7 +20,7 @@
          </font></Label>
       <ImageView fx:id="artistPhoto" fitHeight="138.0" fitWidth="235.0" layoutX="23.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="26.0" layoutY="186.0" mnemonicParsing="false" onAction="#followArtist" prefHeight="41.0" prefWidth="155.0" styleClass="follow-button" stylesheets="@../../../../assets/aplication.css" text="Seguir" />
-      <Label fx:id="resultFollow" layoutX="198.0" layoutY="177.0" prefHeight="18.0" prefWidth="119.0" text="resultFollow" visible="false" />
+      <Label fx:id="resultFollow" layoutX="198.0" layoutY="177.0" prefHeight="18.0" prefWidth="235.0" text="resultFollow" visible="false" />
       <TableView fx:id="listOfSongsTable" layoutX="23.0" layoutY="408.0" prefHeight="155.0" prefWidth="710.0">
          <columns>
             <TableColumn fx:id="photoColumn" editable="false" prefWidth="232.79998779296875" text="FotoAlbum" />
@@ -29,7 +29,7 @@
          </columns>
       </TableView>
       <Label layoutX="26.0" layoutY="588.0" prefHeight="41.0" prefWidth="235.0" styleClass="sub-header-title" stylesheets="@../../../../assets/aplication.css" text="Albums del artista" />
-      <Label fx:id="totalPlays" layoutX="440.0" layoutY="177.0" prefHeight="30.0" prefWidth="338.0" styleClass="reproductions-label" stylesheets="@../../../../assets/aplication.css" text="Reproducciones totales" />
+      <Label fx:id="totalPlays" layoutX="476.0" layoutY="180.0" prefHeight="30.0" prefWidth="338.0" styleClass="reproductions-label" stylesheets="@../../../../assets/aplication.css" text="Reproducciones totales" />
       <Label layoutX="23.0" layoutY="352.0" prefHeight="41.0" prefWidth="228.0" styleClass="sub-header-title" stylesheets="@../../../../assets/aplication.css" text="Canciones más populares" />
       <Button fx:id="deleteButton" layoutX="26.0" layoutY="244.0" mnemonicParsing="false" onAction="#deleteFollow" prefHeight="41.0" prefWidth="155.0" styleClass="unfollow-button" stylesheets="@../../../../assets/aplication.css" text="Dejar de seguir" />
       <FlowPane fx:id="albumsListPane" layoutX="26.0" layoutY="640.0" prefHeight="155.0" prefWidth="710.0" styleClass="flow-pane" stylesheets="@../../../../assets/aplication.css" />
