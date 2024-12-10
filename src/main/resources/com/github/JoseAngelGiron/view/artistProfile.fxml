@@ -3,34 +3,36 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="903.0" prefWidth="757.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JoseAngelGiron.view.ArtistProfileController">
+<AnchorPane fx:id="anchorPane" maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="903.0" prefWidth="926.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JoseAngelGiron.view.ArtistProfileController">
    <children>
-      <Label layoutX="8.0" layoutY="13.0" prefHeight="18.0" prefWidth="65.0" text="Verified" />
-      <ImageView fx:id="verified" fitHeight="25.0" fitWidth="32.0" layoutX="58.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="artistName" layoutX="8.0" layoutY="39.0" prefHeight="26.0" prefWidth="168.0" text="Nombre_Artista" />
-      <ImageView fx:id="artistPhoto" fitHeight="107.0" fitWidth="199.0" layoutX="190.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="53.0" layoutY="117.0" mnemonicParsing="false" onAction="#followArtist" prefHeight="26.0" prefWidth="128.0" text="Seguir" />
-      <Label fx:id="resultFollow" layoutX="217.0" layoutY="121.0" prefHeight="18.0" prefWidth="119.0" text="resultFollow" />
-      <TableView fx:id="listOfSongsTable" layoutX="20.0" layoutY="236.0" prefHeight="155.0" prefWidth="710.0">
+      <Label layoutX="453.0" layoutY="23.0" prefHeight="25.0" prefWidth="119.0" styleClass="section-title" stylesheets="@../../../../assets/aplication.css" text="Verified" />
+      <ImageView fx:id="verified" fitHeight="25.0" fitWidth="32.0" layoutX="597.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="artistName" layoutX="278.0" layoutY="56.0" prefHeight="51.0" prefWidth="263.0" styleClass="artist-label" stylesheets="@../../../../assets/aplication.css" text="Nombre_Artista">
+         <font>
+            <Font size="26.0" />
+         </font></Label>
+      <ImageView fx:id="artistPhoto" fitHeight="138.0" fitWidth="235.0" layoutX="23.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="26.0" layoutY="186.0" mnemonicParsing="false" onAction="#followArtist" prefHeight="41.0" prefWidth="155.0" styleClass="follow-button" stylesheets="@../../../../assets/aplication.css" text="Seguir" />
+      <Label fx:id="resultFollow" layoutX="198.0" layoutY="177.0" prefHeight="18.0" prefWidth="119.0" text="resultFollow" visible="false" />
+      <TableView fx:id="listOfSongsTable" layoutX="23.0" layoutY="408.0" prefHeight="155.0" prefWidth="710.0">
          <columns>
             <TableColumn fx:id="photoColumn" editable="false" prefWidth="232.79998779296875" text="FotoAlbum" />
-            <TableColumn fx:id="nameSongColumn" editable="false" prefWidth="224.0" text="NombreCancion" />
-            <TableColumn fx:id="numberOfPlaysColumn" editable="false" prefWidth="280.800048828125" text="Reproducciones" />
+            <TableColumn fx:id="nameSongColumn" editable="false" prefWidth="228.00001525878906" text="NombreCancion" />
+            <TableColumn fx:id="numberOfPlaysColumn" editable="false" prefWidth="277.5999755859375" text="Reproducciones" />
          </columns>
       </TableView>
-      <Label layoutX="26.0" layoutY="414.0" text="Albums del artista" />
-      <Label fx:id="totalPlays" layoutX="359.0" layoutY="193.0" prefHeight="18.0" prefWidth="182.0" text="Reproducciones totales" />
-      <Label layoutX="47.0" layoutY="193.0" prefHeight="18.0" prefWidth="140.0" text="Canciones más populares" />
-      <ListView fx:id="albumsListView" layoutX="20.0" layoutY="444.0" prefHeight="166.0" prefWidth="707.0" />
-      <Label layoutX="20.0" layoutY="629.0" prefHeight="18.0" prefWidth="231.0" text="Otros perfiles de artistas recomendados:" />
-      <ListView layoutX="22.0" layoutY="660.0" prefHeight="155.0" prefWidth="707.0" />
-      <Button fx:id="deleteButton" layoutX="53.0" layoutY="154.0" mnemonicParsing="false" onAction="#deleteFollow" prefHeight="26.0" prefWidth="128.0" text="Dejar de seguir" />
+      <Label layoutX="26.0" layoutY="588.0" prefHeight="41.0" prefWidth="235.0" styleClass="sub-header-title" stylesheets="@../../../../assets/aplication.css" text="Albums del artista" />
+      <Label fx:id="totalPlays" layoutX="440.0" layoutY="177.0" prefHeight="30.0" prefWidth="338.0" styleClass="reproductions-label" stylesheets="@../../../../assets/aplication.css" text="Reproducciones totales" />
+      <Label layoutX="23.0" layoutY="352.0" prefHeight="41.0" prefWidth="228.0" styleClass="sub-header-title" stylesheets="@../../../../assets/aplication.css" text="Canciones más populares" />
+      <Button fx:id="deleteButton" layoutX="26.0" layoutY="244.0" mnemonicParsing="false" onAction="#deleteFollow" prefHeight="41.0" prefWidth="155.0" styleClass="unfollow-button" stylesheets="@../../../../assets/aplication.css" text="Dejar de seguir" />
+      <FlowPane fx:id="albumsListPane" layoutX="26.0" layoutY="640.0" prefHeight="155.0" prefWidth="710.0" styleClass="flow-pane" stylesheets="@../../../../assets/aplication.css" />
    </children>
    <padding>
       <Insets bottom="575.0" />

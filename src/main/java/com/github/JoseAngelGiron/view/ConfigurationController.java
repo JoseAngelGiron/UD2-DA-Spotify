@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.github.JoseAngelGiron.model.dao.ArtistDAO.findArtistById;
+import static com.github.JoseAngelGiron.model.dao.UserDAO.deleteSearchs;
 
 public class ConfigurationController extends Controller implements Initializable {
 
@@ -71,6 +72,14 @@ public class ConfigurationController extends Controller implements Initializable
         }
 
 
+    }
+
+    @FXML
+    private void deleteRecords(){
+        User currentUser = UserSession.UserSession().getUserLoggedIn();
+        deleteSearchs(currentUser.getId());
+        resultRequestLabel.setVisible(true);
+        resultRequestLabel.setText("Historial borrado");
     }
 
     private void changeData() {

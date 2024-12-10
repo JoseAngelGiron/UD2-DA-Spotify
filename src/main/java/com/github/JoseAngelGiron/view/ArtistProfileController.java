@@ -17,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
@@ -27,7 +28,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import static com.github.JoseAngelGiron.model.dao.ArtistDAO.findAmountOfPlays;
-import static com.github.JoseAngelGiron.model.dao.ArtistDAO.findArtistsVerifiedThatFollows;
 import static com.github.JoseAngelGiron.model.dao.SongDAO.findMostPopularSongs;
 import static com.github.JoseAngelGiron.model.dao.UserDAO.findIfAlreadyFriends;
 import static com.github.JoseAngelGiron.model.dao.UserDAO.insertIntoFriends;
@@ -71,10 +71,9 @@ public class ArtistProfileController extends Controller implements Initializable
     private TableColumn<Song, Integer> numberOfPlaysColumn;
 
     @FXML
-    private ListView<Album> albumsListView;
+    private FlowPane albumsListPane;
 
-    @FXML
-    private ListView<User> userListView;
+
 
     @FXML
     private Button deleteButton;
@@ -82,9 +81,8 @@ public class ArtistProfileController extends Controller implements Initializable
 
     private User currentUser;
     private Artist artistSelected;
-    private ObservableList<Song> songsOfArtist; //las mas populares
+    private ObservableList<Song> songsOfArtist;
     private ObservableList<Album> AlbumsOfArtist;
-    private ObservableList<User> usersFollowers;
 
 
 
@@ -199,64 +197,51 @@ public class ArtistProfileController extends Controller implements Initializable
         List<Album> albumList = albumDAO.findListOfAlbumByArtistID(artistSelected.getId());
 
         AlbumsOfArtist = FXCollections.observableArrayList(albumList);
-        albumsListView.setItems(AlbumsOfArtist);
 
 
-        albumsListView.setOrientation(Orientation.HORIZONTAL);
+        albumsListPane.getChildren().clear();
 
-        albumsListView.setCellFactory(param -> new ListCell<Album>() {
-            private final VBox content;
-            private final ImageView albumImage;
-            private final Label albumName;
-
-            {
-                albumImage = new ImageView();
-                albumImage.setFitHeight(100);
-                albumImage.setFitWidth(100);
-                albumImage.setPreserveRatio(true);
-
-                albumName = new Label();
-                albumName.setStyle("-fx-font-size: 14; -fx-text-fill: white;");
-
-                content = new VBox(albumImage, albumName);
-                content.setSpacing(5);
-                content.setStyle("-fx-alignment: center;");
-            }
-
-            @Override
-            protected void updateItem(Album album, boolean empty) {
-                super.updateItem(album, empty);
-                if (empty || album == null) {
-                    setGraphic(null);
-                } else {
-                    albumImage.setImage(bytesToImage(album.getImage()));
-                    albumName.setText(album.getName());
-                    setGraphic(content);
-                }
-            }
+        for (Album album : AlbumsOfArtist) {
+            VBox albumItem = new VBox();
+            albumItem.setSpacing(5);
+            albumItem.setStyle("-fx-alignment: center; -fx-padding: 10px;");
 
 
-        });
+            ImageView albumImage = new ImageView();
+            albumImage.setImage(bytesToImage(album.getImage()));
+            albumImage.setFitHeight(100);
+            albumImage.setFitWidth(100);
+            albumImage.setPreserveRatio(true);
 
-        albumsListView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                Album albumSelected = albumsListView.getSelectionModel().getSelectedItem();
-                if (albumSelected != null) {
-                    try {
-                        changeToAlbum(albumSelected);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+
+            Label albumName = new Label(album.getName());
+            albumName.setStyle("-fx-font-size: 14; -fx-text-fill: white; -fx-alignment: center;");
+
+
+            albumItem.getChildren().addAll(albumImage, albumName);
+
+
+            albumItem.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2) {
+                    Album albumSelected = album;
+                    if (albumSelected != null) {
+                        try {
+                            changeToAlbum(albumSelected);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
-            }
-        });
+            });
+
+
+            albumsListPane.getChildren().add(albumItem);
+        }
+
+
+        albumsListPane.setOrientation(Orientation.HORIZONTAL);
     }
 
-    private void showRelatedUsers(){
-        List <Artist> artists = findArtistsVerifiedThatFollows(artistSelected.getId());
-
-        //
-    }
 
     private void changeToAlbum(Album album) throws IOException {
         changeScene(Scenes.ALBUMVIEW, anchorPane, album);

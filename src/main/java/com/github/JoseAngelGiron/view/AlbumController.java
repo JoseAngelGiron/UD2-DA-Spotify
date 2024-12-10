@@ -1,11 +1,13 @@
 package com.github.JoseAngelGiron.view;
 
 
+import com.github.JoseAngelGiron.model.SongPlayer;
 import com.github.JoseAngelGiron.model.dao.AlbumDAO;
 import com.github.JoseAngelGiron.model.dao.SongDAO;
 import com.github.JoseAngelGiron.model.entity.Album;
 import com.github.JoseAngelGiron.model.entity.Artist;
 import com.github.JoseAngelGiron.model.entity.Song;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,8 +15,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -54,10 +58,20 @@ public class AlbumController extends Controller implements Initializable {
     private TableColumn<Song, String> numberColumn;
 
     @FXML
+    private TableColumn<Song, ImageView> photoColumn;
+
+    @FXML
     private TableColumn<Song, String> titleColumn;
 
     @FXML
-    private ListView<Album> albumsRelated;
+    private FlowPane albumsRelated;
+
+    @FXML
+    private TitledPane reproductor;
+    @FXML
+    private ImageView imageSong;
+
+    private Song actualSong;
 
 
     private Album albumToShow;
@@ -93,6 +107,19 @@ public class AlbumController extends Controller implements Initializable {
 
     }
 
+    @FXML
+    public void stopSong(){
+        SongPlayer.stopSong();
+
+    }
+
+    @FXML
+    public void startSong() throws InterruptedException {
+        if(actualSong!=null){
+            SongPlayer.playSong(actualSong.getSongFile());
+        }
+    }
+
     private void showAlbumData(){
         titleAlbum.setText(albumToShow.getName());
         yearOfRelease.setText(String.valueOf(albumToShow.getYear()));
@@ -126,6 +153,23 @@ public class AlbumController extends Controller implements Initializable {
             return new SimpleStringProperty(String.valueOf(index));
         });
 
+        photoColumn.setCellValueFactory(cellData -> {
+
+            ImageView imageView = new ImageView();
+
+
+            byte[] imageBytes = cellData.getValue().getPhotoSong();
+            Image image = bytesToImage(imageBytes);
+
+
+            imageView.setImage(image);
+            imageView.setFitHeight(50);
+            imageView.setFitWidth(50);
+            imageView.setPreserveRatio(true);
+
+            return new ReadOnlyObjectWrapper<>(imageView);
+        });
+
         titleColumn.setCellValueFactory(cellData -> {
             return new SimpleStringProperty(cellData.getValue().getName());
         });
@@ -135,8 +179,17 @@ public class AlbumController extends Controller implements Initializable {
             TableRow<Song> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
-                    Song selectedSong = row.getItem();
+                    actualSong = row.getItem();
 
+                    if (actualSong != null) {
+                        try {
+                            startSong();
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        imageSong.setImage(bytesToImage(actualSong.getPhotoSong()));
+                        reproductor.setExpanded(true);
+                    }
                 }
             });
             return row;
@@ -148,62 +201,53 @@ public class AlbumController extends Controller implements Initializable {
 
     private void showAlbumsRelated(){
         albumDAO = new AlbumDAO();
-
-
         List<Album> albumList = albumDAO.findListOfAlbumByArtistID(artistRelated.getId());
 
         AlbumsOfArtist = FXCollections.observableArrayList(albumList);
-        albumsRelated.setItems(AlbumsOfArtist);
+
+
+        albumsRelated.getChildren().clear();
+
+        for (Album album : AlbumsOfArtist) {
+            VBox albumItem = new VBox();
+            albumItem.setSpacing(5);
+            albumItem.setStyle("-fx-alignment: center; -fx-padding: 10px;");
+
+
+            ImageView albumImage = new ImageView();
+            albumImage.setImage(bytesToImage(album.getImage()));
+            albumImage.setFitHeight(100);
+            albumImage.setFitWidth(100);
+            albumImage.setPreserveRatio(true);
+
+
+            Label albumName = new Label(album.getName());
+            albumName.setStyle("-fx-font-size: 14; -fx-text-fill: white; -fx-alignment: center;");
+
+
+            albumItem.getChildren().addAll(albumImage, albumName);
+
+
+            albumItem.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2) {
+                    Album albumSelected = album;
+                    if (albumSelected != null) {
+                        try {
+                            changeToAlbum(albumSelected);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+            });
+
+
+            albumsRelated.getChildren().add(albumItem);
+        }
 
 
         albumsRelated.setOrientation(Orientation.HORIZONTAL);
 
-        albumsRelated.setCellFactory(param -> new ListCell<Album>() {
-            private final VBox content;
-            private final ImageView albumImage;
-            private final Label albumName;
-
-            {
-                albumImage = new ImageView();
-                albumImage.setFitHeight(100);
-                albumImage.setFitWidth(100);
-                albumImage.setPreserveRatio(true);
-
-                albumName = new Label();
-                albumName.setStyle("-fx-font-size: 14; -fx-text-fill: white;");
-
-                content = new VBox(albumImage, albumName);
-                content.setSpacing(5);
-                content.setStyle("-fx-alignment: center;");
-            }
-
-            @Override
-            protected void updateItem(Album album, boolean empty) {
-                super.updateItem(album, empty);
-                if (empty || album == null) {
-                    setGraphic(null);
-                } else {
-                    albumImage.setImage(bytesToImage(album.getImage()));
-                    albumName.setText(album.getName());
-                    setGraphic(content);
-                }
-            }
-
-
-        });
-
-        albumsRelated.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                Album albumSelected = albumsRelated.getSelectionModel().getSelectedItem();
-                if (albumSelected != null) {
-                    try {
-                        changeToAlbum(albumSelected);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        });
 
     }
 

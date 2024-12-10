@@ -30,7 +30,7 @@
                 <TableColumn editable="false" minWidth="0.0" prefWidth="0.0" />
                   <TableColumn fx:id="columnPhotoSong" editable="false" prefWidth="150.4000244140625" resizable="false" text="Photo" />
                 <TableColumn fx:id="columnNameSong" editable="false" prefWidth="184.79998779296875" resizable="false" text="Nombre" />
-                  <TableColumn fx:id="columnGenderSong" editable="false" prefWidth="150.4000244140625" resizable="false" text="Gender" />
+                  <TableColumn fx:id="columnGenderSong" editable="false" prefWidth="163.20001220703125" resizable="false" text="Gender" />
               </columns>
             </TableView>
             <Button fx:id="addAlbum" layoutX="24.0" layoutY="306.0" mnemonicParsing="false" onAction="#showRegisterPanel" prefHeight="26.0" prefWidth="276.0" styleClass="button-previous" stylesheets="@../../../../assets/aplication.css" text="Añadir un nuevo album" />
